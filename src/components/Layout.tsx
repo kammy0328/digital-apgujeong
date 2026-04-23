@@ -320,7 +320,7 @@ export default function Layout() {
           </div>
           <div className="md:text-right font-light">
             <p className="mb-2 text-white tracking-widest text-xs">CONTACT US</p>
-            <p className="mb-2">T. 02-1234-5678</p>
+            <p className="mb-2">T. 010-5823-1350</p>
             <p className="mb-4">E. <a href="mailto:digitalapgujeong@gmail.com" className="hover:text-white transition-colors">digitalapgujeong@gmail.com</a></p>
             <Link to="/careers" className="inline-block mt-2 text-neutral-400 hover:text-white transition-colors border-b border-neutral-600 hover:border-white pb-0.5">
               인재 채용
