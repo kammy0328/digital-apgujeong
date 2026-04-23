@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a1a"/>
+      <stop offset="100%" stop-color="#0d0d0d"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c9a96e" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#c9a96e"/>
+      <stop offset="100%" stop-color="#c9a96e" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- Subtle grid lines -->
+  <line x1="0" y1="315" x2="1200" y2="315" stroke="#ffffff" stroke-width="0.5" opacity="0.05"/>
+  <line x1="600" y1="0" x2="600" y2="630" stroke="#ffffff" stroke-width="0.5" opacity="0.05"/>
+  <!-- Left decorative border -->
+  <rect x="60" y="60" width="2" height="510" fill="#c9a96e" opacity="0.6"/>
+  <!-- Right decorative border -->
+  <rect x="1138" y="60" width="2" height="510" fill="#c9a96e" opacity="0.6"/>
+  <!-- Top line -->
+  <rect x="60" y="60" width="1080" height="1" fill="url(#accent)" opacity="0.6"/>
+  <!-- Bottom line -->
+  <rect x="60" y="569" width="1080" height="1" fill="url(#accent)" opacity="0.6"/>
+  <!-- DA monogram -->
+  <text x="140" y="340" font-family="Georgia, 'Times New Roman', serif" font-size="160" fill="#ffffff" dominant-baseline="middle" font-weight="400" opacity="0.06">DA</text>
+  <!-- Main content - centered -->
+  <text x="600" y="220" font-family="Georgia, 'Times New Roman', serif" font-size="18" fill="#c9a96e" text-anchor="middle" letter-spacing="8">DIGITAL APGUJEONG</text>
+  <text x="600" y="310" font-family="Georgia, 'Times New Roman', serif" font-size="72" fill="#ffffff" text-anchor="middle" font-weight="400" letter-spacing="4">디지털 압구정</text>
+  <!-- Accent line -->
+  <rect x="480" y="350" width="240" height="1" fill="#c9a96e" opacity="0.8"/>
+  <text x="600" y="400" font-family="'Noto Sans KR', Arial, sans-serif" font-size="22" fill="#aaaaaa" text-anchor="middle" letter-spacing="2">디지털 뷰티 리터칭 전문 스튜디오</text>
+  <text x="600" y="445" font-family="'Noto Sans KR', Arial, sans-serif" font-size="18" fill="#888888" text-anchor="middle" letter-spacing="1">상업 영상 · 웨딩 · 퍼스널 영상 피부 보정</text>
+  <!-- Bottom tagline -->
+  <text x="600" y="530" font-family="Georgia, serif" font-size="14" fill="#c9a96e" text-anchor="middle" letter-spacing="6" opacity="0.7">SKIN RETOUCHING STUDIO · SEOUL</text>
+</svg>
