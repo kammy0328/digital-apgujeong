@@ -21,15 +21,6 @@ export default defineConfig(({mode}) => {
     build: {
       target: 'es2018',
       cssCodeSplit: true,
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            'vendor-react': ['react', 'react-dom', 'react-router-dom'],
-            'vendor-motion': ['motion'],
-            'vendor-icons': ['lucide-react'],
-          },
-        },
-      },
     },
   };
 });
