@@ -104,88 +104,131 @@ export default function Home() {
       {/* Before & After Section */}
       <section className="py-32 bg-white">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-20"
+          >
             <h2 className="text-3xl md:text-4xl font-serif mb-4 break-keep">BEFORE & AFTER</h2>
             <p className="text-neutral-500 font-light tracking-wide break-keep">디지털 압구정만의 섬세한 터치로 완성된 변화를 확인하세요.</p>
-          </div>
-          
-          <div className="max-w-5xl mx-auto">
-            {/* Using distinct images to simulate before/after retouching effect */}
-            <BeforeAfterSlider 
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="max-w-5xl mx-auto"
+          >
+            <BeforeAfterSlider
               beforeImage="https://placehold.co/1920x1080?text=준비+중+(원본)"
               afterImage="https://placehold.co/1920x1080?text=준비+중+(리터칭)"
             />
             <div className="mt-12 text-center">
               <p className="text-neutral-600 mb-8 font-light">피부결 정돈, 모공 및 잡티 제거, 미세 윤곽 교정</p>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Services Brief - Redesigned for dual targeting */}
       <section className="py-32 bg-neutral-50 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.7 }}
+            className="text-center mb-20"
+          >
             <p className="text-sm tracking-[0.3em] text-neutral-400 mb-4 uppercase">Our Expertise</p>
             <h2 className="text-3xl md:text-5xl font-serif mb-6 break-keep">하이엔드 리터칭, 모든 영상의 기준이 되다</h2>
             <p className="text-neutral-500 font-light max-w-2xl mx-auto break-keep">
-              영상 제작의 최상위 솔루션을 통해 상업 영상의 완성도를 높이고, 
+              영상 제작의 최상위 솔루션을 통해 상업 영상의 완성도를 높이고,
               개인의 소중한 순간을 영원히 아름답게 기록합니다.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* Commercial Card */}
-            <motion.div 
-              whileHover={{ y: -10 }}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              whileHover={{ y: -10, boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}
               className="bg-white p-10 md:p-16 border border-neutral-100 shadow-sm flex flex-col h-full"
             >
               <div className="mb-12">
                 <span className="text-[10px] tracking-[0.3em] text-neutral-400 uppercase block mb-4">For Professional</span>
                 <h3 className="text-2xl md:text-3xl font-serif mb-6">상업 영상 솔루션</h3>
                 <p className="text-neutral-600 font-light leading-relaxed mb-8 break-keep">
-                  광고, 뮤직비디오, 드라마, 영화 등 고도의 정밀함이 요구되는 프로페셔널 프로젝트를 위한 최상의 리터칭 서비스를 제공합니다. 
+                  광고, 뮤직비디오, 드라마, 영화 등 고도의 정밀함이 요구되는 프로페셔널 프로젝트를 위한 최상의 리터칭 서비스를 제공합니다.
                   Nuke 및 After Effects 기반의 하이엔드 파이프라인으로 압도적인 퀄리티를 보장합니다.
                 </p>
                 <ul className="space-y-4 mb-12">
                   {['광고 및 브랜드 필름', '뮤직비디오 아티스트 리터칭', '드라마/영화 캐릭터 룩 구현', '프레임 단위 정밀 트래킹'].map((item, i) => (
-                    <li key={i} className="flex items-center text-sm text-neutral-500">
-                      <span className="w-1 h-1 bg-neutral-900 rounded-full mr-3"></span>
+                    <motion.li
+                      key={i}
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: 0.2 + i * 0.08 }}
+                      className="flex items-center text-sm text-neutral-500"
+                    >
+                      <span className="w-1 h-1 bg-neutral-900 rounded-full mr-3 flex-shrink-0"></span>
                       {item}
-                    </li>
+                    </motion.li>
                   ))}
                 </ul>
               </div>
-              <Link to="/commercial/procedures" className="mt-auto inline-flex items-center space-x-3 text-sm font-medium tracking-widest border-b border-neutral-900 pb-1 w-fit hover:text-neutral-500 hover:border-neutral-500 transition-all">
+              <Link to="/commercial/procedures" className="mt-auto inline-flex items-center space-x-3 text-sm font-medium tracking-widest border-b border-neutral-900 pb-1 w-fit hover:text-neutral-500 hover:border-neutral-500 transition-all group">
                 <span>상업 영상 서비스 보기</span>
-                <ArrowRight size={16} />
+                <motion.span whileHover={{ x: 4 }} transition={{ duration: 0.2 }}>
+                  <ArrowRight size={16} />
+                </motion.span>
               </Link>
             </motion.div>
 
             {/* Personal Card */}
-            <motion.div 
-              whileHover={{ y: -10 }}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              whileHover={{ y: -10, boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}
               className="bg-neutral-50 text-neutral-900 p-10 md:p-16 border border-neutral-200 flex flex-col h-full"
             >
               <div className="mb-12">
                 <span className="text-[10px] tracking-[0.3em] text-neutral-400 uppercase block mb-4">For Individual</span>
                 <h3 className="text-2xl md:text-3xl font-serif mb-6">퍼스널 메모리 케어</h3>
                 <p className="text-neutral-600 font-light leading-relaxed mb-8 break-keep">
-                  웨딩, 프로필, 브이로그 등 일상의 소중한 기록들을 화보처럼 아름답게 다듬어 드립니다. 
+                  웨딩, 프로필, 브이로그 등 일상의 소중한 기록들을 화보처럼 아름답게 다듬어 드립니다.
                   사진을 보정하듯 영상 속 내 모습도 가장 예쁘고 자연스럽게 간직하세요.
                 </p>
                 <ul className="space-y-4 mb-12">
                   {['웨딩 시네마 뷰티 리터칭', '개인 프로필 및 인터뷰 영상', '유튜브 및 SNS 콘텐츠 최적화', '자연스러운 체형 및 피부 보정'].map((item, i) => (
-                    <li key={i} className="flex items-center text-sm text-neutral-500">
-                      <span className="w-1 h-1 bg-neutral-900 rounded-full mr-3"></span>
+                    <motion.li
+                      key={i}
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: 0.3 + i * 0.08 }}
+                      className="flex items-center text-sm text-neutral-500"
+                    >
+                      <span className="w-1 h-1 bg-neutral-900 rounded-full mr-3 flex-shrink-0"></span>
                       {item}
-                    </li>
+                    </motion.li>
                   ))}
                 </ul>
               </div>
-              <Link to="/wedding/procedures" className="mt-auto inline-flex items-center space-x-3 text-sm font-medium tracking-widest border-b border-neutral-900 pb-1 w-fit hover:text-neutral-500 hover:border-neutral-500 transition-all">
+              <Link to="/wedding/procedures" className="mt-auto inline-flex items-center space-x-3 text-sm font-medium tracking-widest border-b border-neutral-900 pb-1 w-fit hover:text-neutral-500 hover:border-neutral-500 transition-all group">
                 <span>웨딩/퍼스널 서비스 보기</span>
-                <ArrowRight size={16} />
+                <motion.span whileHover={{ x: 4 }} transition={{ duration: 0.2 }}>
+                  <ArrowRight size={16} />
+                </motion.span>
               </Link>
             </motion.div>
           </div>
@@ -193,10 +236,16 @@ export default function Home() {
       </section>
 
       {/* Technology Section */}
-      <section className="py-32 bg-white">
+      <section className="py-32 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-            <div className="relative">
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.8 }}
+              className="relative"
+            >
               <img src="https://placehold.co/1200x1500?text=DIAP+Technology" alt="Technology" className="w-full aspect-[4/5] object-cover" />
               <div className="absolute -bottom-10 -right-10 bg-neutral-900 text-white p-12 hidden md:block max-w-xs">
                 <p className="text-2xl font-serif mb-4 whitespace-nowrap">"티 나지 않는 완벽함"</p>
@@ -204,45 +253,91 @@ export default function Home() {
                   우리는 기술을 자랑하지 않습니다. 결과물에 녹아든 자연스러움이 우리의 자부심입니다.
                 </p>
               </div>
-            </div>
-            <div className="lg:pl-10">
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.8 }}
+              className="lg:pl-10"
+            >
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif mb-10 leading-tight break-keep">압도적인 기술력이 만드는<br/>가장 자연스러운 아름다움</h2>
               <div className="space-y-12">
-                <div>
-                  <h3 className="text-lg font-bold mb-4 flex items-center">
-                    <span className="w-8 h-[1px] bg-neutral-900 mr-4"></span>
-                    전문가용 하이엔드 솔루션
-                  </h3>
-                  <p className="text-neutral-600 font-light leading-relaxed break-keep">
-                    영화나 광고 제작에 쓰이는 전문가용 소프트웨어를 사용하여, 
-                    어색한 어플 필터가 아닌 진짜 내 피부처럼 자연스럽고 완벽한 보정 결과를 만들어냅니다.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold mb-4 flex items-center">
-                    <span className="w-8 h-[1px] bg-neutral-900 mr-4"></span>
-                    한 장면 한 장면 꼼꼼하게
-                  </h3>
-                  <p className="text-neutral-600 font-light leading-relaxed break-keep">
-                    영상이 재생되는 내내 보정이 풀리거나 어색해지지 않도록, 
-                    전문가가 직접 한 장면씩 꼼꼼하게 확인하고 다듬어 드립니다.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold mb-4 flex items-center">
-                    <span className="w-8 h-[1px] bg-neutral-900 mr-4"></span>
-                    철저한 프라이버시 보호
-                  </h3>
-                  <p className="text-neutral-600 font-light leading-relaxed break-keep">
-                    고객님의 소중한 영상은 철저한 보안 속에 관리되며, 
-                    작업이 끝난 후에는 안전하게 폐기되니 안심하고 맡겨주세요.
-                  </p>
-                </div>
+                {[
+                  {
+                    title: '전문가용 하이엔드 솔루션',
+                    desc: '영화나 광고 제작에 쓰이는 전문가용 소프트웨어를 사용하여, 어색한 어플 필터가 아닌 진짜 내 피부처럼 자연스럽고 완벽한 보정 결과를 만들어냅니다.',
+                  },
+                  {
+                    title: '한 장면 한 장면 꼼꼼하게',
+                    desc: '영상이 재생되는 내내 보정이 풀리거나 어색해지지 않도록, 전문가가 직접 한 장면씩 꼼꼼하게 확인하고 다듬어 드립니다.',
+                  },
+                  {
+                    title: '철저한 프라이버시 보호',
+                    desc: '고객님의 소중한 영상은 철저한 보안 속에 관리되며, 작업이 끝난 후에는 안전하게 폐기되니 안심하고 맡겨주세요.',
+                  },
+                ].map((item, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: i * 0.12 }}
+                  >
+                    <h3 className="text-lg font-bold mb-4 flex items-center">
+                      <span className="w-8 h-[1px] bg-neutral-900 mr-4 flex-shrink-0"></span>
+                      {item.title}
+                    </h3>
+                    <p className="text-neutral-600 font-light leading-relaxed break-keep">{item.desc}</p>
+                  </motion.div>
+                ))}
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
+
+      {/* CTA Banner */}
+      <motion.section
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.7 }}
+        className="py-24 bg-neutral-900 text-white text-center"
+      >
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="text-sm tracking-[0.3em] text-neutral-400 mb-6 uppercase"
+        >
+          Ready to start?
+        </motion.p>
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="text-3xl md:text-5xl font-serif mb-10 break-keep"
+        >
+          지금 바로 문의하세요
+        </motion.h2>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          <Link
+            to="/consultation"
+            className="inline-flex items-center space-x-3 border border-white/40 px-10 py-4 text-sm tracking-widest hover:bg-white hover:text-neutral-900 transition-all duration-500"
+          >
+            <span>견적 문의하기</span>
+            <ArrowRight size={16} />
+          </Link>
+        </motion.div>
+      </motion.section>
     </motion.div>
   );
 }

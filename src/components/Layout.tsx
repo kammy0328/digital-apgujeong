@@ -322,6 +322,7 @@ export default function Layout() {
             <p className="mb-2 text-white tracking-widest text-xs">CONTACT US</p>
             <p className="mb-2">T. 010-5823-1350</p>
             <p className="mb-4">E. <a href="mailto:digitalapgujeong@gmail.com" className="hover:text-white transition-colors">digitalapgujeong@gmail.com</a></p>
+            <p className="mb-4">KakaoTalk. <a href="https://pf.kakao.com/_xxxx" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">@디지털압구정</a></p>
             <Link to="/careers" className="inline-block mt-2 text-neutral-400 hover:text-white transition-colors border-b border-neutral-600 hover:border-white pb-0.5">
               인재 채용
             </Link>

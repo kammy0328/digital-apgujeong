@@ -1,5 +1,4 @@
 import { motion } from 'motion/react';
-import { Phone, Mail, Clock, MessageCircle } from 'lucide-react';
 import { useState } from 'react';
 
 const WORK_TYPES = [
@@ -71,75 +70,6 @@ export default function Consultation() {
         <div className="text-center mb-24">
           <h1 className="text-4xl md:text-5xl font-serif mb-6">상담 안내</h1>
           <p className="text-neutral-400 tracking-[0.2em] text-sm">CONSULTATION</p>
-        </div>
-
-        {/* Contact Info */}
-        <div className="bg-neutral-50 p-12 md:p-16 mb-16">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-serif mb-6 break-keep">디지털 압구정 DIAP 고객센터</h2>
-            <p className="text-neutral-500 font-light leading-relaxed break-keep">
-              영상 리터칭에 대한 모든 문의를 환영합니다.<br />
-              아래 견적 문의 폼을 이용하시면 더욱 빠르게 상담받으실 수 있습니다.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-10">
-            <div className="flex items-start">
-              <div className="w-12 h-12 bg-white shadow-sm flex items-center justify-center rounded-full mr-5 flex-shrink-0">
-                <Phone size={20} className="text-neutral-700" />
-              </div>
-              <div className="pt-1">
-                <h3 className="text-xs font-bold tracking-[0.2em] mb-2 text-neutral-400">PHONE</h3>
-                <a href="tel:01058231350" className="text-base text-neutral-900 font-light hover:text-neutral-500 transition-colors">
-                  010-5823-1350
-                </a>
-              </div>
-            </div>
-
-            <div className="flex items-start">
-              <div className="w-12 h-12 bg-white shadow-sm flex items-center justify-center rounded-full mr-5 flex-shrink-0">
-                <Mail size={20} className="text-neutral-700" />
-              </div>
-              <div className="pt-1">
-                <h3 className="text-xs font-bold tracking-[0.2em] mb-2 text-neutral-400">EMAIL</h3>
-                <a
-                  href="mailto:digitalapgujeong@gmail.com"
-                  className="text-base text-neutral-900 font-light hover:text-neutral-500 transition-colors"
-                >
-                  digitalapgujeong@gmail.com
-                </a>
-              </div>
-            </div>
-
-            <div className="flex items-start">
-              <div className="w-12 h-12 bg-white shadow-sm flex items-center justify-center rounded-full mr-5 flex-shrink-0">
-                <Clock size={20} className="text-neutral-700" />
-              </div>
-              <div className="pt-1">
-                <h3 className="text-xs font-bold tracking-[0.2em] mb-2 text-neutral-400">HOURS</h3>
-                <p className="text-base text-neutral-900 font-light">평일 10:00 – 19:00</p>
-                <p className="text-neutral-500 text-sm mt-1 font-light">주말 및 공휴일 휴무</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-10 pt-8 border-t border-neutral-200 flex items-start">
-            <div className="w-12 h-12 bg-white shadow-sm flex items-center justify-center rounded-full mr-5 flex-shrink-0">
-              <MessageCircle size={20} className="text-neutral-700" />
-            </div>
-            <div className="pt-1">
-              <h3 className="text-xs font-bold tracking-[0.2em] mb-2 text-neutral-400">KAKAOTALK</h3>
-              <a
-                href="https://pf.kakao.com/_xxxx"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-base text-neutral-900 font-light hover:text-neutral-500 transition-colors"
-              >
-                @디지털압구정
-              </a>
-              <p className="text-neutral-400 text-xs mt-1 font-light">긴급·주말 작업 문의는 카카오톡 채널로 연락해 주세요.</p>
-            </div>
-          </div>
         </div>
 
         {/* Quote Form */}
