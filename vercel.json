@@ -2,7 +2,6 @@
   "buildCommand": "vite build",
   "outputDirectory": "dist",
   "installCommand": "npm install",
-  "alias": ["diap.vercel.app"],
   "rewrites": [
     {
       "source": "/(.*)",
