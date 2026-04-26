@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://digital-apgujeong.com/sitemap.xml
+Sitemap: https://digital-apgujeong.vercel.app/sitemap.xml

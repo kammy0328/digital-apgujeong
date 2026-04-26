@@ -3,75 +3,87 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <url>
-    <loc>https://digital-apgujeong.com/</loc>
+    <loc>https://digital-apgujeong.vercel.app/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <lastmod>2026-04-27</lastmod>
   </url>
 
   <url>
-    <loc>https://digital-apgujeong.com/about/company</loc>
+    <loc>https://digital-apgujeong.vercel.app/about/company</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <lastmod>2026-04-27</lastmod>
   </url>
 
   <url>
-    <loc>https://digital-apgujeong.com/about/director</loc>
+    <loc>https://digital-apgujeong.vercel.app/about/director</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <lastmod>2026-04-27</lastmod>
   </url>
 
   <url>
-    <loc>https://digital-apgujeong.com/about/staff</loc>
+    <loc>https://digital-apgujeong.vercel.app/about/staff</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <lastmod>2026-04-27</lastmod>
   </url>
 
   <url>
-    <loc>https://digital-apgujeong.com/commercial/procedures</loc>
+    <loc>https://digital-apgujeong.vercel.app/commercial/procedures</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <lastmod>2026-04-27</lastmod>
   </url>
 
   <url>
-    <loc>https://digital-apgujeong.com/commercial/guidelines</loc>
+    <loc>https://digital-apgujeong.vercel.app/commercial/guidelines</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <lastmod>2026-04-27</lastmod>
   </url>
 
   <url>
-    <loc>https://digital-apgujeong.com/commercial/reviews</loc>
+    <loc>https://digital-apgujeong.vercel.app/commercial/reviews</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <lastmod>2026-04-27</lastmod>
   </url>
 
   <url>
-    <loc>https://digital-apgujeong.com/wedding/procedures</loc>
+    <loc>https://digital-apgujeong.vercel.app/wedding/procedures</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <lastmod>2026-04-27</lastmod>
   </url>
 
   <url>
-    <loc>https://digital-apgujeong.com/wedding/reviews</loc>
+    <loc>https://digital-apgujeong.vercel.app/wedding/reviews</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <lastmod>2026-04-27</lastmod>
   </url>
 
   <url>
-    <loc>https://digital-apgujeong.com/event</loc>
+    <loc>https://digital-apgujeong.vercel.app/event</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <lastmod>2026-04-27</lastmod>
   </url>
 
   <url>
-    <loc>https://digital-apgujeong.com/consultation</loc>
+    <loc>https://digital-apgujeong.vercel.app/consultation</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <lastmod>2026-04-27</lastmod>
   </url>
 
   <url>
-    <loc>https://digital-apgujeong.com/careers</loc>
+    <loc>https://digital-apgujeong.vercel.app/careers</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <lastmod>2026-04-27</lastmod>
   </url>
 
 </urlset>
