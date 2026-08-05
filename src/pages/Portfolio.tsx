@@ -2,28 +2,23 @@ import { motion, AnimatePresence } from 'motion/react';
 import React, { useState } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import YouTubeCard from '../components/YouTubeCard';
-import { portfolioVideos, categories } from '../data/portfolio';
+import { portfolioVideos } from '../data/portfolio';
 
 const titleClass = "text-paper font-sans font-medium text-base tracking-widest";
 
 export default function Portfolio() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [activeCategory, setActiveCategory] = useState("전체");
-
-  const filteredVideos = activeCategory === "전체"
-    ? portfolioVideos
-    : portfolioVideos.filter(v => v.category === activeCategory);
 
   const handlePrev = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (selectedIndex === null) return;
-    setSelectedIndex((prev) => (prev !== null ? (prev === 0 ? filteredVideos.length - 1 : prev - 1) : null));
+    setSelectedIndex((prev) => (prev !== null ? (prev === 0 ? portfolioVideos.length - 1 : prev - 1) : null));
   };
 
   const handleNext = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (selectedIndex === null) return;
-    setSelectedIndex((prev) => (prev !== null ? (prev === filteredVideos.length - 1 ? 0 : prev + 1) : null));
+    setSelectedIndex((prev) => (prev !== null ? (prev === portfolioVideos.length - 1 ? 0 : prev + 1) : null));
   };
 
   return (
@@ -39,25 +34,8 @@ export default function Portfolio() {
           <p className="text-neutral-500 tracking-[0.2em] text-sm">PORTFOLIO</p>
         </div>
 
-        {/* Categories */}
-        <div className="flex flex-wrap justify-center gap-4 mb-16">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setActiveCategory(category)}
-              className={`px-6 py-2 text-sm tracking-widest transition-colors duration-300 ${
-                activeCategory === category
-                  ? 'bg-paper text-ink'
-                  : 'bg-neutral-950 text-neutral-400 border border-neutral-800 hover:border-neutral-500 hover:text-paper'
-              }`}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-12">
-          {filteredVideos.map((video, index) => (
+          {portfolioVideos.map((video, index) => (
             <YouTubeCard
               key={index}
               videoId={video.id}
@@ -100,7 +78,7 @@ export default function Portfolio() {
             </button>
 
             <motion.div
-              key={filteredVideos[selectedIndex].id}
+              key={portfolioVideos[selectedIndex].id}
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
@@ -109,14 +87,14 @@ export default function Portfolio() {
               onClick={(e) => e.stopPropagation()}
             >
               <iframe
-                src={`https://www.youtube.com/embed/${filteredVideos[selectedIndex].id}?autoplay=1&controls=1&modestbranding=1`}
+                src={`https://www.youtube.com/embed/${portfolioVideos[selectedIndex].id}?autoplay=1&controls=1&modestbranding=1`}
                 className="absolute inset-0 w-full h-full"
                 allow="autoplay; encrypted-media"
                 allowFullScreen
                 title="Video Player"
               />
               <div className={`absolute -bottom-12 left-0 ${titleClass}`}>
-                {filteredVideos[selectedIndex].title}
+                {portfolioVideos[selectedIndex].title}
               </div>
             </motion.div>
           </motion.div>

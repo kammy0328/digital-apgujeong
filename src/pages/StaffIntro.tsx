@@ -5,7 +5,7 @@ const staffMembers = [
     name: "이원장",
     title: "Lead Retoucher",
     gender: "male",
-    image: "https://placehold.co/800x800/121212/525252?text=준비+중",
+    image: "https://placehold.co/800x800/0a0a0a/525252?text=준비+중",
     specialty: "모공 정밀 케어, 스킨 텍스쳐 및 주름 보정",
     bio: "대형 MV 영상 전담 리터처 출신. 뼈를 깎는 고통 없이 디지털로 완벽한 피부결을 완성합니다.",
     portfolios: [
@@ -18,7 +18,7 @@ const staffMembers = [
     name: "김실장",
     title: "Drama & Film Retoucher",
     gender: "female",
-    image: "https://placehold.co/800x800/121212/525252?text=준비+중",
+    image: "https://placehold.co/800x800/0a0a0a/525252?text=준비+중",
     specialty: "자연스러운 피부톤 보정, 디지털 메이크업, 드라마 및 영화 전문",
     bio: "드라마 및 영화 전문 리터처로서, 영상의 톤앤매너를 유지하면서도 인물의 매력을 극대화하는 작업을 전문으로 합니다. 트렌디한 감각과 꼼꼼한 작업으로 최상의 결과물을 만들어냅니다.",
     portfolios: [

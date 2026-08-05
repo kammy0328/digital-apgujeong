@@ -16,23 +16,15 @@ export default function CompanyIntro() {
 
         <div className="space-y-32">
           <section className="text-center">
-            <h2 className="text-lg sm:text-2xl md:text-3xl font-serif mb-10 leading-tight break-keep whitespace-nowrap sm:whitespace-normal">"영상 속 당신의 아름다움을 재창조합니다"</h2>
-            <p className="text-neutral-400 font-light leading-loose text-base md:text-lg break-keep mb-6">
+            <h2 className="text-lg sm:text-2xl md:text-3xl font-serif mb-10 leading-tight break-keep whitespace-nowrap sm:whitespace-normal">"아름다움을 재창조합니다"</h2>
+            <p className="text-neutral-400 font-light leading-loose text-base md:text-lg break-keep">
               디지털 압구정은 대한민국 뷰티의 중심,<br className="block md:hidden" /> 압구정의 미학을 디지털 세계로 옮겨왔습니다.
             </p>
-            <div className="text-neutral-400 font-light leading-loose text-lg break-keep">
-              <p className="mb-4">
-                단순한 색상 보정이나 필터 적용을 넘어, 프레임 단위의 정밀한 분석과 리터칭을 통해
-              </p>
-              <p>
-                마치 실제 성형외과에서 시술을 받은 듯한 자연스럽고 완벽한 결과를 제공합니다.
-              </p>
-            </div>
           </section>
 
           <section className="grid md:grid-cols-2 gap-16 items-center">
             <img
-              src="https://placehold.co/800x1000/121212/525252?text=준비+중"
+              src="https://placehold.co/800x1000/0a0a0a/525252?text=준비+중"
               alt="Studio"
               className="w-full aspect-[4/5] object-cover"
             />
