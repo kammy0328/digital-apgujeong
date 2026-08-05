@@ -58,7 +58,7 @@ export default function BeforeAfterSlider({
   return (
     <div 
       ref={containerRef}
-      className="relative w-full aspect-video overflow-hidden cursor-ew-resize select-none border border-neutral-200 rounded-sm touch-none"
+      className="relative w-full aspect-video overflow-hidden cursor-ew-resize select-none border border-neutral-800 rounded-sm touch-none"
       onMouseMove={handleMouseMove}
       onTouchMove={handleTouchMove}
       onMouseDown={handleMouseDown}

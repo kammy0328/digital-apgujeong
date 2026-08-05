@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 const WORK_TYPES = [
   '상업 영상 — 광고',
@@ -57,54 +57,54 @@ export default function Consultation() {
     }
   };
 
-  const inputClass = "w-full border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-900 focus:outline-none focus:border-neutral-500 transition-colors placeholder:text-neutral-300";
+  const inputClass = "w-full border border-neutral-800 bg-black px-4 py-3 text-sm text-white focus:outline-none focus:border-neutral-500 transition-colors placeholder:text-neutral-600";
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="pt-40 pb-32 min-h-screen flex flex-col bg-white"
+      className="pt-40 pb-32 min-h-screen flex flex-col bg-black"
     >
       <div className="max-w-4xl mx-auto px-6 w-full flex-grow">
         <div className="text-center mb-24">
           <h1 className="text-4xl md:text-5xl font-serif mb-6">상담 안내</h1>
-          <p className="text-neutral-400 tracking-[0.2em] text-sm">CONSULTATION</p>
+          <p className="text-neutral-500 tracking-[0.2em] text-sm">CONSULTATION</p>
         </div>
 
         {/* Quote Form */}
         <div>
           <div className="text-center mb-12">
             <h2 className="text-3xl font-serif mb-4">견적 문의</h2>
-            <p className="text-neutral-400 tracking-[0.2em] text-xs">INQUIRY FORM</p>
+            <p className="text-neutral-500 tracking-[0.2em] text-xs">INQUIRY FORM</p>
           </div>
 
           {state === 'success' ? (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-center py-20 bg-neutral-50"
+              className="text-center py-20 bg-neutral-950 border border-neutral-800"
             >
-              <div className="w-12 h-12 bg-neutral-900 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" className="w-6 h-6">
+              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2" className="w-6 h-6">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
               </div>
               <p className="text-xl font-serif mb-3">문의가 접수되었습니다</p>
-              <p className="text-neutral-400 text-sm font-light">빠른 시일 내에 연락드리겠습니다.</p>
+              <p className="text-neutral-500 text-sm font-light">빠른 시일 내에 연락드리겠습니다.</p>
               <button
                 onClick={() => setState('idle')}
-                className="mt-8 text-xs tracking-widest text-neutral-400 hover:text-neutral-900 transition-colors underline underline-offset-4"
+                className="mt-8 text-xs tracking-widest text-neutral-500 hover:text-white transition-colors underline underline-offset-4"
               >
                 새 문의 작성
               </button>
             </motion.div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-0 border border-neutral-200">
+            <form onSubmit={handleSubmit} className="space-y-0 border border-neutral-800">
               <div className="grid md:grid-cols-2">
-                <div className="border-b border-r-0 md:border-r border-neutral-200">
-                  <label className="block px-6 pt-5 pb-1 text-[10px] tracking-[0.2em] text-neutral-400 font-bold">
-                    이름 <span className="text-neutral-900">*</span>
+                <div className="border-b border-r-0 md:border-r border-neutral-800">
+                  <label className="block px-6 pt-5 pb-1 text-[10px] tracking-[0.2em] text-neutral-500 font-bold">
+                    이름 <span className="text-white">*</span>
                   </label>
                   <input
                     type="text"
@@ -112,12 +112,12 @@ export default function Consultation() {
                     value={form.name}
                     onChange={handleChange}
                     placeholder="홍길동"
-                    className="w-full px-6 pb-5 pt-1 text-sm text-neutral-900 bg-white focus:outline-none placeholder:text-neutral-300"
+                    className="w-full px-6 pb-5 pt-1 text-sm text-white bg-black focus:outline-none placeholder:text-neutral-600"
                   />
                 </div>
-                <div className="border-b border-neutral-200">
-                  <label className="block px-6 pt-5 pb-1 text-[10px] tracking-[0.2em] text-neutral-400 font-bold">
-                    연락처 <span className="text-neutral-900">*</span>
+                <div className="border-b border-neutral-800">
+                  <label className="block px-6 pt-5 pb-1 text-[10px] tracking-[0.2em] text-neutral-500 font-bold">
+                    연락처 <span className="text-white">*</span>
                   </label>
                   <input
                     type="tel"
@@ -125,15 +125,15 @@ export default function Consultation() {
                     value={form.phone}
                     onChange={handleChange}
                     placeholder="010-0000-0000"
-                    className="w-full px-6 pb-5 pt-1 text-sm text-neutral-900 bg-white focus:outline-none placeholder:text-neutral-300"
+                    className="w-full px-6 pb-5 pt-1 text-sm text-white bg-black focus:outline-none placeholder:text-neutral-600"
                   />
                 </div>
               </div>
 
               <div className="grid md:grid-cols-2">
-                <div className="border-b border-r-0 md:border-r border-neutral-200">
-                  <label className="block px-6 pt-5 pb-1 text-[10px] tracking-[0.2em] text-neutral-400 font-bold">
-                    이메일 <span className="text-neutral-300 font-normal">(선택)</span>
+                <div className="border-b border-r-0 md:border-r border-neutral-800">
+                  <label className="block px-6 pt-5 pb-1 text-[10px] tracking-[0.2em] text-neutral-500 font-bold">
+                    이메일 <span className="text-neutral-600 font-normal">(선택)</span>
                   </label>
                   <input
                     type="email"
@@ -141,31 +141,31 @@ export default function Consultation() {
                     value={form.email}
                     onChange={handleChange}
                     placeholder="answer@email.com"
-                    className="w-full px-6 pb-5 pt-1 text-sm text-neutral-900 bg-white focus:outline-none placeholder:text-neutral-300"
+                    className="w-full px-6 pb-5 pt-1 text-sm text-white bg-black focus:outline-none placeholder:text-neutral-600"
                   />
                 </div>
-                <div className="border-b border-neutral-200">
-                  <label className="block px-6 pt-5 pb-1 text-[10px] tracking-[0.2em] text-neutral-400 font-bold">
-                    작업 종류 <span className="text-neutral-900">*</span>
+                <div className="border-b border-neutral-800">
+                  <label className="block px-6 pt-5 pb-1 text-[10px] tracking-[0.2em] text-neutral-500 font-bold">
+                    작업 종류 <span className="text-white">*</span>
                   </label>
                   <select
                     name="workType"
                     value={form.workType}
                     onChange={handleChange}
-                    className="w-full px-6 pb-5 pt-1 text-sm text-neutral-900 bg-white focus:outline-none appearance-none cursor-pointer"
+                    className="w-full px-6 pb-5 pt-1 text-sm text-white bg-black focus:outline-none appearance-none cursor-pointer"
                   >
-                    <option value="" disabled>선택해 주세요</option>
+                    <option value="" disabled className="bg-black text-neutral-600">선택해 주세요</option>
                     {WORK_TYPES.map(t => (
-                      <option key={t} value={t}>{t}</option>
+                      <option key={t} value={t} className="bg-black text-white">{t}</option>
                     ))}
                   </select>
                 </div>
               </div>
 
               <div className="grid md:grid-cols-2">
-                <div className="border-b border-r-0 md:border-r border-neutral-200">
-                  <label className="block px-6 pt-5 pb-1 text-[10px] tracking-[0.2em] text-neutral-400 font-bold">
-                    영상 분량 <span className="text-neutral-300 font-normal">(선택)</span>
+                <div className="border-b border-r-0 md:border-r border-neutral-800">
+                  <label className="block px-6 pt-5 pb-1 text-[10px] tracking-[0.2em] text-neutral-500 font-bold">
+                    영상 분량 <span className="text-neutral-600 font-normal">(선택)</span>
                   </label>
                   <input
                     type="text"
@@ -173,12 +173,12 @@ export default function Consultation() {
                     value={form.volume}
                     onChange={handleChange}
                     placeholder="예) 3분 30초 / 약 50컷"
-                    className="w-full px-6 pb-5 pt-1 text-sm text-neutral-900 bg-white focus:outline-none placeholder:text-neutral-300"
+                    className="w-full px-6 pb-5 pt-1 text-sm text-white bg-black focus:outline-none placeholder:text-neutral-600"
                   />
                 </div>
-                <div className="border-b border-neutral-200">
-                  <label className="block px-6 pt-5 pb-1 text-[10px] tracking-[0.2em] text-neutral-400 font-bold">
-                    희망 납기일 <span className="text-neutral-300 font-normal">(선택)</span>
+                <div className="border-b border-neutral-800">
+                  <label className="block px-6 pt-5 pb-1 text-[10px] tracking-[0.2em] text-neutral-500 font-bold">
+                    희망 납기일 <span className="text-neutral-600 font-normal">(선택)</span>
                   </label>
                   <input
                     type="text"
@@ -186,14 +186,14 @@ export default function Consultation() {
                     value={form.deadline}
                     onChange={handleChange}
                     placeholder="예) 2025년 5월 초 / 협의 가능"
-                    className="w-full px-6 pb-5 pt-1 text-sm text-neutral-900 bg-white focus:outline-none placeholder:text-neutral-300"
+                    className="w-full px-6 pb-5 pt-1 text-sm text-white bg-black focus:outline-none placeholder:text-neutral-600"
                   />
                 </div>
               </div>
 
-              <div className="border-b border-neutral-200">
-                <label className="block px-6 pt-5 pb-1 text-[10px] tracking-[0.2em] text-neutral-400 font-bold">
-                  추가 요청사항 <span className="text-neutral-300 font-normal">(선택)</span>
+              <div className="border-b border-neutral-800">
+                <label className="block px-6 pt-5 pb-1 text-[10px] tracking-[0.2em] text-neutral-500 font-bold">
+                  추가 요청사항 <span className="text-neutral-600 font-normal">(선택)</span>
                 </label>
                 <textarea
                   name="message"
@@ -201,22 +201,22 @@ export default function Consultation() {
                   onChange={handleChange}
                   rows={5}
                   placeholder="원하시는 보정 방향, 참고 영상 링크, 기타 요청사항을 자유롭게 작성해 주세요."
-                  className="w-full px-6 pb-5 pt-1 text-sm text-neutral-900 bg-white focus:outline-none placeholder:text-neutral-300 resize-none"
+                  className="w-full px-6 pb-5 pt-1 text-sm text-white bg-black focus:outline-none placeholder:text-neutral-600 resize-none"
                 />
               </div>
 
               {errorMsg && (
-                <p className="px-6 py-3 text-xs text-red-500 bg-red-50">{errorMsg}</p>
+                <p className="px-6 py-3 text-xs text-red-400 bg-red-500/10">{errorMsg}</p>
               )}
 
-              <div className="p-6 flex items-center justify-between bg-neutral-50">
-                <p className="text-[11px] text-neutral-400 font-light">
+              <div className="p-6 flex items-center justify-between bg-neutral-950">
+                <p className="text-[11px] text-neutral-500 font-light">
                   * 표시 항목은 필수 입력입니다
                 </p>
                 <button
                   type="submit"
                   disabled={state === 'loading'}
-                  className="bg-neutral-900 text-white px-10 py-3.5 text-xs tracking-[0.2em] font-medium hover:bg-neutral-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="bg-white text-black px-10 py-3.5 text-xs tracking-[0.2em] font-medium hover:bg-neutral-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {state === 'loading' ? '전송 중...' : '문의 전송'}
                 </button>

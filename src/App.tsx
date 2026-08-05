@@ -9,9 +9,6 @@ import CommercialReviews from './pages/CommercialReviews';
 import CommercialGuidelines from './pages/CommercialGuidelines';
 import Consultation from './pages/Consultation';
 import Careers from './pages/Careers';
-import Event from './pages/Event';
-import WeddingProcedures from './pages/WeddingProcedures';
-import WeddingReviews from './pages/WeddingReviews';
 
 export default function App() {
   return (
@@ -25,11 +22,8 @@ export default function App() {
           <Route path="commercial/procedures" element={<CommercialProcedures />} />
           <Route path="commercial/reviews" element={<CommercialReviews />} />
           <Route path="commercial/guidelines" element={<CommercialGuidelines />} />
-          <Route path="wedding/procedures" element={<WeddingProcedures />} />
-          <Route path="wedding/reviews" element={<WeddingReviews />} />
           <Route path="consultation" element={<Consultation />} />
           <Route path="careers" element={<Careers />} />
-          <Route path="event" element={<Event />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -8,9 +8,15 @@
 
 body {
   font-family: "Noto Sans KR", sans-serif;
-  background-color: #fafafa;
+  background-color: #000000;
+  color-scheme: dark;
 }
 
 h1, h2, h3, h4, h5, h6, .font-serif {
   font-family: "Noto Serif KR", serif;
+}
+
+::selection {
+  background-color: #ffffff;
+  color: #000000;
 }
