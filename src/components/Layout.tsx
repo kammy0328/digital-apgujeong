@@ -34,8 +34,8 @@ export default function Layout() {
     // Update document title and meta description per page
     const pageMeta: { [key: string]: { title: string; description: string } } = {
       '/': {
-        title: '디지털 압구정 | 영상 스킨 리터칭·피부보정 전문 스튜디오',
-        description: '뮤직비디오·광고 영상 스킨 리터칭, 피부보정, 뷰티 리터칭 전문. 티 나지 않는 완벽한 디지털 뷰티 리터칭 포트폴리오를 확인하세요.',
+        title: '포트폴리오 | 디지털 압구정 : DIAP',
+        description: '디지털 압구정(DIAP)의 뮤직비디오·광고 영상 스킨 리터칭·피부보정 포트폴리오. 티 나지 않는 완벽한 디지털 뷰티 리터칭 작업물을 확인하세요.',
       },
       '/about/company': {
         title: '회사 소개 | 디지털 압구정 — 스킨 리터칭·뷰티 리터칭 스튜디오',
@@ -49,21 +49,13 @@ export default function Layout() {
         title: '의료진 소개 | 디지털 압구정',
         description: '디지털 압구정의 전문 스킨 리터칭·뷰티 리터칭 아티스트를 소개합니다. 각 분야별 전문가가 최고의 피부보정 결과물을 만들어 드립니다.',
       },
-      '/commercial/procedures': {
-        title: '상업 영상 스킨 리터칭 안내 | 디지털 압구정',
-        description: '광고, 뮤직비디오, 드라마, 영화 등 상업 영상 스킨 리터칭·피부보정 서비스 안내. 가격표, 작업 프로세스, 납기 일정을 확인하세요.',
-      },
       '/commercial/guidelines': {
-        title: '리터칭 규정 | 디지털 압구정',
+        title: '시술 규정 | 디지털 압구정',
         description: '상업 영상 스킨 리터칭·뷰티 리터칭 서비스 규정, 데이터 전달 방법, 수정 횟수 및 파일 사양을 안내합니다.',
       },
-      '/commercial/reviews': {
-        title: '상업 영상 스킨 리터칭 후기 | 디지털 압구정',
-        description: '디지털 압구정의 상업 영상 스킨 리터칭·피부보정 포트폴리오. 뮤직비디오, 광고 등 실제 뷰티 리터칭 결과물을 확인하세요.',
-      },
       '/consultation': {
-        title: '스킨 리터칭·피부보정 상담 문의 | 디지털 압구정',
-        description: '디지털 압구정 스킨 리터칭·피부보정 상담 문의. 전화, 이메일, 카카오톡으로 편리하게 상담받으세요. 평일 10:00~19:00 운영.',
+        title: '문의 | 디지털 압구정',
+        description: '디지털 압구정 스킨 리터칭·피부보정 문의. 전화, 이메일, 카카오톡으로 편리하게 상담받으세요. 평일 10:00~19:00 운영.',
       },
       '/careers': {
         title: '인재 채용 | 디지털 압구정',
@@ -89,8 +81,6 @@ export default function Layout() {
     let ogUrlEl = document.querySelector('meta[property="og:url"]');
     if (ogUrlEl) (ogUrlEl as HTMLMetaElement).content = `https://digital-apgujeong.com${location.pathname}`;
   }, [location.pathname]);
-
-  const isHome = location.pathname === '/';
 
   const [showTooltip, setShowTooltip] = useState(false);
 
@@ -145,17 +135,20 @@ export default function Layout() {
   return (
     <div className="min-h-screen flex flex-col font-sans text-white bg-black">
       <header
-        className={`fixed top-0 w-full z-50 transition-all duration-300 text-white ${
-          isScrolled || !isHome ? 'bg-black/95 backdrop-blur-md border-b border-neutral-800 py-4' : 'bg-transparent py-6'
+        className={`fixed top-0 w-full z-50 transition-all duration-300 text-white bg-black/95 backdrop-blur-md border-b border-neutral-800 ${
+          isScrolled ? 'py-4' : 'py-6'
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          <Link to="/" className="text-2xl font-serif tracking-widest font-bold">
-            디지털 압구정
+          <Link to="/" className="flex items-baseline gap-2 font-serif tracking-widest font-bold">
+            <span className="text-2xl">디지털 압구정</span>
+            <span className="text-xs font-sans font-light tracking-[0.15em] text-neutral-400">: DIAP</span>
           </Link>
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center space-x-10 text-sm tracking-widest font-medium">
+            <Link to="/" className="hover:opacity-70 transition-opacity py-2">포트폴리오</Link>
+
             <div className="relative group">
               <button
                 onClick={() => toggleDropdown('about')}
@@ -173,24 +166,8 @@ export default function Layout() {
               </div>
             </div>
 
-            <div className="relative group">
-              <button
-                onClick={() => toggleDropdown('commercial')}
-                className="flex items-center space-x-1 hover:opacity-70 transition-opacity py-2"
-              >
-                <span>상업 영상</span>
-                <ChevronDown size={14} />
-              </button>
-              <div className={`absolute top-full left-1/2 -translate-x-1/2 pt-4 transition-all duration-300 ${activeDropdown === 'commercial' ? 'opacity-100 visible' : 'opacity-0 invisible group-hover:opacity-100 group-hover:visible'}`}>
-                <div className="bg-neutral-950 text-white shadow-xl shadow-black/50 border border-neutral-800 py-2 min-w-[160px] flex flex-col text-center">
-                  <Link to="/commercial/procedures" onClick={() => setActiveDropdown(null)} className="px-4 py-3 hover:bg-neutral-900 transition-colors">시술 안내</Link>
-                  <Link to="/commercial/guidelines" onClick={() => setActiveDropdown(null)} className="px-4 py-3 hover:bg-neutral-900 transition-colors">시술 규정</Link>
-                  <Link to="/commercial/reviews" onClick={() => setActiveDropdown(null)} className="px-4 py-3 hover:bg-neutral-900 transition-colors">후기</Link>
-                </div>
-              </div>
-            </div>
-
-            <Link to="/consultation" className="hover:opacity-70 transition-opacity py-2">상담 안내</Link>
+            <Link to="/commercial/guidelines" className="hover:opacity-70 transition-opacity py-2">시술 규정</Link>
+            <Link to="/consultation" className="hover:opacity-70 transition-opacity py-2">문의</Link>
           </nav>
 
           {/* Mobile Menu Toggle */}
@@ -217,6 +194,8 @@ export default function Layout() {
                 <X size={24} />
               </button>
             </div>
+            <Link to="/" className="border-b border-neutral-800 pb-4">포트폴리오</Link>
+
             <div className="flex flex-col space-y-4">
               <div className="text-sm text-neutral-500 tracking-widest mb-2 font-sans">ABOUT</div>
               <Link to="/about/company" className="pl-4 border-l border-neutral-800">회사 소개</Link>
@@ -224,14 +203,8 @@ export default function Layout() {
               <Link to="/about/staff" className="pl-4 border-l border-neutral-800">의료진 소개</Link>
             </div>
 
-            <div className="flex flex-col space-y-4 border-b border-neutral-800 pb-4">
-              <div className="text-sm text-neutral-500 tracking-widest font-sans">상업 영상</div>
-              <Link to="/commercial/procedures" className="pl-4 border-l border-neutral-800">시술 안내</Link>
-              <Link to="/commercial/guidelines" className="pl-4 border-l border-neutral-800">시술 규정</Link>
-              <Link to="/commercial/reviews" className="pl-4 border-l border-neutral-800">후기</Link>
-            </div>
-
-            <Link to="/consultation" className="border-b border-neutral-800 pb-4">상담 안내</Link>
+            <Link to="/commercial/guidelines" className="border-b border-neutral-800 pb-4">시술 규정</Link>
+            <Link to="/consultation" className="border-b border-neutral-800 pb-4">문의</Link>
           </motion.div>
         )}
       </AnimatePresence>

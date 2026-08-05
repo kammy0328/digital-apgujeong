@@ -6,7 +6,7 @@ import { portfolioVideos, categories } from '../data/portfolio';
 
 const titleClass = "text-white font-sans font-medium text-base tracking-widest";
 
-export default function CommercialReviews() {
+export default function Portfolio() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [activeCategory, setActiveCategory] = useState("전체");
 
@@ -33,10 +33,10 @@ export default function CommercialReviews() {
       exit={{ opacity: 0 }}
       className="pt-40 pb-32 bg-black min-h-screen"
     >
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-[1920px] mx-auto px-6 lg:px-16">
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-serif mb-6 break-keep">후기</h1>
-          <p className="text-neutral-500 tracking-[0.2em] text-sm">COMMERCIAL REVIEWS</p>
+          <h1 className="text-4xl md:text-5xl font-serif mb-6 break-keep">포트폴리오</h1>
+          <p className="text-neutral-500 tracking-[0.2em] text-sm">PORTFOLIO</p>
         </div>
 
         {/* Categories */}
@@ -56,7 +56,7 @@ export default function CommercialReviews() {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-12">
           {filteredVideos.map((video, index) => (
             <YouTubeCard
               key={index}

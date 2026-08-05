@@ -17,7 +17,7 @@ export default function DirectorGreeting() {
         <div className="space-y-32">
           <section className="text-center">
             <h2 className="text-2xl md:text-3xl font-serif mb-10 leading-tight break-keep">
-              "평생의 뷰티 주치의가 희망을 채워주는 디지털압구정이<br/>당신의 영상과 함께합니다"
+              "평생의 영상 뷰티 주치의, 디지털압구정"
             </h2>
           </section>
 

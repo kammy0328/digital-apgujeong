@@ -68,8 +68,8 @@ export default function Consultation() {
     >
       <div className="max-w-4xl mx-auto px-6 w-full flex-grow">
         <div className="text-center mb-24">
-          <h1 className="text-4xl md:text-5xl font-serif mb-6">상담 안내</h1>
-          <p className="text-neutral-500 tracking-[0.2em] text-sm">CONSULTATION</p>
+          <h1 className="text-4xl md:text-5xl font-serif mb-6">문의</h1>
+          <p className="text-neutral-500 tracking-[0.2em] text-sm">INQUIRY</p>
         </div>
 
         {/* Quote Form */}
