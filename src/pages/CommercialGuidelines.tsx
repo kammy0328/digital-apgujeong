@@ -50,7 +50,7 @@ export default function CommercialGuidelines() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="pt-40 pb-32 bg-black min-h-screen"
+      className="pt-40 pb-32 bg-ink min-h-screen"
     >
       <div className="max-w-4xl mx-auto px-6">
         <div className="text-center mb-16">
@@ -66,8 +66,8 @@ export default function CommercialGuidelines() {
               onClick={() => setSelectedGenre(genre.id as Genre)}
               className={`px-8 py-3 text-sm tracking-widest transition-all duration-300 border ${
                 selectedGenre === genre.id
-                  ? 'bg-white text-black border-white'
-                  : 'bg-black text-neutral-500 border-neutral-800 hover:border-neutral-500 hover:text-white'
+                  ? 'bg-paper text-ink border-paper'
+                  : 'bg-ink text-neutral-500 border-neutral-800 hover:border-neutral-500 hover:text-paper'
               }`}
             >
               {genre.label}
@@ -87,20 +87,20 @@ export default function CommercialGuidelines() {
             {/* 1. 서비스 구성 및 기준 */}
             <section>
               <div className="flex items-center space-x-3 mb-6">
-                <FileCheck className="w-6 h-6 text-white" />
+                <FileCheck className="w-6 h-6 text-paper" />
                 <h2 className="text-2xl font-serif">1. 서비스 구성 및 기준</h2>
               </div>
               <div className="bg-neutral-950 p-8 border border-neutral-800 space-y-4 text-neutral-400 font-light leading-relaxed break-keep">
-                <p><strong className="font-medium text-white">작업 단위:</strong> {content.unit}</p>
-                <p><strong className="font-medium text-white">기준 분량:</strong> {content.duration}</p>
-                <p><strong className="font-medium text-white">특이 사항:</strong> {content.note}</p>
+                <p><strong className="font-medium text-paper">작업 단위:</strong> {content.unit}</p>
+                <p><strong className="font-medium text-paper">기준 분량:</strong> {content.duration}</p>
+                <p><strong className="font-medium text-paper">특이 사항:</strong> {content.note}</p>
               </div>
             </section>
 
             {/* 2. 데이터 접수 및 검수 규정 */}
             <section>
               <div className="flex items-center space-x-3 mb-6">
-                <FileVideo className="w-6 h-6 text-white" />
+                <FileVideo className="w-6 h-6 text-paper" />
                 <h2 className="text-2xl font-serif">2. 데이터 접수 및 검수 규정</h2>
               </div>
               <div className="bg-neutral-950 p-8 border border-neutral-800 space-y-6 text-neutral-400 font-light leading-relaxed break-keep">
@@ -110,19 +110,19 @@ export default function CommercialGuidelines() {
 
                 <div className="space-y-6 pl-4 border-l-2 border-neutral-700">
                   <div>
-                    <strong className="font-medium text-white block mb-1">전체 편집본 제출 필수</strong>
+                    <strong className="font-medium text-paper block mb-1">전체 편집본 제출 필수</strong>
                     <p>작업 의뢰 시 전체 편집본을 전달해 주셔야 합니다.</p>
                     <p className="text-sm mt-1 text-neutral-500">* 이는 영상 간의 컷 중복 여부를 확인하고, 전체 프로젝트 물량을 정확히 파악하여 합리적인 견적을 제시하기 위함입니다.</p>
                   </div>
 
                   <div>
-                    <strong className="font-medium text-white block mb-1">작업 단위의 정의</strong>
+                    <strong className="font-medium text-paper block mb-1">작업 단위의 정의</strong>
                     <p>여러 편의 영상을 한 편으로 구성하여 작업 범위를 축소 보고하는 경우, 추후 확인 시 해당 분량만큼의 추가 비용이 소급 적용됩니다.</p>
                     <p className="text-sm mt-1 text-neutral-500">* 최종 납품 파일의 개수와 실제 작업 시간을 기준으로 정산하는 것을 원칙으로 합니다.</p>
                   </div>
 
                   <div>
-                    <strong className="font-medium text-white block mb-1">픽쳐락(Picture Lock) 기준</strong>
+                    <strong className="font-medium text-paper block mb-1">픽쳐락(Picture Lock) 기준</strong>
                     <p>모든 리터칭 작업은 컷 편집이 100% 확정된 상태에서 시작됩니다. 데이터 전달 후 편집점이 변경될 경우, 기존 작업 무효화에 따른 재작업 비용이 발생합니다.</p>
                   </div>
                 </div>
@@ -132,11 +132,11 @@ export default function CommercialGuidelines() {
             {/* 3. 작업 일정 및 수정 규정 */}
             <section>
               <div className="flex items-center space-x-3 mb-6">
-                <Clock className="w-6 h-6 text-white" />
+                <Clock className="w-6 h-6 text-paper" />
                 <h2 className="text-2xl font-serif">3. 작업 일정 및 수정 규정</h2>
               </div>
               <div className="bg-neutral-950 p-8 border border-neutral-800 space-y-4 text-neutral-400 font-light leading-relaxed break-keep">
-                <p><strong className="font-medium text-white">무료 수정:</strong> 1차 시안 전달 후 최대 2회까지 가능합니다.</p>
+                <p><strong className="font-medium text-paper">무료 수정:</strong> 1차 시안 전달 후 최대 2회까지 가능합니다.</p>
                 <ul className="list-disc pl-5 space-y-2">
                   <li>수정 요청은 명확한 타임코드와 함께 통합된 피드백으로 전달해 주셔야 합니다.</li>
                   <li>보정 강도의 전면적인 변경이나 이목구비 형태의 재수정 등 작업 범위의 50%를 초과하는 과도한 수정은 추가 비용이 발생할 수 있습니다.</li>
@@ -147,7 +147,7 @@ export default function CommercialGuidelines() {
             {/* 4. 긴급 작업 안내 */}
             <section>
               <div className="flex items-center space-x-3 mb-6">
-                <AlertCircle className="w-6 h-6 text-white" />
+                <AlertCircle className="w-6 h-6 text-paper" />
                 <h2 className="text-2xl font-serif">4. 긴급 작업 안내</h2>
               </div>
               <div className="bg-neutral-950 p-8 border border-neutral-800 space-y-4 text-neutral-400 font-light leading-relaxed break-keep">
@@ -161,7 +161,7 @@ export default function CommercialGuidelines() {
             {/* 5. 보안 및 저작권 */}
             <section>
               <div className="flex items-center space-x-3 mb-6">
-                <ShieldAlert className="w-6 h-6 text-white" />
+                <ShieldAlert className="w-6 h-6 text-paper" />
                 <h2 className="text-2xl font-serif">5. 보안 및 저작권</h2>
               </div>
               <div className="bg-neutral-950 p-8 border border-neutral-800 space-y-4 text-neutral-400 font-light leading-relaxed break-keep">

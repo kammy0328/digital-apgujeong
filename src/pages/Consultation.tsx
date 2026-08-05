@@ -57,14 +57,14 @@ export default function Consultation() {
     }
   };
 
-  const inputClass = "w-full border border-neutral-800 bg-black px-4 py-3 text-sm text-white focus:outline-none focus:border-neutral-500 transition-colors placeholder:text-neutral-600";
+  const inputClass = "w-full border border-neutral-800 bg-ink px-4 py-3 text-sm text-paper focus:outline-none focus:border-neutral-500 transition-colors placeholder:text-neutral-600";
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="pt-40 pb-32 min-h-screen flex flex-col bg-black"
+      className="pt-40 pb-32 min-h-screen flex flex-col bg-ink"
     >
       <div className="max-w-4xl mx-auto px-6 w-full flex-grow">
         <div className="text-center mb-24">
@@ -85,8 +85,8 @@ export default function Consultation() {
               animate={{ opacity: 1, y: 0 }}
               className="text-center py-20 bg-neutral-950 border border-neutral-800"
             >
-              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2" className="w-6 h-6">
+              <div className="w-12 h-12 bg-paper rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#121212" strokeWidth="2" className="w-6 h-6">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
               </div>
@@ -94,7 +94,7 @@ export default function Consultation() {
               <p className="text-neutral-500 text-sm font-light">빠른 시일 내에 연락드리겠습니다.</p>
               <button
                 onClick={() => setState('idle')}
-                className="mt-8 text-xs tracking-widest text-neutral-500 hover:text-white transition-colors underline underline-offset-4"
+                className="mt-8 text-xs tracking-widest text-neutral-500 hover:text-paper transition-colors underline underline-offset-4"
               >
                 새 문의 작성
               </button>
@@ -104,7 +104,7 @@ export default function Consultation() {
               <div className="grid md:grid-cols-2">
                 <div className="border-b border-r-0 md:border-r border-neutral-800">
                   <label className="block px-6 pt-5 pb-1 text-[10px] tracking-[0.2em] text-neutral-500 font-bold">
-                    이름 <span className="text-white">*</span>
+                    이름 <span className="text-paper">*</span>
                   </label>
                   <input
                     type="text"
@@ -112,12 +112,12 @@ export default function Consultation() {
                     value={form.name}
                     onChange={handleChange}
                     placeholder="홍길동"
-                    className="w-full px-6 pb-5 pt-1 text-sm text-white bg-black focus:outline-none placeholder:text-neutral-600"
+                    className="w-full px-6 pb-5 pt-1 text-sm text-paper bg-ink focus:outline-none placeholder:text-neutral-600"
                   />
                 </div>
                 <div className="border-b border-neutral-800">
                   <label className="block px-6 pt-5 pb-1 text-[10px] tracking-[0.2em] text-neutral-500 font-bold">
-                    연락처 <span className="text-white">*</span>
+                    연락처 <span className="text-paper">*</span>
                   </label>
                   <input
                     type="tel"
@@ -125,7 +125,7 @@ export default function Consultation() {
                     value={form.phone}
                     onChange={handleChange}
                     placeholder="010-0000-0000"
-                    className="w-full px-6 pb-5 pt-1 text-sm text-white bg-black focus:outline-none placeholder:text-neutral-600"
+                    className="w-full px-6 pb-5 pt-1 text-sm text-paper bg-ink focus:outline-none placeholder:text-neutral-600"
                   />
                 </div>
               </div>
@@ -141,22 +141,22 @@ export default function Consultation() {
                     value={form.email}
                     onChange={handleChange}
                     placeholder="answer@email.com"
-                    className="w-full px-6 pb-5 pt-1 text-sm text-white bg-black focus:outline-none placeholder:text-neutral-600"
+                    className="w-full px-6 pb-5 pt-1 text-sm text-paper bg-ink focus:outline-none placeholder:text-neutral-600"
                   />
                 </div>
                 <div className="border-b border-neutral-800">
                   <label className="block px-6 pt-5 pb-1 text-[10px] tracking-[0.2em] text-neutral-500 font-bold">
-                    작업 종류 <span className="text-white">*</span>
+                    작업 종류 <span className="text-paper">*</span>
                   </label>
                   <select
                     name="workType"
                     value={form.workType}
                     onChange={handleChange}
-                    className="w-full px-6 pb-5 pt-1 text-sm text-white bg-black focus:outline-none appearance-none cursor-pointer"
+                    className="w-full px-6 pb-5 pt-1 text-sm text-paper bg-ink focus:outline-none appearance-none cursor-pointer"
                   >
-                    <option value="" disabled className="bg-black text-neutral-600">선택해 주세요</option>
+                    <option value="" disabled className="bg-ink text-neutral-600">선택해 주세요</option>
                     {WORK_TYPES.map(t => (
-                      <option key={t} value={t} className="bg-black text-white">{t}</option>
+                      <option key={t} value={t} className="bg-ink text-paper">{t}</option>
                     ))}
                   </select>
                 </div>
@@ -173,7 +173,7 @@ export default function Consultation() {
                     value={form.volume}
                     onChange={handleChange}
                     placeholder="예) 3분 30초 / 약 50컷"
-                    className="w-full px-6 pb-5 pt-1 text-sm text-white bg-black focus:outline-none placeholder:text-neutral-600"
+                    className="w-full px-6 pb-5 pt-1 text-sm text-paper bg-ink focus:outline-none placeholder:text-neutral-600"
                   />
                 </div>
                 <div className="border-b border-neutral-800">
@@ -186,7 +186,7 @@ export default function Consultation() {
                     value={form.deadline}
                     onChange={handleChange}
                     placeholder="예) 2025년 5월 초 / 협의 가능"
-                    className="w-full px-6 pb-5 pt-1 text-sm text-white bg-black focus:outline-none placeholder:text-neutral-600"
+                    className="w-full px-6 pb-5 pt-1 text-sm text-paper bg-ink focus:outline-none placeholder:text-neutral-600"
                   />
                 </div>
               </div>
@@ -201,7 +201,7 @@ export default function Consultation() {
                   onChange={handleChange}
                   rows={5}
                   placeholder="원하시는 보정 방향, 참고 영상 링크, 기타 요청사항을 자유롭게 작성해 주세요."
-                  className="w-full px-6 pb-5 pt-1 text-sm text-white bg-black focus:outline-none placeholder:text-neutral-600 resize-none"
+                  className="w-full px-6 pb-5 pt-1 text-sm text-paper bg-ink focus:outline-none placeholder:text-neutral-600 resize-none"
                 />
               </div>
 
@@ -216,7 +216,7 @@ export default function Consultation() {
                 <button
                   type="submit"
                   disabled={state === 'loading'}
-                  className="bg-white text-black px-10 py-3.5 text-xs tracking-[0.2em] font-medium hover:bg-neutral-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="bg-paper text-ink px-10 py-3.5 text-xs tracking-[0.2em] font-medium hover:bg-neutral-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {state === 'loading' ? '전송 중...' : '문의 전송'}
                 </button>

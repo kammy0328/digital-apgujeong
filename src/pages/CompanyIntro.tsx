@@ -6,7 +6,7 @@ export default function CompanyIntro() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="pt-40 pb-32 bg-black min-h-screen"
+      className="pt-40 pb-32 bg-ink min-h-screen"
     >
       <div className="max-w-4xl mx-auto px-6">
         <div className="text-center mb-24">
@@ -32,7 +32,7 @@ export default function CompanyIntro() {
 
           <section className="grid md:grid-cols-2 gap-16 items-center">
             <img
-              src="https://placehold.co/800x1000/141414/525252?text=준비+중"
+              src="https://placehold.co/800x1000/121212/525252?text=준비+중"
               alt="Studio"
               className="w-full aspect-[4/5] object-cover"
             />
@@ -66,9 +66,9 @@ export default function CompanyIntro() {
             <h3 className="text-sm font-bold tracking-[0.2em] mb-12 text-neutral-500 text-center uppercase">History</h3>
             <div className="max-w-2xl mx-auto">
               <div className="flex gap-8 md:gap-16 items-start">
-                <div className="text-2xl font-serif text-white flex-shrink-0 w-24 md:w-32">2026. 04</div>
+                <div className="text-2xl text-paper flex-shrink-0 w-24 md:w-32">2026. 04</div>
                 <div className="pt-1.5 pb-8 border-l border-neutral-700 pl-8 md:pl-16 relative">
-                  <div className="absolute w-2 h-2 bg-white rounded-full -left-[5px] top-3" />
+                  <div className="absolute w-2 h-2 bg-paper rounded-full -left-[5px] top-3" />
                   <h4 className="text-lg font-medium mb-2">디지털 압구정(DIAP) 설립</h4>
                   <p className="text-neutral-400 font-light text-sm break-keep">
                     압구정 본점 개업 및 하이엔드 영상 뷰티 리터칭 전문 서비스 런칭

@@ -6,7 +6,6 @@ import DirectorGreeting from './pages/DirectorGreeting';
 import StaffIntro from './pages/StaffIntro';
 import CommercialGuidelines from './pages/CommercialGuidelines';
 import Consultation from './pages/Consultation';
-import Careers from './pages/Careers';
 
 export default function App() {
   return (
@@ -19,7 +18,6 @@ export default function App() {
           <Route path="about/staff" element={<StaffIntro />} />
           <Route path="commercial/guidelines" element={<CommercialGuidelines />} />
           <Route path="consultation" element={<Consultation />} />
-          <Route path="careers" element={<Careers />} />
         </Route>
       </Routes>
     </BrowserRouter>

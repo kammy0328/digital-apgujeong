@@ -6,7 +6,7 @@ export default function DirectorGreeting() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="pt-40 pb-32 bg-black min-h-screen"
+      className="pt-40 pb-32 bg-ink min-h-screen"
     >
       <div className="max-w-4xl mx-auto px-6">
         <div className="text-center mb-24">

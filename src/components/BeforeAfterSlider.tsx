@@ -87,13 +87,13 @@ export default function BeforeAfterSlider({
 
       {/* Slider Line */}
       <div 
-        className="absolute top-0 bottom-0 w-0.5 bg-white shadow-[0_0_10px_rgba(0,0,0,0.3)] z-10 transition-opacity duration-300 pointer-events-none"
+        className="absolute top-0 bottom-0 w-0.5 bg-paper shadow-[0_0_10px_rgba(0,0,0,0.3)] z-10 transition-opacity duration-300 pointer-events-none"
         style={{ 
           left: `${sliderPosition}%`,
           opacity: (sliderPosition === 0 || sliderPosition === 100) ? 0 : 1
         }}
       >
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-paper rounded-full shadow-lg flex items-center justify-center">
           <div className="flex gap-0.5">
             <div className="w-0.5 h-3 bg-neutral-400" />
             <div className="w-0.5 h-3 bg-neutral-400" />
@@ -103,13 +103,13 @@ export default function BeforeAfterSlider({
 
       {/* Labels */}
       <div 
-        className="absolute top-4 left-4 bg-black/40 backdrop-blur-sm text-white text-[10px] tracking-widest px-2 py-1 rounded-sm uppercase transition-opacity duration-300 pointer-events-none"
+        className="absolute top-4 left-4 bg-ink/40 backdrop-blur-sm text-paper text-[10px] tracking-widest px-2 py-1 rounded-sm uppercase transition-opacity duration-300 pointer-events-none"
         style={{ opacity: sliderPosition < 40 ? 0 : 1 }}
       >
         {beforeLabel}
       </div>
       <div 
-        className="absolute top-4 right-4 bg-black/40 backdrop-blur-sm text-white text-[10px] tracking-widest px-2 py-1 rounded-sm uppercase transition-opacity duration-300 pointer-events-none"
+        className="absolute top-4 right-4 bg-ink/40 backdrop-blur-sm text-paper text-[10px] tracking-widest px-2 py-1 rounded-sm uppercase transition-opacity duration-300 pointer-events-none"
         style={{ opacity: sliderPosition > 60 ? 0 : 1 }}
       >
         {afterLabel}
