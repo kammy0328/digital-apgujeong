@@ -16,7 +16,7 @@ export default function Layout() {
           : "스튜디오 소개";
     document.title = `${title} — 디지털 압구정 / DIAP`;
     const description =
-      "장면의 본질은 그대로, 완성도는 더 높게. 디지털 압구정은 영상 뷰티 리터칭과 오브젝트 클리닝을 전문으로 하는 포스트 프로덕션 스튜디오입니다.";
+      "디지털 압구정은 영상 뷰티 리터칭과 오브젝트 클리닝을 전문으로 하는 포스트 프로덕션 스튜디오입니다.";
     document
       .querySelector('meta[name="description"]')
       ?.setAttribute("content", description);
@@ -91,24 +91,12 @@ export default function Layout() {
           <NavLink to="/consultation" onClick={() => setOpen(false)}>
             Contact ↗
           </NavLink>
-          <p>영상의 마지막 디테일을 만듭니다.</p>
         </nav>
       )}
       <main id="main-content">
         <Outlet />
       </main>
       <footer className="site-footer">
-        <div className="footer-top">
-          <span className="eyebrow">PROJECT ENQUIRIES</span>
-          <Link to="/consultation" className="footer-title">
-            Let’s work
-            <br />
-            together. <ArrowUpRight />
-          </Link>
-          <a className="email-link" href="mailto:digitalapgujeong@gmail.com">
-            digitalapgujeong@gmail.com <ArrowUpRight size={18} />
-          </a>
-        </div>
         <div className="footer-bottom">
           <Link to="/" className="footer-wordmark">
             diap
@@ -116,9 +104,14 @@ export default function Layout() {
           <span>
             디지털 압구정
             <br />
-            POST-PRODUCTION / SEOUL
+            Beauty & Cleanup
           </span>
-          <a href="tel:01058231350">010.5823.1350</a>
+          <div className="footer-contact">
+            <a href="mailto:digitalapgujeong@gmail.com">
+              digitalapgujeong@gmail.com
+            </a>
+            <a href="tel:01058231350">010.5823.1350</a>
+          </div>
           <span>© {new Date().getFullYear()} DIAP</span>
         </div>
       </footer>

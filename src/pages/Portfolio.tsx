@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 import { ArrowUpRight, Play, X } from "lucide-react";
 import {
   portfolioVideos,
@@ -29,22 +28,10 @@ export default function Portfolio() {
   return (
     <>
       <section className="work-intro page-pad">
-        <div>
-          <span className="eyebrow">DIGITAL APGUJEONG</span>
-          <h1>
-            Post-production.
-            <br />
-            Invisible by design.
-          </h1>
-        </div>
-        <div className="intro-note">
-          <p>
-            Beauty retouching & object cleanup.
-            <br />
-            Film, commercial, music video.
-          </p>
-          <a href="#work">Selected work ↓</a>
-        </div>
+        <h1>
+          Beauty <span>&</span> Cleanup
+        </h1>
+        <p>Film / Commercial / Music video</p>
       </section>
       <section
         id="work"
@@ -74,7 +61,7 @@ export default function Portfolio() {
                 </span>
                 {getVideoPoster(video) && (
                   <img
-                    loading={index === 0 ? "eager" : "lazy"}
+                    loading={index < 3 ? "eager" : "lazy"}
                     src={getVideoPoster(video)}
                     alt=""
                     onError={(event) => {
@@ -96,30 +83,6 @@ export default function Portfolio() {
               </div>
             </button>
           ))}
-        </div>
-      </section>
-      <section className="studio-summary page-pad">
-        <span className="eyebrow">THE FINISHING DETAILS</span>
-        <div>
-          <h2>
-            장면에 집중하고,
-            <br />
-            흔적은 남기지 않습니다.
-          </h2>
-          <p>
-            피부의 질감과 인물의 개성을 살리는 뷰티 리터칭.
-            <br />
-            불필요한 요소를 지우고 장면을 복원하는 오브젝트 클리닝.
-            <br />
-            디지털 압구정은 프레임마다 필요한 디테일을 완성합니다.
-          </p>
-          <Link to="/about/company" className="text-link">
-            About the studio <ArrowUpRight size={16} />
-          </Link>
-        </div>
-        <div className="service-index">
-          <span>01 — Beauty retouching</span>
-          <span>02 — Object cleanup</span>
         </div>
       </section>
       {selected !== null && (

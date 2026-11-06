@@ -49,25 +49,13 @@ export default function Consultation() {
     <div className="contact-page page-pad">
       <div className="contact-heading">
         <div>
-          <span className="eyebrow">PROJECT ENQUIRIES</span>
-          <h1>
-            Contact.
-            <br />
-            디지털 압구정
-          </h1>
+          <h1>Contact</h1>
         </div>
-        <p>
-          작업의 시작은, 가벼운 대화부터.
-          <br />
-          프로젝트의 방향과 일정을 알려주세요.
-          <br />
-          필요한 디테일을 함께 찾아가겠습니다.
-        </p>
       </div>
       <div className="contact-layout">
         <aside className="contact-aside">
           <span className="eyebrow">CONTACT / DIAP</span>
-          <h2>어떤 장면을 만들고 계신가요?</h2>
+          <h2>Beauty & Cleanup</h2>
           <p>
             영상 링크, 작업 분량, 희망 납기일을 함께 보내주시면
             <br />더 구체적인 상담이 가능합니다.
