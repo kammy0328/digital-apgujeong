@@ -6,7 +6,6 @@ import type { Key, ReactNode } from "react";
 const ease = [0.22, 1, 0.36, 1] as const;
 
 interface ServiceContent {
-  index: string;
   title: string;
   kicker: string;
   lead: string;
@@ -23,7 +22,6 @@ const PROCESS = [
 ];
 
 const BEAUTY: ServiceContent = {
-  index: "01",
   title: "Beauty",
   kicker: "영상 뷰티 리터칭",
   lead: "피부의 질감과 인물의 개성은 살리고, 시선을 방해하는 것만 덜어냅니다. 움직임과 조명이 바뀌어도 프레임 단위로 자연스럽게 이어지는 보정을 합니다.",
@@ -44,7 +42,6 @@ const BEAUTY: ServiceContent = {
 };
 
 const CLEANUP: ServiceContent = {
-  index: "02",
   title: "Cleanup",
   kicker: "오브젝트 클리닝",
   lead: "화면 속 불필요한 요소를 지우고, 그 자리를 원래 있던 것처럼 복원합니다. 촬영 현장에서 피할 수 없었던 흔적을 후반에서 정리합니다.",
@@ -82,14 +79,6 @@ function ServicePage({ content }: { content: ServiceContent }) {
   return (
     <div className="service-page page-pad">
       <section className="service-hero">
-        <motion.span
-          className="eyebrow"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.15 }}
-        >
-          {content.index} — {content.kicker}
-        </motion.span>
         <h1 className="reveal-line">
           <motion.span initial={{ y: "105%" }} animate={{ y: 0 }} transition={{ duration: 1.1, ease, delay: 0.1 }}>
             {content.title}

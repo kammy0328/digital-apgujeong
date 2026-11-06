@@ -504,19 +504,15 @@ main {
   padding-bottom: 40px;
 }
 .service-hero {
-  min-height: min(72vh, 720px);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
   padding-bottom: 72px;
   border-bottom: 1px solid var(--line);
 }
 .service-hero h1 {
-  margin: 20px 0 36px;
-  font-size: clamp(64px, 15vw, 240px);
+  margin: 0 0 48px;
+  font-size: clamp(56px, 11vw, 180px);
   font-weight: 500;
   letter-spacing: -0.065em;
-  line-height: 0.92;
+  line-height: 0.95;
 }
 .service-lead p {
   max-width: 640px;
@@ -922,7 +918,6 @@ main {
     font-size: 15px;
   }
   .service-hero {
-    min-height: 58vh;
     padding-bottom: 48px;
   }
   .service-section {
