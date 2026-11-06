@@ -1,230 +1,202 @@
-import { motion } from 'motion/react';
-import React, { useState } from 'react';
-
-const WORK_TYPES = [
-  '상업 영상 — 광고',
-  '상업 영상 — 뮤직비디오',
-  '상업 영상 — 드라마 / 영화',
-  '웨딩 영상',
-  '퍼스널 영상 (유튜브 / 브이로그 등)',
-  '기타',
-];
-
-type FormState = 'idle' | 'loading' | 'success' | 'error';
-
+import { useState, type ChangeEvent, type FormEvent } from "react";
+import { ArrowUpRight, Check } from "lucide-react";
+const initial = {
+  name: "",
+  phone: "",
+  email: "",
+  workType: "",
+  volume: "",
+  deadline: "",
+  message: "",
+};
 export default function Consultation() {
-  const [form, setForm] = useState({
-    name: '',
-    phone: '',
-    email: '',
-    workType: '',
-    volume: '',
-    deadline: '',
-    message: '',
-  });
-  const [state, setState] = useState<FormState>('idle');
-  const [errorMsg, setErrorMsg] = useState('');
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const [form, setForm] = useState(initial);
+  const [state, setState] = useState<"idle" | "loading" | "success" | "error">(
+    "idle",
+  );
+  const [error, setError] = useState("");
+  async function submit(e: FormEvent) {
     e.preventDefault();
-    if (!form.name || !form.phone || !form.workType) {
-      setErrorMsg('이름, 연락처, 작업 종류는 필수 항목입니다.');
-      return;
-    }
-    setState('loading');
-    setErrorMsg('');
+    setState("loading");
+    setError("");
     try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      const data = await res.json();
-      if (res.ok) {
-        setState('success');
-        setForm({ name: '', phone: '', email: '', workType: '', volume: '', deadline: '', message: '' });
-      } else {
-        setErrorMsg(data.error || '오류가 발생했습니다.');
-        setState('error');
-      }
-    } catch {
-      setErrorMsg('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
-      setState('error');
+      const data = await response.json().catch(() => null);
+      if (!response.ok || !data?.success)
+        throw new Error(
+          data?.error ||
+            "문의를 전송하지 못했습니다. 이메일 또는 전화로 연락해 주세요.",
+        );
+      setState("success");
+      setForm(initial);
+    } catch (e) {
+      setState("error");
+      setError(
+        e instanceof Error
+          ? e.message
+          : "전송에 실패했습니다. 이메일로 연락해 주세요.",
+      );
     }
-  };
-
-  const inputClass = "w-full border border-neutral-800 bg-ink px-4 py-3 text-sm text-paper focus:outline-none focus:border-neutral-500 transition-colors placeholder:text-neutral-600";
-
+  }
+  const change = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+  ) => setForm({ ...form, [e.target.name]: e.target.value });
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="pt-40 pb-32 min-h-screen flex flex-col bg-ink"
-    >
-      <div className="max-w-4xl mx-auto px-6 w-full flex-grow">
-        <div className="text-center mb-24">
-          <h1 className="text-4xl md:text-5xl font-serif mb-6">문의</h1>
-          <p className="text-neutral-500 tracking-[0.2em] text-sm">INQUIRY</p>
-        </div>
-
-        {/* Quote Form */}
+    <div className="contact-page page-pad">
+      <div className="contact-heading">
         <div>
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-serif mb-4">견적 문의</h2>
-            <p className="text-neutral-500 tracking-[0.2em] text-xs">INQUIRY FORM</p>
-          </div>
-
-          {state === 'success' ? (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center py-20 bg-neutral-950 border border-neutral-800"
-            >
-              <div className="w-12 h-12 bg-paper rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#121212" strokeWidth="2" className="w-6 h-6">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-              </div>
-              <p className="text-xl font-serif mb-3">문의가 접수되었습니다</p>
-              <p className="text-neutral-500 text-sm font-light">빠른 시일 내에 연락드리겠습니다.</p>
-              <button
-                onClick={() => setState('idle')}
-                className="mt-8 text-xs tracking-widest text-neutral-500 hover:text-paper transition-colors underline underline-offset-4"
-              >
-                새 문의 작성
-              </button>
-            </motion.div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-0 border border-neutral-800">
-              <div className="grid md:grid-cols-2">
-                <div className="border-b border-r-0 md:border-r border-neutral-800">
-                  <label className="block px-6 pt-5 pb-1 text-[10px] tracking-[0.2em] text-neutral-500 font-bold">
-                    이름 <span className="text-paper">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={form.name}
-                    onChange={handleChange}
-                    placeholder="홍길동"
-                    className="w-full px-6 pb-5 pt-1 text-sm text-paper bg-ink focus:outline-none placeholder:text-neutral-600"
-                  />
-                </div>
-                <div className="border-b border-neutral-800">
-                  <label className="block px-6 pt-5 pb-1 text-[10px] tracking-[0.2em] text-neutral-500 font-bold">
-                    연락처 <span className="text-paper">*</span>
-                  </label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={form.phone}
-                    onChange={handleChange}
-                    placeholder="010-0000-0000"
-                    className="w-full px-6 pb-5 pt-1 text-sm text-paper bg-ink focus:outline-none placeholder:text-neutral-600"
-                  />
-                </div>
-              </div>
-
-              <div className="grid md:grid-cols-2">
-                <div className="border-b border-r-0 md:border-r border-neutral-800">
-                  <label className="block px-6 pt-5 pb-1 text-[10px] tracking-[0.2em] text-neutral-500 font-bold">
-                    이메일 <span className="text-neutral-600 font-normal">(선택)</span>
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    placeholder="answer@email.com"
-                    className="w-full px-6 pb-5 pt-1 text-sm text-paper bg-ink focus:outline-none placeholder:text-neutral-600"
-                  />
-                </div>
-                <div className="border-b border-neutral-800">
-                  <label className="block px-6 pt-5 pb-1 text-[10px] tracking-[0.2em] text-neutral-500 font-bold">
-                    작업 종류 <span className="text-paper">*</span>
-                  </label>
-                  <select
-                    name="workType"
-                    value={form.workType}
-                    onChange={handleChange}
-                    className="w-full px-6 pb-5 pt-1 text-sm text-paper bg-ink focus:outline-none appearance-none cursor-pointer"
-                  >
-                    <option value="" disabled className="bg-ink text-neutral-600">선택해 주세요</option>
-                    {WORK_TYPES.map(t => (
-                      <option key={t} value={t} className="bg-ink text-paper">{t}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div className="grid md:grid-cols-2">
-                <div className="border-b border-r-0 md:border-r border-neutral-800">
-                  <label className="block px-6 pt-5 pb-1 text-[10px] tracking-[0.2em] text-neutral-500 font-bold">
-                    영상 분량 <span className="text-neutral-600 font-normal">(선택)</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="volume"
-                    value={form.volume}
-                    onChange={handleChange}
-                    placeholder="예) 3분 30초 / 약 50컷"
-                    className="w-full px-6 pb-5 pt-1 text-sm text-paper bg-ink focus:outline-none placeholder:text-neutral-600"
-                  />
-                </div>
-                <div className="border-b border-neutral-800">
-                  <label className="block px-6 pt-5 pb-1 text-[10px] tracking-[0.2em] text-neutral-500 font-bold">
-                    희망 납기일 <span className="text-neutral-600 font-normal">(선택)</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="deadline"
-                    value={form.deadline}
-                    onChange={handleChange}
-                    placeholder="예) 2025년 5월 초 / 협의 가능"
-                    className="w-full px-6 pb-5 pt-1 text-sm text-paper bg-ink focus:outline-none placeholder:text-neutral-600"
-                  />
-                </div>
-              </div>
-
-              <div className="border-b border-neutral-800">
-                <label className="block px-6 pt-5 pb-1 text-[10px] tracking-[0.2em] text-neutral-500 font-bold">
-                  추가 요청사항 <span className="text-neutral-600 font-normal">(선택)</span>
-                </label>
+          <span className="eyebrow">LET’S MAKE SOMETHING GREAT</span>
+          <h1>
+            Next frame.
+            <br />
+            <em>With us.</em>
+          </h1>
+        </div>
+        <p>
+          작업의 시작은, 가벼운 대화부터.
+          <br />
+          프로젝트의 방향과 일정을 알려주세요.
+          <br />
+          필요한 디테일을 함께 찾아가겠습니다.
+        </p>
+      </div>
+      <div className="contact-layout">
+        <aside className="contact-aside">
+          <span className="eyebrow">CONTACT / DIAP</span>
+          <h2>어떤 장면을 만들고 계신가요?</h2>
+          <p>
+            영상 링크, 작업 분량, 희망 납기일을 함께 보내주시면
+            <br />더 구체적인 상담이 가능합니다.
+          </p>
+          <a href="mailto:digitalapgujeong@gmail.com">
+            digitalapgujeong@gmail.com ↗
+          </a>
+          <a href="tel:01058231350">010.5823.1350 ↗</a>
+          <p>
+            영상 뷰티 리터칭 / 오브젝트 클리닝
+            <br />
+            뮤직비디오 · 광고 · 영화 · 퍼스널 영상
+          </p>
+        </aside>
+        {state === "success" ? (
+          <section className="success-panel" role="status">
+            <Check />
+            <h2>문의가 접수되었습니다.</h2>
+            <p>프로젝트를 확인한 후 연락드리겠습니다.</p>
+            <button onClick={() => setState("idle")}>
+              새 문의 작성 <ArrowUpRight size={17} />
+            </button>
+          </section>
+        ) : (
+          <form
+            className="contact-form"
+            onSubmit={submit}
+            aria-label="프로젝트 문의"
+          >
+            <div className="form-fields">
+              <label>
+                이름 / 회사명 *
+                <input
+                  name="name"
+                  value={form.name}
+                  onChange={change}
+                  required
+                  autoComplete="name"
+                  placeholder="성함 또는 회사명을 알려주세요"
+                />
+              </label>
+              <label>
+                연락처 *
+                <input
+                  name="phone"
+                  type="tel"
+                  value={form.phone}
+                  onChange={change}
+                  required
+                  autoComplete="tel"
+                  placeholder="010-0000-0000"
+                />
+              </label>
+              <label>
+                이메일
+                <input
+                  name="email"
+                  type="email"
+                  value={form.email}
+                  onChange={change}
+                  autoComplete="email"
+                  placeholder="hello@company.com"
+                />
+              </label>
+              <label>
+                작업 종류 *
+                <select
+                  name="workType"
+                  value={form.workType}
+                  onChange={change}
+                  required
+                >
+                  <option value="" disabled>
+                    선택해 주세요
+                  </option>
+                  {[
+                    "영상 뷰티 리터칭",
+                    "오브젝트 클리닝",
+                    "뷰티 리터칭 + 클리닝",
+                    "기타 / 상담 후 결정",
+                  ].map((t) => (
+                    <option key={t}>{t}</option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                작업 분량
+                <input
+                  name="volume"
+                  value={form.volume}
+                  onChange={change}
+                  placeholder="예) 3분 / 약 50컷"
+                />
+              </label>
+              <label>
+                희망 납기일
+                <input
+                  name="deadline"
+                  value={form.deadline}
+                  onChange={change}
+                  placeholder="예) 2주 이내 / 협의 가능"
+                />
+              </label>
+              <label className="full-field">
+                프로젝트 이야기
                 <textarea
                   name="message"
-                  value={form.message}
-                  onChange={handleChange}
                   rows={5}
-                  placeholder="원하시는 보정 방향, 참고 영상 링크, 기타 요청사항을 자유롭게 작성해 주세요."
-                  className="w-full px-6 pb-5 pt-1 text-sm text-paper bg-ink focus:outline-none placeholder:text-neutral-600 resize-none"
+                  value={form.message}
+                  onChange={change}
+                  placeholder="프로젝트 소개, 참고 영상 링크, 원하시는 작업 방향을 자유롭게 남겨주세요."
                 />
-              </div>
-
-              {errorMsg && (
-                <p className="px-6 py-3 text-xs text-red-400 bg-red-500/10">{errorMsg}</p>
-              )}
-
-              <div className="p-6 flex items-center justify-between bg-neutral-950">
-                <p className="text-[11px] text-neutral-500 font-light">
-                  * 표시 항목은 필수 입력입니다
-                </p>
-                <button
-                  type="submit"
-                  disabled={state === 'loading'}
-                  className="bg-paper text-ink px-10 py-3.5 text-xs tracking-[0.2em] font-medium hover:bg-neutral-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {state === 'loading' ? '전송 중...' : '문의 전송'}
-                </button>
-              </div>
-            </form>
-          )}
-        </div>
+              </label>
+            </div>
+            {error && (
+              <p className="form-error" role="alert">
+                {error}
+              </p>
+            )}
+            <div className="submit-row">
+              <p>* 필수 입력 항목입니다.</p>
+              <button disabled={state === "loading"} type="submit">
+                {state === "loading" ? "전송 중…" : "프로젝트 문의 보내기"}{" "}
+                <ArrowUpRight size={17} />
+              </button>
+            </div>
+          </form>
+        )}
       </div>
-    </motion.div>
+    </div>
   );
 }

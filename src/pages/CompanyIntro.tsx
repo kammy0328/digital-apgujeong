@@ -1,76 +1,66 @@
-import { motion } from 'motion/react';
-
+import { Link } from "react-router-dom";
+import { ArrowUpRight } from "lucide-react";
 export default function CompanyIntro() {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="pt-40 pb-32 bg-ink min-h-screen"
-    >
-      <div className="max-w-4xl mx-auto px-6">
-        <div className="text-center mb-24">
-          <h1 className="text-4xl md:text-5xl font-serif mb-6">회사 소개</h1>
-          <p className="text-neutral-500 tracking-[0.2em] text-sm">ABOUT DIGITAL APGUJEONG DIAP</p>
-        </div>
-
-        <div className="space-y-32">
-          <section className="text-center">
-            <h2 className="text-lg sm:text-2xl md:text-3xl font-serif mb-10 leading-tight break-keep whitespace-nowrap sm:whitespace-normal">"아름다움을 재창조합니다"</h2>
-            <p className="text-neutral-400 font-light leading-loose text-base md:text-lg break-keep">
-              디지털 압구정은 대한민국 뷰티의 중심,<br className="block md:hidden" /> 압구정의 미학을 디지털 세계로 옮겨왔습니다.
-            </p>
-          </section>
-
-          <section className="grid md:grid-cols-2 gap-16 items-center">
-            <img
-              src="https://placehold.co/800x1000/0a0a0a/525252?text=준비+중"
-              alt="Studio"
-              className="w-full aspect-[4/5] object-cover"
-            />
-            <div>
-              <div className="mb-16">
-                <h3 className="text-sm font-bold tracking-[0.2em] mb-4 text-neutral-500">PHILOSOPHY</h3>
-                <h4 className="text-xl md:text-2xl font-serif mb-6 break-keep">티 나지 않는 완벽함</h4>
-                <div className="text-neutral-400 font-light leading-relaxed break-keep">
-                  <p className="mb-4">우리의 철학은 '티 나지 않는 완벽함'입니다.</p>
-                  <p>
-                    과도한 보정으로 본연의 매력을 잃는 것이 아니라, 단점을 섬세하게 커버하고 장점을 극대화하여 가장 나다운 아름다움을 영상 속에 담아냅니다.
-                  </p>
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-sm font-bold tracking-[0.2em] mb-4 text-neutral-500">TECHNOLOGY</h3>
-                <h4 className="text-xl md:text-2xl font-serif mb-6 break-keep">하이엔드 시술 도구 및 작업 공정</h4>
-                <p className="text-neutral-400 font-light leading-relaxed mb-4 break-keep">
-                  수년간 숙련된 전문 리터처의 수작업이 결합된 독자적인 작업 공정을 구축했습니다.
-                  움직임이 많은 영상에서도 흔들림 없는 완벽한 보정 퀄리티를 유지합니다.
-                </p>
-                <p className="text-neutral-400 font-light leading-relaxed break-keep">
-                  특히 수백만원을 호가하는 고사양 하이엔드 합성 소프트웨어인 <strong className="text-neutral-200">Nuke</strong>를 비롯하여, <strong className="text-neutral-200">After Effects</strong>, <strong className="text-neutral-200">DaVinci Resolve</strong> 등 세계적인 영화 및 광고 산업에서 사용되는 최고급 툴만을 시술 도구로 채택하여 압도적인 결과물을 완성합니다.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <section className="pt-16 border-t border-neutral-800">
-            <h3 className="text-sm font-bold tracking-[0.2em] mb-12 text-neutral-500 text-center uppercase">History</h3>
-            <div className="max-w-2xl mx-auto">
-              <div className="flex gap-8 md:gap-16 items-start">
-                <div className="text-2xl text-paper flex-shrink-0 w-24 md:w-32">2026. 04</div>
-                <div className="pt-1.5 pb-8 border-l border-neutral-700 pl-8 md:pl-16 relative">
-                  <div className="absolute w-2 h-2 bg-paper rounded-full -left-[5px] top-3" />
-                  <h4 className="text-lg font-medium mb-2">디지털 압구정(DIAP) 설립</h4>
-                  <p className="text-neutral-400 font-light text-sm break-keep">
-                    압구정 본점 개업 및 하이엔드 영상 뷰티 리터칭 전문 서비스 런칭
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
+    <div className="studio-page page-pad">
+      <span className="eyebrow">THE STUDIO / DIGITAL APGUJEONG</span>
+      <h1>
+        We refine.
+        <br />
+        <em>You shine.</em>
+      </h1>
+      <div className="studio-description">
+        <span className="studio-symbol">✳︎</span>
+        <div>
+          <h2>
+            보이지 않는 디테일이
+            <br />
+            장면의 차이를 만듭니다.
+          </h2>
+          <p>
+            디지털 압구정은 영상 뷰티 리터칭과 오브젝트 클리닝을 전문으로 하는
+            포스트 프로덕션 스튜디오입니다. 뮤직비디오, 광고, 다양한 영상 속
+            인물과 공간을 섬세하게 다듬습니다.
+          </p>
+          <p>
+            우리가 추구하는 것은 자연스러운 완성도입니다. 피부의 질감, 인물의
+            개성, 장면의 분위기를 존중하며 크리에이터가 의도한 이미지에 한 걸음
+            더 가까이 다가갑니다.
+          </p>
         </div>
       </div>
-    </motion.div>
+      <div className="studio-values">
+        {[
+          [
+            "01",
+            "Respect the original.",
+            "본연의 아름다움",
+            "인물의 개성과 장면의 의도를 이해하는 것에서 시작합니다.",
+          ],
+          [
+            "02",
+            "Obsess over details.",
+            "프레임마다 섬세하게",
+            "움직임과 조명의 흐름을 따라 디테일을 연결합니다.",
+          ],
+          [
+            "03",
+            "Create together.",
+            "같은 방향으로",
+            "레퍼런스부터 최종 결과물까지, 필요한 대화를 함께합니다.",
+          ],
+        ].map(([n, title, ko, desc]) => (
+          <article key={n}>
+            <span className="eyebrow">/{n}</span>
+            <h3>{title}</h3>
+            <h4>{ko}</h4>
+            <p>{desc}</p>
+          </article>
+        ))}
+      </div>
+      <Link to="/consultation" className="studio-cta">
+        다음 프로젝트를 이야기해 주세요. <ArrowUpRight />
+      </Link>
+    </div>
   );
 }

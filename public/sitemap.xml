@@ -16,28 +16,14 @@
     <lastmod>2026-08-05</lastmod>
   </url>
 
-  <url>
-    <loc>https://digital-apgujeong.vercel.app/about/director</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-    <lastmod>2026-08-05</lastmod>
-  </url>
-
-  <url>
+<url>
     <loc>https://digital-apgujeong.vercel.app/about/staff</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <lastmod>2026-08-05</lastmod>
   </url>
 
-  <url>
-    <loc>https://digital-apgujeong.vercel.app/commercial/guidelines</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2026-08-05</lastmod>
-  </url>
-
-  <url>
+<url>
     <loc>https://digital-apgujeong.vercel.app/consultation</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
