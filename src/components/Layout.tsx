@@ -4,6 +4,7 @@ import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import { Menu, X } from "lucide-react";
 import Logo from "./Logo";
 import WebGLBackground from "./WebGLBackground";
+import { useLang, type L, type Lang } from "../i18n";
 
 const NAV = [
   { to: "/", label: "work" },
@@ -12,28 +13,69 @@ const NAV = [
   { to: "/contact", label: "contact" },
 ];
 
-const META: Record<string, { title: string; description: string }> = {
+const META: Record<string, { title: L; description: L }> = {
   "/": {
-    title: "work — 디지털 압구정 / diap",
-    description:
-      "디지털 압구정(diap)의 영상 뷰티 리터칭·오브젝트 클리닝 포트폴리오. 뮤직비디오, 광고, 영화 작업을 확인하세요.",
+    title: { en: "work — diap / Digital Apgujeong", ko: "work — 디지털 압구정 / diap" },
+    description: {
+      en: "Portfolio of diap (Digital Apgujeong): beauty retouching and object cleanup for music videos, commercials and film.",
+      ko: "디지털 압구정(diap)의 영상 뷰티 리터칭·오브젝트 클리닝 포트폴리오. 뮤직비디오, 광고, 영화 작업을 확인하세요.",
+    },
   },
   "/beauty": {
-    title: "beauty — 영상 뷰티 리터칭 | 디지털 압구정",
-    description:
-      "피부 질감은 살리고 시선을 방해하는 요소만 덜어내는 영상 뷰티 리터칭. 프레임 단위로 자연스럽게 이어지는 보정.",
+    title: { en: "beauty — Video beauty retouching | diap", ko: "beauty — 영상 뷰티 리터칭 | 디지털 압구정" },
+    description: {
+      en: "Video beauty retouching that keeps skin texture and personality, removing only what distracts. Natural, frame-accurate work.",
+      ko: "피부 질감은 살리고 시선을 방해하는 요소만 덜어내는 영상 뷰티 리터칭. 프레임 단위로 자연스럽게 이어지는 보정.",
+    },
   },
   "/cleanup": {
-    title: "cleanup — 오브젝트 클리닝 | 디지털 압구정",
-    description:
-      "장비, 로고, 반사, 배경 잡물 등 화면 속 불필요한 요소를 지우고 원래 있던 것처럼 복원하는 오브젝트 클리닝.",
+    title: { en: "cleanup — Object cleanup | diap", ko: "cleanup — 오브젝트 클리닝 | 디지털 압구정" },
+    description: {
+      en: "Object cleanup for video: rigs, logos, reflections and background clutter removed and restored as if never there.",
+      ko: "장비, 로고, 반사, 배경 잡물 등 화면 속 불필요한 요소를 지우고 원래 있던 것처럼 복원하는 오브젝트 클리닝.",
+    },
   },
   "/contact": {
-    title: "contact — 프로젝트 문의 | 디지털 압구정",
-    description:
-      "디지털 압구정 프로젝트 문의. 영상 링크, 분량, 희망 납기일을 보내주시면 빠르게 안내드립니다.",
+    title: { en: "contact — Project inquiry | diap", ko: "contact — 프로젝트 문의 | 디지털 압구정" },
+    description: {
+      en: "Project inquiries for diap. Send a video link, length and deadline and we will get back to you quickly.",
+      ko: "디지털 압구정 프로젝트 문의. 영상 링크, 분량, 희망 납기일을 보내주시면 빠르게 안내드립니다.",
+    },
   },
 };
+
+const UI = {
+  home: { en: "diap home", ko: "디지털 압구정 홈" } as L,
+  mainMenu: { en: "Main menu", ko: "주 메뉴" } as L,
+  mobileMenu: { en: "Mobile menu", ko: "모바일 메뉴" } as L,
+  openMenu: { en: "Open menu", ko: "메뉴 열기" } as L,
+  closeMenu: { en: "Close menu", ko: "메뉴 닫기" } as L,
+  studioName: { en: "Digital Apgujeong", ko: "디지털 압구정" } as L,
+  switchLang: { en: "Switch language", ko: "언어 전환" } as L,
+};
+
+function LangToggle() {
+  const { lang, setLang, t } = useLang();
+  const options: { value: Lang; label: string }[] = [
+    { value: "en", label: "EN" },
+    { value: "ko", label: "KR" },
+  ];
+  return (
+    <div className="lang-toggle" role="group" aria-label={t(UI.switchLang)}>
+      {options.map((o) => (
+        <button
+          key={o.value}
+          type="button"
+          className={lang === o.value ? "is-active" : ""}
+          aria-pressed={lang === o.value}
+          onClick={() => setLang(o.value)}
+        >
+          {o.label}
+        </button>
+      ))}
+    </div>
+  );
+}
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -42,19 +84,22 @@ export default function Layout() {
   const [scrolled, setScrolled] = useState(false);
   const { pathname } = useLocation();
   const outlet = useOutlet();
+  const { t, lang } = useLang();
   const glassRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setOpen(false);
     const meta = META[pathname] ?? META["/"];
-    document.title = meta.title;
-    document.querySelector('meta[name="description"]')?.setAttribute("content", meta.description);
-    document.querySelector('meta[property="og:title"]')?.setAttribute("content", meta.title);
-    document.querySelector('meta[property="og:description"]')?.setAttribute("content", meta.description);
+    const title = meta.title[lang];
+    const description = meta.description[lang];
+    document.title = title;
+    document.querySelector('meta[name="description"]')?.setAttribute("content", description);
+    document.querySelector('meta[property="og:title"]')?.setAttribute("content", title);
+    document.querySelector('meta[property="og:description"]')?.setAttribute("content", description);
     document
       .querySelector('meta[property="og:url"]')
       ?.setAttribute("content", `https://digital-apgujeong.vercel.app${pathname}`);
-  }, [pathname]);
+  }, [pathname, lang]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -98,7 +143,7 @@ export default function Layout() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease }}
           >
-            <Link to="/" className="brand" aria-label="디지털 압구정 홈">
+            <Link to="/" className="brand" aria-label={t(UI.home)}>
               <Logo className="brand-logo" />
               <span className="brand-caption">
                 digital
@@ -106,7 +151,8 @@ export default function Layout() {
                 apgujeong
               </span>
             </Link>
-            <nav className="desktop-nav" aria-label="주 메뉴">
+            <div className="header-right">
+            <nav className="desktop-nav" aria-label={t(UI.mainMenu)}>
               {NAV.map((item) => (
                 <NavLink key={item.to} to={item.to} end={item.to === "/"}>
                   {({ isActive }) => (
@@ -124,15 +170,17 @@ export default function Layout() {
                 </NavLink>
               ))}
             </nav>
+            <LangToggle />
             <button
               className="menu-toggle"
-              aria-label={open ? "메뉴 닫기" : "메뉴 열기"}
+              aria-label={open ? t(UI.closeMenu) : t(UI.openMenu)}
               aria-expanded={open}
               aria-controls="mobile-navigation"
               onClick={() => setOpen(!open)}
             >
               {open ? <X size={22} /> : <Menu size={22} />}
             </button>
+            </div>
           </motion.div>
         </header>
 
@@ -141,7 +189,7 @@ export default function Layout() {
             <motion.nav
               id="mobile-navigation"
               className="mobile-nav"
-              aria-label="모바일 메뉴"
+              aria-label={t(UI.mobileMenu)}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -193,7 +241,7 @@ export default function Layout() {
             <div className="footer-col">
               <span className="eyebrow">studio</span>
               <p>
-                디지털 압구정
+                {t(UI.studioName)}
                 <br />
                 beauty & cleanup
               </p>

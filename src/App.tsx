@@ -3,9 +3,11 @@ import Layout from "./components/Layout";
 import Portfolio from "./pages/Portfolio";
 import { Beauty, Cleanup } from "./pages/Services";
 import Consultation from "./pages/Consultation";
+import { LangProvider } from "./i18n";
 
 export default function App() {
   return (
+    <LangProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
@@ -19,5 +21,6 @@ export default function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+    </LangProvider>
   );
 }

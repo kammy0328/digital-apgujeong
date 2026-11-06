@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { X } from "lucide-react";
+import { useLang } from "../i18n";
 import { portfolioVideos, getVideoEmbedUrl, getVideoPoster } from "../data/portfolio";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function Portfolio() {
+  const { lang } = useLang();
   const [selected, setSelected] = useState<number | null>(null);
   const closeButton = useRef<HTMLButtonElement>(null);
   const trigger = useRef<HTMLElement | null>(null);
@@ -42,7 +44,7 @@ export default function Portfolio() {
         </h1>
       </section>
 
-      <section className="work-grid" aria-label="포트폴리오">
+      <section className="work-grid" aria-label={lang === "ko" ? "포트폴리오" : "Portfolio"}>
         {portfolioVideos.map((item, index) => {
           const poster = getVideoPoster(item);
           return (
@@ -53,7 +55,7 @@ export default function Portfolio() {
                 trigger.current = event.currentTarget;
                 setSelected(index);
               }}
-              aria-label={`${item.title} 영상 재생`}
+              aria-label={lang === "ko" ? `${item.title} 영상 재생` : `Play ${item.title}`}
               initial={{ opacity: 0, y: 36, scale: 0.98 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true, margin: "-40px" }}
@@ -126,7 +128,7 @@ export default function Portfolio() {
             >
               <div className="video-top">
                 <span>{video.title}</span>
-                <button ref={closeButton} onClick={() => setSelected(null)} aria-label="영상 닫기">
+                <button ref={closeButton} onClick={() => setSelected(null)} aria-label={lang === "ko" ? "영상 닫기" : "Close video"}>
                   <X size={20} />
                 </button>
               </div>
