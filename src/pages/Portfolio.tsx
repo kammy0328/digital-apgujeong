@@ -74,7 +74,6 @@ export default function Portfolio() {
                   />
                 )}
                 <span className="work-overlay" aria-hidden="true">
-                  <span className="work-index">{String(index + 1).padStart(2, "0")}</span>
                   <span className="work-title">
                     {item.title.split(" ").map((word, i) => (
                       <span className="word" key={i}>

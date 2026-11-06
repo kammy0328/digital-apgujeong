@@ -327,14 +327,6 @@ main {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition:
-    transform 1.1s var(--ease),
-    filter 0.8s var(--ease);
-}
-.work-card:hover img,
-.work-card:focus-visible img {
-  transform: scale(1.06);
-  filter: brightness(0.68) saturate(1.05);
 }
 .image-fallback {
   position: absolute;
@@ -356,9 +348,9 @@ main {
   padding: clamp(14px, 1.4vw, 22px);
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.72) 0%,
-    rgba(0, 0, 0, 0.22) 45%,
-    transparent 75%
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.38) 38%,
+    transparent 68%
   );
   opacity: 0;
   transition: opacity 0.6s var(--ease);
@@ -366,13 +358,6 @@ main {
 .work-card:hover .work-overlay,
 .work-card:focus-visible .work-overlay {
   opacity: 1;
-}
-.work-index {
-  font-size: 10px;
-  letter-spacing: 0.16em;
-  color: #cfcfcc;
-  transform: translateY(8px);
-  transition: transform 0.7s var(--ease);
 }
 .work-title {
   display: flex;
@@ -396,9 +381,7 @@ main {
   transition-delay: calc(var(--i) * 45ms);
 }
 .work-card:hover .word > span,
-.work-card:focus-visible .word > span,
-.work-card:hover .work-index,
-.work-card:focus-visible .work-index {
+.work-card:focus-visible .word > span {
   transform: translateY(0);
 }
 
@@ -988,8 +971,7 @@ main {
       transparent 55%
     );
   }
-  .work-title .word > span,
-  .work-index {
+  .work-title .word > span {
     transform: none;
   }
   .glass-card:hover {
