@@ -1,5 +1,8 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { ArrowUpRight, Check } from "lucide-react";
+import { motion } from "motion/react";
+
+const ease = [0.22, 1, 0.36, 1] as const;
 const initial = {
   name: "",
   phone: "",
@@ -48,11 +51,18 @@ export default function Consultation() {
   return (
     <div className="contact-page page-pad">
       <div className="contact-heading">
-        <div>
-          <h1>Contact</h1>
-        </div>
+        <h1 className="reveal-line">
+          <motion.span initial={{ y: "105%" }} animate={{ y: 0 }} transition={{ duration: 1.1, ease, delay: 0.1 }}>
+            Contact
+          </motion.span>
+        </h1>
       </div>
-      <div className="contact-layout">
+      <motion.div
+        className="contact-layout"
+        initial={{ opacity: 0, y: 32 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9, ease, delay: 0.3 }}
+      >
         <aside className="contact-aside">
           <span className="eyebrow">CONTACT / DIAP</span>
           <h2>Beauty & Cleanup</h2>
@@ -63,7 +73,7 @@ export default function Consultation() {
           <a href="mailto:digitalapgujeong@gmail.com">
             digitalapgujeong@gmail.com ↗
           </a>
-          <a href="tel:01058231350">010.5823.1350 ↗</a>
+          <a href="tel:01028920328">010.2892.0328 ↗</a>
           <p>
             영상 뷰티 리터칭 / 오브젝트 클리닝
             <br />
@@ -184,7 +194,7 @@ export default function Consultation() {
             </div>
           </form>
         )}
-      </div>
+      </motion.div>
     </div>
   );
 }

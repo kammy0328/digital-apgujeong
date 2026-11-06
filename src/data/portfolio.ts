@@ -1,7 +1,6 @@
 export interface PortfolioVideo {
   id: string;
   title: string;
-  category: "Film" | "Commercial" | "Music video";
   youtubeId?: string;
   /** Full Vimeo link, including the privacy hash for unlisted videos. */
   vimeoUrl?: string;
@@ -15,43 +14,36 @@ export const portfolioVideos: PortfolioVideo[] = [
     id: "beomgyu",
     youtubeId: "3y743h28quI",
     title: "TXT 범규 - I Love You",
-    category: "Music video",
   },
   {
     id: "blackpink",
     youtubeId: "CgCVZdcKcqY",
     title: "BLACKPINK - 뛰어",
-    category: "Music video",
   },
   {
     id: "xiaoting",
     youtubeId: "61mQuZDp450",
     title: "Kep1er 샤오팅 - LEGEND",
-    category: "Music video",
   },
   {
     id: "memi",
     youtubeId: "i_-pZiZJ7MQ",
     title: "MEMI - BADidea",
-    category: "Music video",
   },
   {
     id: "matthew",
     youtubeId: "nZS9J20OWog",
     title: "ZEROBASEONE 석매튜 - Love Ain't Easy",
-    category: "Music video",
   },
   {
     id: "hanbin",
     youtubeId: "AkP6v3sMyh8",
     title: "ZEROBASEONE 성한빈 - Pretender",
-    category: "Music video",
   },
   {
     id: "keyveatz",
     youtubeId: "rt7fIlko0CM",
     title: "Keyveatz(키비츠) - A1ㄱ",
-    category: "Music video",
   },
 ];
 

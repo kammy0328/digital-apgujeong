@@ -1,15 +1,15 @@
-import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Play, X } from "lucide-react";
-import {
-  portfolioVideos,
-  getVideoEmbedUrl,
-  getVideoPoster,
-} from "../data/portfolio";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import { X } from "lucide-react";
+import { portfolioVideos, getVideoEmbedUrl, getVideoPoster } from "../data/portfolio";
+
+const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function Portfolio() {
   const [selected, setSelected] = useState<number | null>(null);
   const closeButton = useRef<HTMLButtonElement>(null);
   const trigger = useRef<HTMLElement | null>(null);
+
   useEffect(() => {
     if (selected === null) return;
     const previous = document.body.style.overflow;
@@ -25,109 +25,122 @@ export default function Portfolio() {
       trigger.current?.focus();
     };
   }, [selected]);
+
+  const video = selected !== null ? portfolioVideos[selected] : null;
+
   return (
     <>
       <section className="work-intro page-pad">
-        <h1>
-          Beauty <span>&</span> Cleanup
+        <h1 className="reveal-line">
+          <motion.span
+            initial={{ y: "105%" }}
+            animate={{ y: 0 }}
+            transition={{ duration: 1, ease, delay: 0.1 }}
+          >
+            Beauty <em>&</em> Cleanup
+          </motion.span>
         </h1>
-        <p>Film / Commercial / Music video</p>
       </section>
-      <section
-        id="work"
-        className="work-section page-pad"
-        aria-label="포트폴리오"
-      >
-        <div className="section-bar">
-          <h2>Selected work</h2>
-          <span>
-            {String(portfolioVideos.length).padStart(2, "0")} PROJECTS
-          </span>
-        </div>
-        <div className="work-grid">
-          {portfolioVideos.map((video, index) => (
-            <button
-              key={video.id}
+
+      <section className="work-grid" aria-label="포트폴리오">
+        {portfolioVideos.map((item, index) => {
+          const poster = getVideoPoster(item);
+          return (
+            <motion.button
+              key={item.id}
               className="work-card"
               onClick={(event) => {
                 trigger.current = event.currentTarget;
                 setSelected(index);
               }}
-              aria-label={`${video.title} 영상 재생`}
+              aria-label={`${item.title} 영상 재생`}
+              initial={{ opacity: 0, y: 36, scale: 0.98 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.9, ease, delay: (index % 4) * 0.07 }}
             >
-              <div className="work-image">
+              <span className="work-image">
                 <span className="image-fallback" aria-hidden="true">
-                  {video.title.split(" - ")[0]}
+                  {item.title.split(" - ")[0]}
                 </span>
-                {getVideoPoster(video) && (
+                {poster && (
                   <img
-                    loading={index < 3 ? "eager" : "lazy"}
-                    src={getVideoPoster(video)}
+                    loading={index < 4 ? "eager" : "lazy"}
+                    src={poster}
                     alt=""
                     onError={(event) => {
                       event.currentTarget.style.opacity = "0";
                     }}
                   />
                 )}
-                <span className="work-play">
-                  <Play size={18} fill="currentColor" />
+                <span className="work-overlay" aria-hidden="true">
+                  <span className="work-index">{String(index + 1).padStart(2, "0")}</span>
+                  <span className="work-title">
+                    {item.title.split(" ").map((word, i) => (
+                      <span className="word" key={i}>
+                        <span style={{ "--i": i } as CSSProperties}>{word}</span>
+                      </span>
+                    ))}
+                  </span>
                 </span>
-                <span className="frame-index">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-              </div>
-              <div className="work-info">
-                <h3>{video.title}</h3>
-                <span>{video.category}</span>
-                <ArrowUpRight size={16} />
-              </div>
-            </button>
-          ))}
-        </div>
+              </span>
+            </motion.button>
+          );
+        })}
       </section>
-      {selected !== null && (
-        <div className="video-overlay" onClick={() => setSelected(null)}>
-          <div
-            className="video-dialog"
-            role="dialog"
-            aria-modal="true"
-            aria-label={portfolioVideos[selected].title}
-            onClick={(event) => event.stopPropagation()}
-            onKeyDown={(event) => {
-              if (event.key !== "Tab") return;
-              const nodes = Array.from(
-                event.currentTarget.querySelectorAll("button, iframe"),
-              ) as HTMLElement[];
-              const first = nodes[0],
-                last = nodes[nodes.length - 1];
-              if (event.shiftKey && document.activeElement === first) {
-                event.preventDefault();
-                last.focus();
-              } else if (!event.shiftKey && document.activeElement === last) {
-                event.preventDefault();
-                first.focus();
-              }
-            }}
+
+      <AnimatePresence>
+        {video && (
+          <motion.div
+            className="video-overlay"
+            onClick={() => setSelected(null)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
           >
-            <div className="video-top">
-              <span>{portfolioVideos[selected].title}</span>
-              <button
-                ref={closeButton}
-                onClick={() => setSelected(null)}
-                aria-label="영상 닫기"
-              >
-                <X />
-              </button>
-            </div>
-            <iframe
-              src={getVideoEmbedUrl(portfolioVideos[selected])}
-              title={portfolioVideos[selected].title}
-              allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
-        </div>
-      )}
+            <motion.div
+              className="video-dialog"
+              role="dialog"
+              aria-modal="true"
+              aria-label={video.title}
+              onClick={(event) => event.stopPropagation()}
+              initial={{ opacity: 0, y: 24, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 12, scale: 0.98 }}
+              transition={{ duration: 0.45, ease }}
+              onKeyDown={(event) => {
+                if (event.key !== "Tab") return;
+                const nodes = Array.from(
+                  event.currentTarget.querySelectorAll("button, iframe"),
+                ) as HTMLElement[];
+                const first = nodes[0],
+                  last = nodes[nodes.length - 1];
+                if (event.shiftKey && document.activeElement === first) {
+                  event.preventDefault();
+                  last.focus();
+                } else if (!event.shiftKey && document.activeElement === last) {
+                  event.preventDefault();
+                  first.focus();
+                }
+              }}
+            >
+              <div className="video-top">
+                <span>{video.title}</span>
+                <button ref={closeButton} onClick={() => setSelected(null)} aria-label="영상 닫기">
+                  <X size={20} />
+                </button>
+              </div>
+              <iframe
+                src={getVideoEmbedUrl(video)}
+                title={video.title}
+                allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                allowFullScreen
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

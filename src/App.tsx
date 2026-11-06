@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout";
 import Portfolio from "./pages/Portfolio";
-import CompanyIntro from "./pages/CompanyIntro";
+import { Beauty, Cleanup } from "./pages/Services";
 import Consultation from "./pages/Consultation";
 
 export default function App() {
@@ -10,20 +10,11 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Portfolio />} />
-          <Route path="about/company" element={<CompanyIntro />} />
-          <Route
-            path="about/director"
-            element={<Navigate to="/about/company" replace />}
-          />
-          <Route
-            path="about/staff"
-            element={<Navigate to="/about/company" replace />}
-          />
-          <Route
-            path="commercial/guidelines"
-            element={<Navigate to="/" replace />}
-          />
-          <Route path="consultation" element={<Consultation />} />
+          <Route path="beauty" element={<Beauty />} />
+          <Route path="cleanup" element={<Cleanup />} />
+          <Route path="contact" element={<Consultation />} />
+          <Route path="consultation" element={<Navigate to="/contact" replace />} />
+          <Route path="about/*" element={<Navigate to="/beauty" replace />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

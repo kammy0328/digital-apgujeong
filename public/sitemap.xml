@@ -1,33 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
     <loc>https://digital-apgujeong.vercel.app/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <lastmod>2026-08-05</lastmod>
+    <lastmod>2026-11-06</lastmod>
   </url>
 
   <url>
-    <loc>https://digital-apgujeong.vercel.app/about/company</loc>
+    <loc>https://digital-apgujeong.vercel.app/beauty</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <lastmod>2026-08-05</lastmod>
+    <lastmod>2026-11-06</lastmod>
   </url>
 
-<url>
-    <loc>https://digital-apgujeong.vercel.app/about/staff</loc>
+  <url>
+    <loc>https://digital-apgujeong.vercel.app/cleanup</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2026-08-05</lastmod>
+    <priority>0.8</priority>
+    <lastmod>2026-11-06</lastmod>
   </url>
 
-<url>
-    <loc>https://digital-apgujeong.vercel.app/consultation</loc>
+  <url>
+    <loc>https://digital-apgujeong.vercel.app/contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-    <lastmod>2026-08-05</lastmod>
+    <lastmod>2026-11-06</lastmod>
   </url>
 
 </urlset>
