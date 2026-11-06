@@ -5,12 +5,12 @@ export default function CompanyIntro() {
     <div className="studio-page page-pad">
       <span className="eyebrow">THE STUDIO / DIGITAL APGUJEONG</span>
       <h1>
-        We refine.
+        The studio.
         <br />
-        <em>You shine.</em>
+        Post-production.
       </h1>
       <div className="studio-description">
-        <span className="studio-symbol">✳︎</span>
+        <span className="eyebrow">OUR APPROACH</span>
         <div>
           <h2>
             보이지 않는 디테일이

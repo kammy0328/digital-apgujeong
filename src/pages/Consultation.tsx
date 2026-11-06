@@ -49,11 +49,11 @@ export default function Consultation() {
     <div className="contact-page page-pad">
       <div className="contact-heading">
         <div>
-          <span className="eyebrow">LET’S MAKE SOMETHING GREAT</span>
+          <span className="eyebrow">PROJECT ENQUIRIES</span>
           <h1>
-            Next frame.
+            Contact.
             <br />
-            <em>With us.</em>
+            디지털 압구정
           </h1>
         </div>
         <p>
@@ -79,7 +79,7 @@ export default function Consultation() {
           <p>
             영상 뷰티 리터칭 / 오브젝트 클리닝
             <br />
-            뮤직비디오 · 광고 · 영화 · 퍼스널 영상
+            영화 · 광고 · 뮤직비디오
           </p>
         </aside>
         {state === "success" ? (

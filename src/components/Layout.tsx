@@ -50,7 +50,7 @@ export default function Layout() {
     <div className="site-shell">
       <header className="site-header">
         <Link to="/" className="brand" aria-label="디지털 압구정 홈">
-          diap<span className="brand-star">✳︎</span>
+          diap
           <span className="brand-caption">
             DIGITAL
             <br />
@@ -59,13 +59,11 @@ export default function Layout() {
         </Link>
         <nav className="desktop-nav" aria-label="주 메뉴">
           <NavLink to="/" end>
-            Work <span>작업</span>
+            Work
           </NavLink>
-          <NavLink to="/about/company">
-            Studio <span>소개</span>
-          </NavLink>
+          <NavLink to="/about/company">Studio</NavLink>
           <NavLink to="/consultation" className="nav-contact">
-            Let’s talk <ArrowUpRight size={17} />
+            Contact <ArrowUpRight size={17} />
           </NavLink>
         </nav>
         <button
@@ -91,7 +89,7 @@ export default function Layout() {
             Studio ↗
           </NavLink>
           <NavLink to="/consultation" onClick={() => setOpen(false)}>
-            Let’s talk ↗
+            Contact ↗
           </NavLink>
           <p>영상의 마지막 디테일을 만듭니다.</p>
         </nav>
@@ -101,11 +99,11 @@ export default function Layout() {
       </main>
       <footer className="site-footer">
         <div className="footer-top">
-          <span className="eyebrow">HAVE A FRAME IN MIND?</span>
+          <span className="eyebrow">PROJECT ENQUIRIES</span>
           <Link to="/consultation" className="footer-title">
-            좋은 장면을,
+            Let’s work
             <br />
-            함께 완성해요. <ArrowUpRight />
+            together. <ArrowUpRight />
           </Link>
           <a className="email-link" href="mailto:digitalapgujeong@gmail.com">
             digitalapgujeong@gmail.com <ArrowUpRight size={18} />
@@ -113,12 +111,12 @@ export default function Layout() {
         </div>
         <div className="footer-bottom">
           <Link to="/" className="footer-wordmark">
-            diap✳︎
+            diap
           </Link>
           <span>
             디지털 압구정
             <br />
-            BEAUTY RETOUCHING & CLEANUP STUDIO
+            POST-PRODUCTION / SEOUL
           </span>
           <a href="tel:01058231350">010.5823.1350</a>
           <span>© {new Date().getFullYear()} DIAP</span>

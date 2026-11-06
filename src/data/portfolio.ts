@@ -1,15 +1,87 @@
 export interface PortfolioVideo {
   id: string;
   title: string;
+  category: "Film" | "Commercial" | "Music video";
+  youtubeId?: string;
+  /** Full Vimeo link, including the privacy hash for unlisted videos. */
+  vimeoUrl?: string;
+  /** Local still image or an approved image URL. */
+  poster?: string;
 }
 
-// Using placeholder YouTube video IDs
+// Retain existing films until their Vimeo replacements and stills are supplied.
 export const portfolioVideos: PortfolioVideo[] = [
-  { id: "3y743h28quI", title: "TXT 범규 - I Love You" },
-  { id: "CgCVZdcKcqY", title: "BLACKPINK - 뛰어" },
-  { id: "61mQuZDp450", title: "Kep1er 샤오팅 - LEGEND" },
-  { id: "i_-pZiZJ7MQ", title: "MEMI - BADidea" },
-  { id: "nZS9J20OWog", title: "ZEROBASEONE 석매튜 - Love Ain't Easy" },
-  { id: "AkP6v3sMyh8", title: "ZEROBASEONE 성한빈 - Pretender" },
-  { id: "rt7fIlko0CM", title: "Keyveatz(키비츠) - A1ㄱ" },
+  {
+    id: "beomgyu",
+    youtubeId: "3y743h28quI",
+    title: "TXT 범규 - I Love You",
+    category: "Music video",
+  },
+  {
+    id: "blackpink",
+    youtubeId: "CgCVZdcKcqY",
+    title: "BLACKPINK - 뛰어",
+    category: "Music video",
+  },
+  {
+    id: "xiaoting",
+    youtubeId: "61mQuZDp450",
+    title: "Kep1er 샤오팅 - LEGEND",
+    category: "Music video",
+  },
+  {
+    id: "memi",
+    youtubeId: "i_-pZiZJ7MQ",
+    title: "MEMI - BADidea",
+    category: "Music video",
+  },
+  {
+    id: "matthew",
+    youtubeId: "nZS9J20OWog",
+    title: "ZEROBASEONE 석매튜 - Love Ain't Easy",
+    category: "Music video",
+  },
+  {
+    id: "hanbin",
+    youtubeId: "AkP6v3sMyh8",
+    title: "ZEROBASEONE 성한빈 - Pretender",
+    category: "Music video",
+  },
+  {
+    id: "keyveatz",
+    youtubeId: "rt7fIlko0CM",
+    title: "Keyveatz(키비츠) - A1ㄱ",
+    category: "Music video",
+  },
 ];
+
+export function getVideoEmbedUrl(video: PortfolioVideo): string {
+  if (video.vimeoUrl) {
+    const url = new URL(video.vimeoUrl);
+    if (
+      !["vimeo.com", "www.vimeo.com", "player.vimeo.com"].includes(url.hostname)
+    )
+      throw new Error("Unsupported Vimeo host");
+    const parts = url.pathname.split("/").filter(Boolean);
+    const id = parts[0] === "video" ? parts[1] : parts[0];
+    if (!/^\d+$/.test(id || "")) throw new Error("Invalid Vimeo video ID");
+    const embed = new URL(`https://player.vimeo.com/video/${id}`);
+    const hash =
+      url.searchParams.get("h") ||
+      (parts[0] !== "video" ? parts[1] : undefined);
+    if (hash) embed.searchParams.set("h", hash);
+    embed.searchParams.set("autoplay", "1");
+    embed.searchParams.set("dnt", "1");
+    return embed.toString();
+  }
+  return `https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&rel=0`;
+}
+
+export function getVideoPoster(video: PortfolioVideo): string | undefined {
+  return (
+    video.poster ||
+    (video.youtubeId
+      ? `https://img.youtube.com/vi/${video.youtubeId}/maxresdefault.jpg`
+      : undefined)
+  );
+}
