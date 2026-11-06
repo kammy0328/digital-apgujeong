@@ -296,7 +296,7 @@ main {
 .work-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 6px;
+  gap: clamp(10px, 1.1vw, 18px);
 }
 .work-card {
   display: block;
@@ -916,7 +916,7 @@ main {
 @media (max-width: 599px) {
   .work-grid {
     grid-template-columns: 1fr;
-    gap: 8px;
+    gap: 12px;
   }
   .work-title {
     font-size: 15px;
