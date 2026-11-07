@@ -40,7 +40,7 @@ void main() {
   float vig = smoothstep(1.35, 0.15, length(p));
   float light = (n * n * 0.085 + glow * 0.03) * vig;
   vec3 col = vec3(0.047) + light * vec3(1.0, 0.985, 0.96);
-  col += (hash(gl_FragCoord.xy + fract(u_time) * 97.0) - 0.5) * 0.016;
+  col += (hash(gl_FragCoord.xy) - 0.5) * 0.016;
   gl_FragColor = vec4(col, 1.0);
 }
 `;
@@ -77,7 +77,11 @@ export default function WebGLBackground() {
 
     const buffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      new Float32Array([-1, -1, 3, -1, -1, 3]),
+      gl.STATIC_DRAW,
+    );
     const loc = gl.getAttribLocation(program, "a_pos");
     gl.enableVertexAttribArray(loc);
     gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
@@ -87,18 +91,22 @@ export default function WebGLBackground() {
     const uMouse = gl.getUniformLocation(program, "u_mouse");
     const uScroll = gl.getUniformLocation(program, "u_scroll");
 
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
     let scale = 1;
     const target = { x: 0.5, y: 0.6 };
     const mouse = { x: 0.5, y: 0.6 };
 
     const resize = () => {
       // The field is soft, so rendering below native resolution is invisible and keeps phones cool.
-      scale = Math.min(window.devicePixelRatio || 1, 1.5) * (window.innerWidth < 768 ? 0.5 : 0.65);
+      scale =
+        Math.min(window.devicePixelRatio || 1, 1.5) *
+        (window.innerWidth < 768 ? 0.5 : 0.65);
       canvas.width = Math.max(1, Math.round(window.innerWidth * scale));
       canvas.height = Math.max(1, Math.round(window.innerHeight * scale));
       gl.viewport(0, 0, canvas.width, canvas.height);
-      if (reduced) draw(0);
+      if (reduced) draw(start);
     };
     const onMove = (e: PointerEvent) => {
       target.x = e.clientX / window.innerWidth;
@@ -117,7 +125,7 @@ export default function WebGLBackground() {
       gl!.drawArrays(gl!.TRIANGLES, 0, 3);
     }
     const loop = (now: number) => {
-      draw(now);
+      if (!document.hidden) draw(now);
       frame = requestAnimationFrame(loop);
     };
 
@@ -133,6 +141,10 @@ export default function WebGLBackground() {
       cancelAnimationFrame(frame);
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onMove);
+      gl.deleteBuffer(buffer);
+      gl.deleteProgram(program);
+      gl.deleteShader(vs);
+      gl.deleteShader(fs);
     };
   }, []);
 
