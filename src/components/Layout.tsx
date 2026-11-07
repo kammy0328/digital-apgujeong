@@ -34,7 +34,7 @@ function LangToggle() {
     { value: "ko", label: "KR" },
   ];
   return (
-    <div className="lang-toggle" role="group" aria-label={t(UI.switchLang)}>
+    <div className="lang-toggle" lang="en" translate="no" role="group" aria-label={t(UI.switchLang)}>
       {options.map((o) => (
         <button
           key={o.value}
@@ -155,7 +155,7 @@ export default function Layout() {
                           transition={{ type: "spring", stiffness: 420, damping: 34 }}
                         />
                       )}
-                      <span className="nav-label">{item.label}</span>
+                      <span className="nav-label" lang="en" translate="no">{item.label}</span>
                     </>
                   )}
                 </NavLink>
@@ -194,7 +194,7 @@ export default function Layout() {
                   exit={{ opacity: 0, y: 12 }}
                   transition={{ duration: 0.55, delay: 0.06 * i + 0.05, ease }}
                 >
-                  <NavLink to={item.to} end={item.to === "/"} onClick={() => setOpen(false)}>
+                  <NavLink to={item.to} lang="en" translate="no" end={item.to === "/"} onClick={() => setOpen(false)}>
                     <span className="mobile-index">0{i + 1}</span>
                     {item.label}
                   </NavLink>

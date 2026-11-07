@@ -318,31 +318,27 @@ main {
 }
 .lang-toggle {
   display: inline-flex;
-  padding: 3px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  gap: 4px;
+  padding: 0;
+  border: 0;
+  background: transparent;
 }
 .lang-toggle button {
-  min-width: 38px;
-  padding: 6px 10px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 10px 8px;
   border: 0;
-  border-radius: 999px;
+  border-radius: 0;
   background: transparent;
-  color: #8f8f8c;
+  color: var(--paper);
   font-size: 11px;
+  font-weight: 400;
   letter-spacing: 0.08em;
-  transition:
-    background 0.35s var(--ease),
-    color 0.3s;
+  transition: opacity 0.2s;
 }
-.lang-toggle button:hover {
-  color: #e6e6e3;
-}
-.lang-toggle button.is-active {
-  background: rgba(255, 255, 255, 0.16);
-  color: #fff;
-}
+.lang-toggle button:hover { opacity: 0.7; }
+.lang-toggle button.is-active { font-weight: 700; }
+.mobile-menu-footer .lang-toggle { align-self: flex-end; }
 
 /* ---------- work ---------- */
 .work-intro {
@@ -1485,7 +1481,6 @@ main {
 :lang(ko) .landing-team p,
 :lang(ko) .contact-aside h2,
 :lang(ko) .service-cta p,
-:lang(ko) .mobile-nav a,
 :lang(ko) .landing-hero h1 {
   letter-spacing: -0.005em;
 }
