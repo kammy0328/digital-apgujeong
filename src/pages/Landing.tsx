@@ -6,8 +6,8 @@ import { ArrowUpRight } from "lucide-react";
 import { useLang, type L } from "../i18n";
 import { Reveal } from "./Services";
 import { portfolioVideos, getVideoThumb } from "../data/portfolio";
+import { ease } from "../motion";
 
-const ease = [0.22, 1, 0.36, 1] as const;
 
 const T = {
   eyebrow: { en: "video beauty retouching & object cleanup", ko: "영상 뷰티 리터칭 · 오브젝트 클리닝" } as L,

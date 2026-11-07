@@ -6,6 +6,7 @@ import Logo from "./Logo";
 import WebGLBackground from "./WebGLBackground";
 import { useLang, type L, type Lang } from "../i18n";
 import seo from "../data/seo.json";
+import { ease } from "../motion";
 
 const NAV = [
   { to: "/work", label: "work" },
@@ -49,7 +50,6 @@ function LangToggle() {
   );
 }
 
-const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function Layout() {
   const [open, setOpen] = useState(false);

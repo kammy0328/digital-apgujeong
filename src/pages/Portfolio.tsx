@@ -9,8 +9,8 @@ import {
   getVideoPoster,
   getVideoThumb,
 } from "../data/portfolio";
+import { ease, TITLE, REVEAL } from "../motion";
 
-const ease = [0.22, 1, 0.36, 1] as const;
 type Frame = { left: number; top: number; width: number; height: number };
 function playerFrame(): Frame {
   const width = Math.min(
@@ -108,7 +108,7 @@ export default function Portfolio() {
           <motion.span
             initial={{ y: reduced ? 0 : "105%" }}
             animate={{ y: 0 }}
-            transition={{ duration: reduced ? 0 : 1, ease, delay: reduced ? 0 : 0.1 }}
+            transition={{ duration: reduced ? 0 : TITLE.duration, ease, delay: reduced ? 0 : TITLE.delay }}
           >
             WORK
           </motion.span>
@@ -145,13 +145,14 @@ export default function Portfolio() {
             aria-label={
               lang === "ko" ? `${item.title.ko} 영상 재생` : `Play ${item.title.en}`
             }
-            initial={{ opacity: reduced ? 1 : 0, y: reduced ? 0 : 24 }}
+            initial={{ opacity: reduced ? 1 : 0, y: reduced ? 0 : REVEAL.y }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-20px" }}
+            viewport={{ once: true, margin: REVEAL.margin }}
             transition={{
-              duration: reduced ? 0 : 0.6,
+              duration: reduced ? 0 : REVEAL.duration,
               ease,
-              delay: reduced ? 0 : (index % 4) * 0.05,
+              // The first row follows the title; later rows start the moment they scroll in.
+              delay: reduced ? 0 : (index < 4 ? 0.3 : 0) + (index % 4) * REVEAL.stagger,
             }}
           >
             <span className="work-image">

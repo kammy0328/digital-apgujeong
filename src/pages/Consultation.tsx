@@ -3,8 +3,8 @@ import { ArrowUpRight, Check } from "lucide-react";
 import { motion } from "motion/react";
 import { useLang, type L } from "../i18n";
 import Magnetic from "../components/Magnetic";
+import { ease, TITLE } from "../motion";
 
-const ease = [0.22, 1, 0.36, 1] as const;
 const initial = {
   name: "",
   phone: "",
@@ -88,7 +88,7 @@ export default function Consultation() {
     <div className="contact-page page-pad">
       <div className="contact-heading">
         <h1 className="reveal-line">
-          <motion.span initial={{ y: "105%" }} animate={{ y: 0 }} transition={{ duration: 1.1, ease, delay: 0.1 }}>
+          <motion.span initial={{ y: "105%" }} animate={{ y: 0 }} transition={{ duration: TITLE.duration, ease, delay: TITLE.delay }}>
             Contact
           </motion.span>
         </h1>

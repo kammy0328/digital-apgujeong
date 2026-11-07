@@ -1,8 +1,8 @@
 import { motion } from "motion/react";
 import type { Key, ReactNode } from "react";
 import { useLang, type L } from "../i18n";
+import { ease, REVEAL } from "../motion";
 
-const ease = [0.22, 1, 0.36, 1] as const;
 
 export interface ServiceContent {
   title: string;
@@ -86,10 +86,10 @@ export function Reveal({ children, delay = 0, className }: { key?: Key; children
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 32 }}
+      initial={{ opacity: 0, y: REVEAL.y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.9, ease, delay }}
+      viewport={{ once: true, margin: REVEAL.margin }}
+      transition={{ duration: REVEAL.duration, ease, delay }}
     >
       {children}
     </motion.div>
