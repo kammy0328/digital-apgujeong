@@ -88,7 +88,7 @@ const CLEANUP: ServiceContent = {
   ],
 };
 
-function Reveal({ children, delay = 0, className }: { key?: Key; children: ReactNode; delay?: number; className?: string }) {
+export function Reveal({ children, delay = 0, className }: { key?: Key; children: ReactNode; delay?: number; className?: string }) {
   return (
     <motion.div
       className={className}
