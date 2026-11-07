@@ -873,6 +873,14 @@ main {
     max-width: 2200px;
     margin: 0 auto;
   }
+  /* The landing wall bleeds to the screen edges even where the page column is capped. */
+  .landing .landing-hero {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+  }
+  body {
+    overflow-x: clip;
+  }
 }
 @media (max-width: 1023px) {
   .work-grid {
@@ -1098,7 +1106,6 @@ main {
   height: 100svh;
   min-height: 520px;
   margin: -104px 0 0;
-  border-radius: 0 0 28px 28px;
   isolation: isolate;
 }
 .wall {
@@ -1367,7 +1374,6 @@ main {
   }
   .landing-hero {
     margin-top: -84px;
-    border-radius: 0 0 20px 20px;
   }
   .index-row {
     grid-template-columns: 28px 1fr 28px;
