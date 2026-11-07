@@ -64,6 +64,8 @@ export default function WebGLBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    // Phones and touch devices keep the flat page black: the low-res field upscales into visible blocky grain there.
+    if (window.matchMedia("(max-width: 767px), (pointer: coarse)").matches) return;
     const canvas = canvasRef.current!;
     const gl = canvas.getContext("webgl", {
       alpha: false,

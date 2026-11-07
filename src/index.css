@@ -1090,14 +1090,14 @@ main {
 
 /* ---------- landing ---------- */
 .landing {
-  padding-top: 24px;
+  padding-top: 0;
 }
 .landing-hero {
   position: relative;
   overflow: hidden;
-  height: calc(100svh - 24px);
+  height: 100svh;
   min-height: 520px;
-  margin: 0 calc(var(--pad) * -1);
+  margin: -104px calc(var(--pad) * -1) 0;
   border-radius: 0 0 28px 28px;
   isolation: isolate;
 }
@@ -1366,6 +1366,7 @@ main {
     display: none;
   }
   .landing-hero {
+    margin-top: -84px;
     border-radius: 0 0 20px 20px;
   }
   .index-row {
