@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState, type PointerEvent } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { animate, motion, useInView, useReducedMotion } from "motion/react";
+import Logo from "../components/Logo";
 import { ArrowUpRight } from "lucide-react";
 import { useLang, type L } from "../i18n";
 import { Reveal } from "./Services";
@@ -9,15 +10,7 @@ import { portfolioVideos, getVideoThumb } from "../data/portfolio";
 const ease = [0.22, 1, 0.36, 1] as const;
 
 const T = {
-  hint: { en: "move your cursor to retouch", ko: "커서를 움직여 보정해 보세요" } as L,
-  lines: {
-    en: ["Perfection", "you can't see"],
-    ko: ["티 나지 않는", "완벽함"],
-  },
-  lead: {
-    en: "We refine skin and clear the frame so the work looks as if nothing was ever done. Natural, frame-accurate finishing for music videos, commercials and film.",
-    ko: "피부는 다듬고 화면은 비워, 처음부터 아무것도 하지 않은 것처럼 보이게 합니다. 뮤직비디오, 광고, 영화를 위한 자연스럽고 프레임 단위로 정확한 마무리.",
-  } as L,
+  eyebrow: { en: "video beauty retouching & object cleanup", ko: "영상 뷰티 리터칭 · 오브젝트 클리닝" } as L,
   viewWork: { en: "View work", ko: "작업 보기" } as L,
   disciplines: { en: "two disciplines", ko: "two disciplines" } as L,
   beautyText: {
@@ -49,57 +42,54 @@ const ROLES: L[] = [
   { en: "Cleanup ×30", ko: "Cleanup ×30" },
 ];
 
-// A moving lens reveals the clean version of the headline over a blemished one.
-function Hero() {
-  const { lang, t } = useLang();
-  const reduced = useReducedMotion();
-  const root = useRef<HTMLElement>(null);
-  const lines = T.lines[lang];
-  const move = (e: PointerEvent<HTMLElement>) => {
-    if (e.pointerType === "touch" || !root.current) return;
-    const r = root.current.getBoundingClientRect();
-    root.current.style.setProperty("--mx", `${e.clientX - r.left}px`);
-    root.current.style.setProperty("--my", `${e.clientY - r.top}px`);
-    root.current.classList.add("is-lens");
-  };
-  const title = (cls: string, hidden?: boolean) => (
-    <h1 className={cls} aria-hidden={hidden || undefined}>
-      {lines.map((line, i) => (
-        <span className="reveal-line" key={line}>
-          <motion.span
-            initial={{ y: reduced ? 0 : "105%" }}
-            animate={{ y: 0 }}
-            transition={{ duration: reduced ? 0 : 1.1, ease, delay: reduced ? 0 : 0.15 + i * 0.12 }}
-          >
-            {line}
-          </motion.span>
-        </span>
-      ))}
-    </h1>
-  );
+// A wall of work drifting in opposite directions behind the wordmark.
+const COLUMNS = 4;
+function Wall() {
+  const cols = Array.from({ length: COLUMNS }, (_, c) => {
+    const items = portfolioVideos.filter((_, i) => i % COLUMNS === c);
+    return items.length ? items : portfolioVideos.slice(0, 2);
+  });
   return (
-    <section className="landing-hero" ref={root} onPointerMove={move}>
-      <div className="lens-stack">
-        {title("lens-dirty", true)}
-        {title("lens-clean")}
+    <div className="wall" aria-hidden="true">
+      {cols.map((items, c) => (
+        <div className={`wall-col${c % 2 ? " is-up" : ""}`} key={c} style={{ animationDuration: `${46 + c * 7}s` }}>
+          {[...items, ...items, ...items, ...items].map((v, i) => (
+            <img key={i} src={getVideoThumb(v)} alt="" decoding="async" loading={i < 3 ? "eager" : "lazy"} />
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function Hero() {
+  const { t } = useLang();
+  return (
+    <section className="landing-hero">
+      <Wall />
+      <div className="hero-center">
+        <h1 className="sr-only">diap — Digital Apgujeong</h1>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.94 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2, ease, delay: 0.1 }}
+        >
+          <Logo className="hero-logo" />
+        </motion.div>
+        <motion.p
+          className="eyebrow"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease, delay: 0.5 }}
+        >
+          {t(T.eyebrow)}
+        </motion.p>
+        <Reveal delay={0.6}>
+          <Link to="/work" className="glass-button">
+            {t(T.viewWork)} <ArrowUpRight size={18} />
+          </Link>
+        </Reveal>
       </div>
-      <motion.p
-        className="lens-hint"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 0.8 }}
-      >
-        <span className="lens-dot" aria-hidden="true" />
-        {t(T.hint)}
-      </motion.p>
-      <Reveal delay={0.4} className="service-lead">
-        <p>{t(T.lead)}</p>
-      </Reveal>
-      <Reveal delay={0.5}>
-        <Link to="/work" className="glass-button">
-          {t(T.viewWork)} <ArrowUpRight size={18} />
-        </Link>
-      </Reveal>
     </section>
   );
 }

@@ -853,7 +853,6 @@ main {
 /* Page titles drift up and fade as you scroll (CSS scroll-driven; browsers without it just skip it). */
 @supports (animation-timeline: scroll()) {
   .work-intro h1,
-  .landing-hero h1,
   .service-hero h1,
   .contact-heading h1 {
     animation: title-drift linear both;
@@ -1094,99 +1093,78 @@ main {
   padding-top: 24px;
 }
 .landing-hero {
-  --mx: 50%;
-  --my: 40%;
   position: relative;
+  overflow: hidden;
+  height: calc(100svh - 24px);
+  min-height: 520px;
+  margin: 0 calc(var(--pad) * -1);
+  border-radius: 0 0 28px 28px;
+  isolation: isolate;
+}
+.wall {
+  position: absolute;
+  inset: -6% -3%;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  transform: rotate(-7deg) scale(1.15);
+  z-index: -2;
+}
+.wall-col {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 28px;
-  min-height: calc(100svh - 120px);
-  padding: 40px 0 72px;
+  gap: 14px;
+  animation: wall-down linear infinite;
+  will-change: transform;
 }
-.lens-stack {
-  display: grid;
+.wall-col.is-up {
+  animation-name: wall-up;
 }
-.lens-stack > h1 {
-  grid-area: 1 / 1;
-  margin: 0;
-  font-size: clamp(52px, 11vw, 190px);
-  font-weight: 500;
-  letter-spacing: -0.06em;
-  line-height: 0.98;
-  word-break: keep-all;
+.wall-col img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #151515;
+  filter: brightness(0.62);
 }
-/* Blemished layer: dimmed text with dust specks punched through it. */
-.lens-dirty {
-  color: transparent;
+@keyframes wall-down {
+  from { transform: translateY(-50%); }
+  to { transform: translateY(0); }
+}
+@keyframes wall-up {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+.landing-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
   background:
-    radial-gradient(circle at 8% 38%, #0c0c0c 0 0.05em, transparent 0.06em),
-    radial-gradient(circle at 21% 72%, #0c0c0c 0 0.035em, transparent 0.045em),
-    radial-gradient(circle at 34% 24%, #0c0c0c 0 0.04em, transparent 0.05em),
-    radial-gradient(circle at 47% 60%, #0c0c0c 0 0.06em, transparent 0.07em),
-    radial-gradient(circle at 58% 30%, #0c0c0c 0 0.035em, transparent 0.045em),
-    radial-gradient(circle at 69% 78%, #0c0c0c 0 0.05em, transparent 0.06em),
-    radial-gradient(circle at 81% 44%, #0c0c0c 0 0.04em, transparent 0.05em),
-    radial-gradient(circle at 92% 66%, #0c0c0c 0 0.055em, transparent 0.065em),
-    linear-gradient(100deg, #55554f, #77776f 40%, #4c4c47 70%, #6d6d66);
-  -webkit-background-clip: text;
-  background-clip: text;
-  transform: translate(0.012em, -0.008em);
+    radial-gradient(ellipse 60% 50% at 50% 50%, rgba(12, 12, 12, 0.82), rgba(12, 12, 12, 0.35) 70%, transparent),
+    linear-gradient(to bottom, rgba(12, 12, 12, 0.55), transparent 22%, transparent 78%, rgba(12, 12, 12, 0.7));
 }
-/* Clean layer: revealed inside a lens that follows the pointer. */
-.lens-clean {
+.hero-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  text-align: center;
+}
+.hero-logo {
+  display: block;
+  width: clamp(240px, 46vw, 760px);
+  height: auto;
   color: var(--paper);
-  -webkit-mask-image: radial-gradient(circle at center, #000 0, #000 52%, transparent 70%);
-  mask-image: radial-gradient(circle at center, #000 0, #000 52%, transparent 70%);
-  -webkit-mask-size: clamp(260px, 34vw, 520px) clamp(260px, 34vw, 520px);
-  mask-size: clamp(260px, 34vw, 520px) clamp(260px, 34vw, 520px);
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: 12% 40%;
-  mask-position: 12% 40%;
-  animation: lens-drift 11s ease-in-out infinite alternate;
-}
-.landing-hero.is-lens .lens-clean {
-  animation: none;
-  -webkit-mask-position: calc(var(--mx) - clamp(130px, 17vw, 260px)) calc(var(--my) - clamp(130px, 17vw, 260px));
-  mask-position: calc(var(--mx) - clamp(130px, 17vw, 260px)) calc(var(--my) - clamp(130px, 17vw, 260px));
-  transition: mask-position 0.18s ease-out, -webkit-mask-position 0.18s ease-out;
-}
-@keyframes lens-drift {
-  from {
-    -webkit-mask-position: 0% 10%;
-    mask-position: 0% 10%;
-  }
-  to {
-    -webkit-mask-position: 100% 90%;
-    mask-position: 100% 90%;
-  }
 }
 @media (prefers-reduced-motion: reduce) {
-  .lens-clean {
+  .wall-col {
     animation: none;
-  }
-}
-.lens-hint {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0;
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  color: #8c8c89;
-}
-.lens-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--paper);
-  animation: lens-pulse 2.2s ease-in-out infinite;
-}
-@keyframes lens-pulse {
-  50% {
-    opacity: 0.25;
   }
 }
 .landing-link {
@@ -1380,9 +1358,15 @@ main {
 }
 
 @media (max-width: 767px) {
+  .wall {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .wall-col:nth-child(4) {
+    display: none;
+  }
   .landing-hero {
-    min-height: auto;
-    padding: 24px 0 56px;
+    border-radius: 0 0 20px 20px;
   }
   .index-row {
     grid-template-columns: 28px 1fr 28px;
