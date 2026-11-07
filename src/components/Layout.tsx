@@ -74,6 +74,9 @@ export default function Layout() {
 
   useEffect(() => {
     setOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
     const meta = META[pathname] ?? META["/"];
     const title = meta.title[lang];
     const description = meta.description[lang];
@@ -158,7 +161,7 @@ export default function Layout() {
                 </NavLink>
               ))}
             </nav>
-            <LangToggle />
+            <div className="header-language"><LangToggle /></div>
             <button
               className="menu-toggle"
               aria-label={open ? t(UI.closeMenu) : t(UI.openMenu)}
@@ -197,17 +200,21 @@ export default function Layout() {
                   </NavLink>
                 </motion.div>
               ))}
-              <motion.p
+              <motion.div
+                className="mobile-menu-footer"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.35 }}
               >
-                digitalapgujeong@gmail.com
-                <br />
-                <a href="https://www.instagram.com/digital_apgujeong" target="_blank" rel="noopener noreferrer">
-                  @digital_apgujeong
-                </a>
-              </motion.p>
+                <p>
+                  digitalapgujeong@gmail.com
+                  <br />
+                  <a href="https://www.instagram.com/digital_apgujeong" target="_blank" rel="noopener noreferrer">
+                    @digital_apgujeong
+                  </a>
+                </p>
+                <LangToggle />
+              </motion.div>
             </motion.nav>
           )}
         </AnimatePresence>

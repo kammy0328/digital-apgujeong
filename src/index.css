@@ -253,7 +253,8 @@ em {
   z-index: 45;
   display: flex;
   flex-direction: column;
-  padding: 120px 7% 40px;
+  padding: 120px 7% max(32px, env(safe-area-inset-bottom));
+  overflow-y: auto;
   background: rgba(10, 10, 10, 0.6);
   -webkit-backdrop-filter: blur(26px) saturate(160%);
   backdrop-filter: blur(26px) saturate(160%);
@@ -279,8 +280,18 @@ em {
   letter-spacing: 0.12em;
   color: #6f6f6c;
 }
-.mobile-nav p {
+.mobile-menu-footer {
   margin-top: auto;
+  padding-top: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+.mobile-menu-footer .lang-toggle button { min-width: 48px; min-height: 44px; }
+
+.mobile-nav p {
+  margin: 0;
   font-size: 12px;
   line-height: 1.8;
   color: #8c8c89;
@@ -929,7 +940,8 @@ main {
   .brand-caption {
     font-size: 10px;
   }
-  .desktop-nav {
+  .desktop-nav,
+  .header-language {
     display: none;
   }
   .menu-toggle {
@@ -1585,3 +1597,11 @@ main {
     padding: 40px 0;
   }
 }
+
+/* Opacity only: card positions stay fixed and no viewport observers are needed. */
+.work-card {
+  animation: work-card-appear 320ms ease-out both;
+  animation-delay: var(--work-delay, 0ms);
+}
+@keyframes work-card-appear { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .work-card { animation: none; } }

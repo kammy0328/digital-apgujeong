@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { X } from "lucide-react";
 import { createPortal, flushSync } from "react-dom";
@@ -122,6 +122,7 @@ export default function Portfolio() {
           <button
             key={item.id}
             className="work-card"
+            style={{ "--work-delay": `${Math.min(index, 5) * 35}ms` } as CSSProperties}
             onPointerEnter={() => preloadPoster(item)}
             onFocus={() => preloadPoster(item)}
             onClick={(event) => {
