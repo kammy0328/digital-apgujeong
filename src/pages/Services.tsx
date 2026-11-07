@@ -9,7 +9,6 @@ export interface ServiceContent {
   cta: L;
   lead: L;
   items: { name: L; text: L }[];
-  approachTitle: L;
   approach: { title: L; text: L }[];
 }
 
@@ -54,7 +53,6 @@ export const BEAUTY: ServiceContent = {
     { name: { en: "Contour", ko: "윤곽 · 라인" }, text: { en: "Face and body lines are refined without bending the background, and only as far as stays invisible.", ko: "얼굴 윤곽과 바디 라인을 배경 왜곡 없이, 티 나지 않는 범위에서 다듬습니다." } },
     { name: { en: "Hairline", ko: "헤어 라인" }, text: { en: "Flyaways and thin hairlines are tidied to lift the polish of the whole frame.", ko: "잔머리와 비어 보이는 헤어 라인을 정리해 화면 전체의 완성도를 높입니다." } },
   ],
-  approachTitle: { en: "Perfection you can't see", ko: "티 나지 않는 완벽함" },
   approach: [
     { title: { en: "Texture preserved", ko: "질감 보존" }, text: { en: "Never a filter laid on top. The skin looks like it was always this good.", ko: "필터처럼 덮지 않고, 피부가 원래 좋았던 것처럼 보이게 합니다." } },
     { title: { en: "Frame-by-frame tracking", ko: "프레임 단위 트래킹" }, text: { en: "The retouch stays put as heads turn and expressions change.", ko: "고개를 돌리고 표정이 바뀌어도 보정이 미끄러지지 않습니다." } },
@@ -77,7 +75,6 @@ export const CLEANUP: ServiceContent = {
     { name: { en: "Tattoos & marks", ko: "타투 · 상처" }, text: { en: "Tattoos, wounds and bandages that showed up by accident are removed to suit the scene.", ko: "일시적으로 드러난 타투, 상처, 밴드를 장면에 맞게 지웁니다." } },
     { name: { en: "Dust & dead pixels", ko: "먼지 · 데드픽셀" }, text: { en: "Sensor dust, dead pixels and flicker are cleaned out of the image.", ko: "센서 먼지, 데드픽셀, 깜빡임 같은 이미지 결함을 정리합니다." } },
   ],
-  approachTitle: { en: "No trace of the fix", ko: "지운 자리가 보이지 않게" },
   approach: [
     { title: { en: "Background rebuild", ko: "배경 복원" }, text: { en: "Hidden background is reconstructed from neighbouring frames to fill the gap.", ko: "가려졌던 배경을 앞뒤 프레임에서 재구성해 빈자리를 채웁니다." } },
     { title: { en: "Camera tracking", ko: "카메라 트래킹" }, text: { en: "The restored area follows the camera so it stays attached to the scene.", ko: "카메라 움직임을 따라 복원한 면이 장면에 붙어 있도록 합니다." } },
@@ -120,9 +117,6 @@ export function ServiceBlock({ id, index, content }: { id: string; index: string
             </Reveal>
           ))}
         </div>
-        <Reveal className="approach-title">
-          <h3>{t(content.approachTitle)}</h3>
-        </Reveal>
         <div className="approach-list">
           {content.approach.map((a, i) => (
             <Reveal key={a.title.en} delay={i * 0.1} className="approach-row">

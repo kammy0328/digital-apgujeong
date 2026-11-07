@@ -1403,20 +1403,20 @@ main {
 
 /* ---------- service (team) ---------- */
 .team-list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-auto-rows: 1fr;
 }
 .team-row {
   display: grid;
   grid-template-columns: 40px 1.2fr 2fr;
   gap: 24px;
-  align-items: start;
-  padding: 28px 0;
+  align-items: center;
+  min-height: 104px;
+  padding: 0;
   border-top: 1px solid var(--line);
 }
 .team-row:first-child {
   border-top: 0;
-  padding-top: 0;
 }
 .team-row h3 {
   margin: 0;
@@ -1431,61 +1431,16 @@ main {
   color: #a6a6a3;
   word-break: keep-all;
 }
-.team-row {
-  grid-template-columns: 40px 1.2fr 2fr 170px;
-}
-.team-row:not(.has-stat) p {
-  grid-column: 3 / -1;
-}
-.team-row.has-stat {
-  align-items: center;
-}
-.team-stat {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 6px;
-  padding-left: 28px;
-  border-left: 1px solid var(--line);
-  text-align: right;
-}
-.team-stat strong {
-  font-size: clamp(40px, 4.6vw, 72px);
-  font-weight: 500;
-  letter-spacing: -0.04em;
-  line-height: 0.95;
-}
-.team-stat span {
-  font-size: 11px;
-  letter-spacing: 0.04em;
-  color: #8c8c89;
-  word-break: keep-all;
-}
 
 @media (max-width: 767px) {
   .team-row {
     grid-template-columns: 28px 1fr;
-    gap: 10px 14px;
+    gap: 6px 14px;
+    min-height: 0;
+    padding: 22px 0;
   }
   .team-row p {
     grid-column: 2;
-  }
-  .team-row,
-  .team-row.has-stat {
-    grid-template-columns: 28px 1fr;
-  }
-  .team-row:not(.has-stat) p {
-    grid-column: 2;
-  }
-  .team-stat {
-    grid-column: 2;
-    flex-direction: row;
-    align-items: baseline;
-    gap: 12px;
-    padding: 14px 0 0;
-    border-left: 0;
-    border-top: 1px solid var(--line);
-    text-align: left;
   }
 }
 
@@ -1499,16 +1454,6 @@ main {
   gap: 40px;
   min-width: 0;
 }
-.approach-title h3 {
-  margin: 24px 0 0;
-  font-size: clamp(20px, 2vw, 30px);
-  font-weight: 400;
-  letter-spacing: -0.04em;
-  word-break: keep-all;
-}
-.service-block .approach-list {
-  margin-top: -16px;
-}
 .service-block .service-section-head h2 {
   font-size: clamp(36px, 4.4vw, 72px);
   font-weight: 500;
@@ -1519,7 +1464,6 @@ main {
 :lang(ko) .service-section-head h2,
 :lang(ko) .service-item h3,
 :lang(ko) .approach-row h3,
-:lang(ko) .approach-title h3,
 :lang(ko) .process-step h3,
 :lang(ko) .team-row h3,
 :lang(ko) .landing-team p,
