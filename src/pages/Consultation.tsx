@@ -53,8 +53,8 @@ const T = {
   sending: { en: "Sending…", ko: "전송 중…" } as L,
   send: { en: "Send inquiry", ko: "프로젝트 문의 보내기" } as L,
   failed: {
-    en: "We couldn't send your inquiry. Please contact us by email or phone.",
-    ko: "문의를 전송하지 못했습니다. 이메일 또는 전화로 연락해 주세요.",
+    en: "We couldn't send your inquiry. Please contact us by email.",
+    ko: "문의를 전송하지 못했습니다. 이메일로 연락해 주세요.",
   } as L,
 };
 
