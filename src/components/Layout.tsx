@@ -15,6 +15,7 @@ import {
   useSpring,
 } from "motion/react";
 import { Menu, X } from "lucide-react";
+import { createPortal } from "react-dom";
 import Logo from "./Logo";
 import WebGLBackground from "./WebGLBackground";
 import { basePath, localizedPath, useLang, type L, type Lang } from "../i18n";
@@ -172,7 +173,10 @@ export default function Layout() {
   }, [pathname, lang]);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => {
+      if (!document.body.classList.contains("menu-open"))
+        setScrolled(window.scrollY > 24);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -180,8 +184,34 @@ export default function Layout() {
 
   useEffect(() => {
     if (!open) return;
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    const body = document.body;
+    const hadMenuClass = body.classList.contains("menu-open");
+    body.classList.add("menu-open");
+    const savedY = window.scrollY;
+    const savedX = window.scrollX;
+    const savedPath = basePath(window.location.pathname);
+    const properties = [
+      "position",
+      "top",
+      "left",
+      "width",
+      "overflow",
+    ] as const;
+    const previous = properties.map((property) => body.style[property]);
+    // Fixed-body locking also prevents Safari from scrolling behind the menu.
+    body.style.position = "fixed";
+    body.style.top = `${-savedY}px`;
+    body.style.left = `${-savedX}px`;
+    body.style.width = "100%";
+    body.style.overflow = "hidden";
+    const syncViewport = () => {
+      menuRef.current?.style.setProperty(
+        "--menu-height",
+        `${window.visualViewport?.height ?? window.innerHeight}px`,
+      );
+    };
+    syncViewport();
+    window.visualViewport?.addEventListener("resize", syncViewport);
     const roots = [
       document.querySelector("main"),
       document.querySelector("footer"),
@@ -230,7 +260,18 @@ export default function Layout() {
     document.addEventListener("keydown", onKey);
     window.addEventListener("resize", resize);
     return () => {
-      document.body.style.overflow = previous;
+      properties.forEach((property, index) => {
+        body.style[property] = previous[index];
+      });
+      const samePage = basePath(window.location.pathname) === savedPath;
+      window.scrollTo({
+        left: samePage ? savedX : 0,
+        top: samePage ? savedY : 0,
+        behavior: "instant",
+      });
+      if (!hadMenuClass) body.classList.remove("menu-open");
+      setScrolled(samePage && savedY > 24);
+      window.visualViewport?.removeEventListener("resize", syncViewport);
       roots.forEach((el, i) => {
         el.inert = wasInert[i];
       });
@@ -316,60 +357,68 @@ export default function Layout() {
           </motion.div>
         </header>
 
-        <AnimatePresence>
-          {open && (
-            <motion.nav
-              ref={menuRef}
-              id="mobile-navigation"
-              className="mobile-nav"
-              aria-label={t(UI.mobileMenu)}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.35 }}
-            >
-              {NAV.map((item, i) => (
-                <motion.div
-                  key={item.to}
-                  initial={{ opacity: 0, y: 28 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 12 }}
-                  transition={{ duration: 0.55, delay: 0.06 * i + 0.05, ease }}
+        {typeof document !== "undefined" &&
+          createPortal(
+            <AnimatePresence>
+              {open && (
+                <motion.nav
+                  ref={menuRef}
+                  id="mobile-navigation"
+                  className="mobile-nav"
+                  aria-label={t(UI.mobileMenu)}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.35 }}
                 >
-                  <NavLink
-                    to={item.to}
-                    lang="en"
-                    translate="no"
-                    end={item.to === "/"}
-                    onClick={() => setOpen(false)}
+                  {NAV.map((item, i) => (
+                    <motion.div
+                      key={item.to}
+                      initial={{ opacity: 0, y: 28 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 12 }}
+                      transition={{
+                        duration: 0.55,
+                        delay: 0.06 * i + 0.05,
+                        ease,
+                      }}
+                    >
+                      <NavLink
+                        to={item.to}
+                        lang="en"
+                        translate="no"
+                        end={item.to === "/"}
+                        onClick={() => setOpen(false)}
+                      >
+                        <span className="mobile-index">0{i + 1}</span>
+                        {item.label}
+                      </NavLink>
+                    </motion.div>
+                  ))}
+                  <motion.div
+                    className="mobile-menu-footer"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.35 }}
                   >
-                    <span className="mobile-index">0{i + 1}</span>
-                    {item.label}
-                  </NavLink>
-                </motion.div>
-              ))}
-              <motion.div
-                className="mobile-menu-footer"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.35 }}
-              >
-                <p>
-                  digitalapgujeong@gmail.com
-                  <br />
-                  <a
-                    href="https://www.instagram.com/digital_apgujeong"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    @digital_apgujeong
-                  </a>
-                </p>
-                <LangToggle />
-              </motion.div>
-            </motion.nav>
+                    <p>
+                      digitalapgujeong@gmail.com
+                      <br />
+                      <a
+                        href="https://www.instagram.com/digital_apgujeong"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        @digital_apgujeong
+                      </a>
+                    </p>
+                    <LangToggle />
+                  </motion.div>
+                </motion.nav>
+              )}
+            </AnimatePresence>,
+            document.body,
           )}
-        </AnimatePresence>
 
         <main id="main-content">
           <AnimatePresence mode="wait" onExitComplete={resetPageScroll}>

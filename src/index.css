@@ -249,13 +249,17 @@ em {
 
 .mobile-nav {
   position: fixed;
-  inset: 0;
+  inset: 0 0 auto;
+  height: 100vh;
+  height: var(--menu-height, 100dvh);
   z-index: 45;
   display: flex;
   flex-direction: column;
-  padding: 120px 7% max(32px, env(safe-area-inset-bottom));
+  padding: 110px 6% max(20px, env(safe-area-inset-bottom));
   overflow-y: auto;
-  background: rgba(10, 10, 10, 0.6);
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  background: rgba(10, 10, 10, 0.94);
   -webkit-backdrop-filter: blur(26px) saturate(160%);
   backdrop-filter: blur(26px) saturate(160%);
 }
@@ -282,15 +286,16 @@ em {
 }
 .mobile-menu-footer {
   margin-top: auto;
-  padding-top: 28px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 20px;
+  padding-top: 32px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  column-gap: 12px;
 }
 .mobile-menu-footer .lang-toggle button {
-  min-width: 48px;
+  min-width: 44px;
   min-height: 44px;
+  font-size: 13px;
 }
 
 .mobile-nav p {
@@ -344,6 +349,16 @@ main {
 }
 .lang-toggle button.is-active {
   font-weight: 700;
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 7px;
+  text-decoration-thickness: 2px;
+}
+.lang-toggle button:not(.is-active) {
+  color: #999;
+}
+.lang-toggle button.is-active:hover {
+  opacity: 1;
 }
 .mobile-menu-footer .lang-toggle {
   align-self: flex-end;
@@ -1664,4 +1679,37 @@ main {
 .not-found a {
   text-decoration: underline;
   text-underline-offset: 5px;
+}
+
+.mobile-nav > * {
+  flex-shrink: 0;
+}
+.mobile-menu-footer p {
+  font-size: 11px;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 359px) {
+  .mobile-menu-footer {
+    grid-template-columns: 1fr;
+    row-gap: 10px;
+  }
+  .mobile-menu-footer .lang-toggle {
+    justify-self: end;
+  }
+}
+@media (max-width: 767px) {
+  .hero-center .glass-button,
+  .hero-center .glass-button:hover {
+    min-height: 44px;
+    padding: 12px 0;
+    background: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    transform: none;
+  }
+  .hero-center .glass-button svg {
+    display: none;
+  }
 }
