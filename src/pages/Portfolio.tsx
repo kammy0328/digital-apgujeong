@@ -7,6 +7,7 @@ import {
   portfolioVideos,
   getVideoEmbedUrl,
   getVideoPoster,
+  getVideoThumb,
 } from "../data/portfolio";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -134,10 +135,11 @@ export default function Portfolio() {
               <span className="image-fallback" aria-hidden="true">
                 {item.title.split(" - ")[0]}
               </span>
-              {getVideoPoster(item) && (
+              {getVideoThumb(item) && (
                 <img
                   loading={index < 4 ? "eager" : "lazy"}
-                  src={getVideoPoster(item)}
+                  decoding="async"
+                  src={getVideoThumb(item)}
                   alt=""
                   onError={(event) => {
                     event.currentTarget.style.opacity = "0";

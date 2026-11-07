@@ -27,7 +27,7 @@ float noise(vec2 p) {
 }
 float fbm(vec2 p) {
   float v = 0.0, a = 0.5;
-  for (int i = 0; i < 5; i++) { v += a * noise(p); p = p * 2.02 + vec2(1.7, 9.2); a *= 0.5; }
+  for (int i = 0; i < 3; i++) { v += a * noise(p); p = p * 2.02 + vec2(1.7, 9.2); a *= 0.5; }
   return v;
 }
 void main() {
@@ -100,9 +100,7 @@ export default function WebGLBackground() {
 
     const resize = () => {
       // The field is soft, so rendering below native resolution is invisible and keeps phones cool.
-      scale =
-        Math.min(window.devicePixelRatio || 1, 1.5) *
-        (window.innerWidth < 768 ? 0.5 : 0.65);
+      scale = window.innerWidth < 768 ? 0.3 : 0.4;
       canvas.width = Math.max(1, Math.round(window.innerWidth * scale));
       canvas.height = Math.max(1, Math.round(window.innerHeight * scale));
       gl.viewport(0, 0, canvas.width, canvas.height);
@@ -124,9 +122,13 @@ export default function WebGLBackground() {
       gl!.uniform1f(uScroll, window.scrollY / window.innerHeight);
       gl!.drawArrays(gl!.TRIANGLES, 0, 3);
     }
+    // The field drifts slowly, so 30fps looks identical and halves the GPU work.
+    let lastDraw = 0;
     const loop = (now: number) => {
-      if (!document.hidden) draw(now);
       frame = requestAnimationFrame(loop);
+      if (document.hidden || now - lastDraw < 33) return;
+      lastDraw = now;
+      draw(now);
     };
 
     resize();

@@ -69,6 +69,16 @@ export function getVideoEmbedUrl(video: PortfolioVideo): string {
   return `https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&rel=0`;
 }
 
+/** Card-sized still (640px WebP). YouTube bakes 4:3 letterbox bars into it; the card's object-fit: cover crops them off. */
+export function getVideoThumb(video: PortfolioVideo): string | undefined {
+  return (
+    video.poster ||
+    (video.youtubeId
+      ? `https://i.ytimg.com/vi_webp/${video.youtubeId}/sddefault.webp`
+      : undefined)
+  );
+}
+
 export function getVideoPoster(video: PortfolioVideo): string | undefined {
   return (
     video.poster ||
