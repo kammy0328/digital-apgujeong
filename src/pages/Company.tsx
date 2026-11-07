@@ -41,10 +41,10 @@ const TEAM: { role: L; text: L; stat?: { value: string; label: L } }[] = [
   },
   {
     role: { en: "Cleanup Team", ko: "클린업 팀" },
-    stat: { value: "~30", label: { en: "artists available through partnership", ko: "파트너십 체결 · 가용 인원" } },
+    stat: { value: "~30", label: { en: "artists available", ko: "가용 인원" } },
     text: {
-      en: "A partner team of around 30 available artists. Volume and deadlines scale up without waiting on a single desk.",
-      ko: "파트너십으로 연결된 약 30명의 가용 인원. 물량과 납기에 맞춰 한 사람의 속도에 묶이지 않고 규모를 키웁니다.",
+      en: "A cleanup team of around 30 available artists. Volume and deadlines scale up without waiting on a single desk.",
+      ko: "약 30명의 가용 인원. 물량과 납기에 맞춰 한 사람의 속도에 묶이지 않고 규모를 키웁니다.",
     },
   },
 ];

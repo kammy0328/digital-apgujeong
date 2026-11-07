@@ -22,15 +22,15 @@ const T = {
     ko: "장비, 로고, 반사, 잡물을 지우고 그 자리를 복원.",
   } as L,
   stats: [
-    { value: 30, prefix: "~", label: { en: "partner cleanup artists available", ko: "파트너 클린업 가용 인원" } as L },
+    { value: 30, prefix: "~", label: { en: "cleanup artists available", ko: "클린업 가용 인원" } as L },
     { value: portfolioVideos.length, prefix: "", label: { en: "projects", ko: "프로젝트" } as L },
     { value: 4, prefix: "", label: { en: "layers from supervisor to artist", ko: "수퍼바이저부터 작업자까지 단계" } as L },
   ],
   workLabel: { en: "latest work", ko: "최신 작업" } as L,
   all: { en: "All work", ko: "전체 보기" } as L,
   team: {
-    en: "Supervisor, lead, core beauty and a partner cleanup team. One pipeline that holds quality on tight deadlines.",
-    ko: "수퍼바이저, 리드, 베이스 뷰티, 파트너 클린업 팀. 촉박한 납기에서도 퀄리티를 지키는 하나의 파이프라인.",
+    en: "Supervisor, lead, core beauty and a cleanup team. One pipeline that holds quality on tight deadlines.",
+    ko: "수퍼바이저, 리드, 베이스 뷰티, 클린업 팀. 촉박한 납기에서도 퀄리티를 지키는 하나의 파이프라인.",
   } as L,
   teamLink: { en: "About our service", ko: "서비스 소개" } as L,
 };
@@ -43,39 +43,59 @@ const ROLES: L[] = [
 ];
 
 // A wall of work drifting in opposite directions behind the wordmark.
-const COLUMNS = 4;
+const COLUMNS = 5;
+const PER_COLUMN = 6;
+const COPIES = 3;
+const WALL_URLS = [...new Set(portfolioVideos.map((v) => getVideoThumb(v)).filter(Boolean) as string[])];
+
+// Start fetching as soon as the app loads so the thumbnails are cached before the landing page mounts.
+const wallLoad: Promise<void> =
+  typeof window === "undefined"
+    ? Promise.resolve()
+    : Promise.all(
+        WALL_URLS.map(
+          (u) =>
+            new Promise<void>((resolve) => {
+              const img = new Image();
+              img.onload = img.onerror = () => resolve();
+              img.src = u;
+              img.decode?.().then(resolve, resolve);
+            }),
+        ),
+      ).then(() => undefined);
+let wallReady = false;
+wallLoad.then(() => {
+  wallReady = true;
+});
+
 function Wall() {
-  const [ready, setReady] = useState(false);
-  // Show the wall only once its thumbnails are decoded, so tiles never appear empty and then pop in.
+  const [ready, setReady] = useState(wallReady);
   useEffect(() => {
+    if (wallReady) {
+      setReady(true);
+      return;
+    }
     let live = true;
-    const urls = [...new Set(portfolioVideos.map((v) => getVideoThumb(v)).filter(Boolean) as string[])];
-    const loads = urls.map(
-      (u) =>
-        new Promise<void>((resolve) => {
-          const img = new Image();
-          img.onload = img.onerror = () => resolve();
-          img.src = u;
-          img.decode?.().then(resolve, resolve);
-        }),
-    );
-    const timeout = new Promise<void>((r) => setTimeout(r, 3500));
-    Promise.race([Promise.all(loads), timeout]).then(() => live && setReady(true));
+    const timeout = new Promise<void>((r) => setTimeout(r, 4000));
+    Promise.race([wallLoad, timeout]).then(() => live && setReady(true));
     return () => {
       live = false;
     };
   }, []);
-  const cols = Array.from({ length: COLUMNS }, (_, c) => {
-    const items = portfolioVideos.filter((_, i) => i % COLUMNS === c);
-    return items.length ? items : portfolioVideos.slice(0, 2);
-  });
+  const cols = Array.from({ length: COLUMNS }, (_, c) =>
+    Array.from({ length: PER_COLUMN }, (_, i) => portfolioVideos[(c * 2 + i) % portfolioVideos.length]),
+  );
   return (
     <div className={`wall${ready ? " is-ready" : ""}`} aria-hidden="true">
       {cols.map((items, c) => (
-        <div className={`wall-col${c % 2 ? " is-up" : ""}`} key={c} style={{ animationDuration: `${46 + c * 7}s` }}>
-          {[...items, ...items, ...items, ...items].map((v, i) => (
-            <img key={i} src={getVideoThumb(v)} alt="" decoding="async" loading="eager" />
-          ))}
+        <div
+          className={`wall-col${c % 2 ? " is-up" : ""}`}
+          key={c}
+          style={{ animationDuration: `${70 + c * 9}s`, transitionDelay: `${c * 0.12}s` }}
+        >
+          {Array.from({ length: COPIES }).flatMap((_, k) =>
+            items.map((v, i) => <img key={`${k}-${i}`} src={getVideoThumb(v)} alt="" decoding="async" loading="eager" />),
+          )}
         </div>
       ))}
     </div>
@@ -134,11 +154,11 @@ function Count({ value, prefix }: { value: number; prefix: string }) {
 
 export default function Landing() {
   const { lang, t } = useLang();
-  const featured = portfolioVideos.slice(0, 7);
+  const featured = portfolioVideos.slice(0, 4);
   return (
     <div className="landing">
+      <Hero />
       <div className="page-pad">
-        <Hero />
 
         <section className="landing-index">
           <Reveal>
@@ -182,7 +202,7 @@ export default function Landing() {
           {featured.map((v, i) => (
             <Link to="/work" className="rail-card" key={v.id} aria-label={v.title[lang]}>
               <span className="rail-img">
-                <img src={getVideoThumb(v)} alt="" loading="lazy" decoding="async" />
+                <img src={getVideoThumb(v)} alt="" decoding="async" />
               </span>
               <span className="rail-meta">
                 <em>{String(i + 1).padStart(2, "0")}</em>
