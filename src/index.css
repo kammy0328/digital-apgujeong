@@ -351,6 +351,7 @@ main {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: clamp(10px, 1.1vw, 18px);
+  padding-top: 16px;
 }
 .work-card {
   display: block;

@@ -103,21 +103,7 @@ export default function Portfolio() {
   const duration = reduced ? 0 : 0.46;
   return (
     <>
-      <section className="work-intro page-pad">
-        <h1 className="reveal-line">
-          <motion.span
-            initial={{ y: reduced ? 0 : "105%" }}
-            animate={{ y: 0 }}
-            transition={{
-              duration: reduced ? 0 : 1,
-              ease,
-              delay: reduced ? 0 : 0.1,
-            }}
-          >
-            Beauty <em>&</em> Cleanup
-          </motion.span>
-        </h1>
-      </section>
+      <h1 className="sr-only">diap — Beauty &amp; Cleanup</h1>
       <section
         className="work-grid"
         aria-label={lang === "ko" ? "포트폴리오" : "Portfolio"}
