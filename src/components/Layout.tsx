@@ -31,7 +31,7 @@ const META: Record<string, { title: L; description: L }> = {
     title: { en: "service — Beauty, cleanup & team | diap", ko: "service — 뷰티 · 클리닝 · 팀 구성 | 디지털 압구정" },
     description: {
       en: "Video beauty retouching and object cleanup by a supervised team of project supervisor, lead, core beauty artists and a partner cleanup team of about 30, built to deliver quality on tight deadlines.",
-      ko: "프로젝트 수퍼바이저, 리드, 베이스 Beauty 작업자, 약 30명의 Cleanup 파트너 팀으로 촉박한 납기에도 퀄리티를 지키는 작업 구성.",
+      ko: "프로젝트 수퍼바이저, 리드, 베이스 뷰티 작업자, 약 30명의 클린업 파트너 팀으로 촉박한 납기에도 퀄리티를 지키는 작업 구성.",
     },
   },
   "/contact": {

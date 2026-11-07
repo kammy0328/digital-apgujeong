@@ -22,7 +22,7 @@ const T = {
     ko: "장비, 로고, 반사, 잡물을 지우고 그 자리를 복원.",
   } as L,
   stats: [
-    { value: 30, prefix: "~", label: { en: "partner cleanup artists available", ko: "파트너 Cleanup 가용 인원" } as L },
+    { value: 30, prefix: "~", label: { en: "partner cleanup artists available", ko: "파트너 클린업 가용 인원" } as L },
     { value: portfolioVideos.length, prefix: "", label: { en: "projects", ko: "프로젝트" } as L },
     { value: 4, prefix: "", label: { en: "layers from supervisor to artist", ko: "수퍼바이저부터 작업자까지 단계" } as L },
   ],
@@ -30,7 +30,7 @@ const T = {
   all: { en: "All work", ko: "전체 보기" } as L,
   team: {
     en: "Supervisor, lead, core beauty and a partner cleanup team. One pipeline that holds quality on tight deadlines.",
-    ko: "수퍼바이저, 리드, 베이스 Beauty, 파트너 Cleanup 팀. 촉박한 납기에서도 퀄리티를 지키는 하나의 파이프라인.",
+    ko: "수퍼바이저, 리드, 베이스 뷰티, 파트너 클린업 팀. 촉박한 납기에서도 퀄리티를 지키는 하나의 파이프라인.",
   } as L,
   teamLink: { en: "About our service", ko: "서비스 소개" } as L,
 };
@@ -38,8 +38,8 @@ const T = {
 const ROLES: L[] = [
   { en: "Supervisor", ko: "수퍼바이저" },
   { en: "Lead", ko: "리드" },
-  { en: "Beauty", ko: "Beauty" },
-  { en: "Cleanup", ko: "Cleanup" },
+  { en: "Beauty", ko: "뷰티" },
+  { en: "Cleanup", ko: "클린업" },
 ];
 
 // A wall of work drifting in opposite directions behind the wordmark.

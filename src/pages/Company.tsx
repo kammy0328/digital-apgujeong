@@ -33,14 +33,14 @@ const TEAM: { role: L; text: L; stat?: { value: string; label: L } }[] = [
     },
   },
   {
-    role: { en: "Core Beauty Artists", ko: "베이스 Beauty 작업자" },
+    role: { en: "Core Beauty Artists", ko: "베이스 뷰티 작업자" },
     text: {
       en: "The in-house retouchers who carry the studio's look: skin, tone and contour that hold frame by frame.",
       ko: "스튜디오의 룩을 지키는 상주 리터처. 피부, 톤, 윤곽이 프레임 단위로 일관되게 이어지도록 작업합니다.",
     },
   },
   {
-    role: { en: "Cleanup Team", ko: "Cleanup 팀" },
+    role: { en: "Cleanup Team", ko: "클린업 팀" },
     stat: { value: "~30", label: { en: "artists available through partnership", ko: "파트너십 체결 · 가용 인원" } },
     text: {
       en: "A partner team of around 30 available artists. Volume and deadlines scale up without waiting on a single desk.",
