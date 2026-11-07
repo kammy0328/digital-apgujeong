@@ -96,6 +96,18 @@ em {
   opacity: 0;
   transition: opacity 1.6s ease;
   pointer-events: none;
+  image-rendering: pixelated;
+}
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 70;
+  transform-origin: 0 50%;
+  background: rgba(236, 236, 233, 0.6);
+  pointer-events: none;
 }
 .webgl-bg.is-ready {
   opacity: 1;
@@ -271,6 +283,15 @@ em {
   font-size: 12px;
   line-height: 1.8;
   color: #8c8c89;
+}
+.mobile-nav p a {
+  display: inline;
+  padding: 0;
+  border: 0;
+  font-size: inherit;
+  letter-spacing: normal;
+  line-height: inherit;
+  color: inherit;
 }
 
 main {
@@ -460,8 +481,6 @@ main {
   );
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
   transition:
     transform 0.6s var(--ease),
     border-color 0.4s,
@@ -493,8 +512,6 @@ main {
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.2),
     0 10px 30px rgba(0, 0, 0, 0.35);
-  -webkit-backdrop-filter: blur(16px) saturate(160%);
-  backdrop-filter: blur(16px) saturate(160%);
   transition:
     transform 0.5s var(--ease),
     background 0.4s;
@@ -833,6 +850,60 @@ main {
   display: block;
   width: clamp(180px, 34vw, 620px);
   height: auto;
+}
+
+.marquee {
+  overflow: hidden;
+  margin-top: 64px;
+  padding: 22px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 48s linear infinite;
+  will-change: transform;
+}
+.marquee-group {
+  display: flex;
+  flex-shrink: 0;
+}
+.marquee-group span {
+  padding-right: 0.7em;
+  font-size: clamp(40px, 7vw, 108px);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 1.05;
+  white-space: nowrap;
+  color: #2c2c2a;
+}
+.marquee-group em {
+  color: #3a3a38;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Page titles drift up and fade as you scroll (CSS scroll-driven; browsers without it just skip it). */
+@supports (animation-timeline: scroll()) {
+  .work-intro h1,
+  .service-hero h1,
+  .contact-heading h1 {
+    animation: title-drift linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 70vh;
+  }
+  @keyframes title-drift {
+    to {
+      transform: translateY(-48px);
+      opacity: 0.15;
+    }
+  }
 }
 
 /* ---------- responsive ---------- */

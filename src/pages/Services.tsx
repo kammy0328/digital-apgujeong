@@ -3,6 +3,7 @@ import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import type { Key, ReactNode } from "react";
 import { useLang, type L } from "../i18n";
+import Magnetic from "../components/Magnetic";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -163,9 +164,11 @@ function ServicePage({ content }: { content: ServiceContent }) {
 
       <Reveal className="service-cta">
         <p>{t(content.cta)}</p>
-        <Link to="/contact" className="glass-button">
-          {t(LABELS.inquiry)} <ArrowUpRight size={18} />
-        </Link>
+        <Magnetic>
+          <Link to="/contact" className="glass-button">
+            {t(LABELS.inquiry)} <ArrowUpRight size={18} />
+          </Link>
+        </Magnetic>
       </Reveal>
     </div>
   );

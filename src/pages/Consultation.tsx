@@ -2,6 +2,7 @@ import { useState, type ChangeEvent, type FormEvent } from "react";
 import { ArrowUpRight, Check } from "lucide-react";
 import { motion } from "motion/react";
 import { useLang, type L } from "../i18n";
+import Magnetic from "../components/Magnetic";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const initial = {
@@ -103,7 +104,9 @@ export default function Consultation() {
           <h2>Beauty & Cleanup</h2>
           <p>{t(T.aside)}</p>
           <a href="mailto:digitalapgujeong@gmail.com">digitalapgujeong@gmail.com ↗</a>
-          <a href="tel:01028920328">010.2892.0328 ↗</a>
+          <a href="https://www.instagram.com/digital_apgujeong" target="_blank" rel="noopener noreferrer">
+            @digital_apgujeong ↗
+          </a>
           <p>
             {t(T.services)}
             <br />
@@ -195,9 +198,11 @@ export default function Consultation() {
             )}
             <div className="submit-row">
               <p>{t(T.required)}</p>
-              <button disabled={state === "loading"} type="submit">
-                {state === "loading" ? t(T.sending) : t(T.send)} <ArrowUpRight size={17} />
-              </button>
+              <Magnetic>
+                <button disabled={state === "loading"} type="submit">
+                  {state === "loading" ? t(T.sending) : t(T.send)} <ArrowUpRight size={17} />
+                </button>
+              </Magnetic>
             </div>
           </form>
         )}

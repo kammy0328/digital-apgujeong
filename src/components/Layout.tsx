@@ -1,6 +1,6 @@
 import { NavLink, Link, useLocation, useOutlet } from "react-router-dom";
 import { useEffect, useRef, useState, type PointerEvent } from "react";
-import { AnimatePresence, MotionConfig, motion } from "motion/react";
+import { AnimatePresence, MotionConfig, motion, useScroll, useSpring } from "motion/react";
 import { Menu, X } from "lucide-react";
 import Logo from "./Logo";
 import WebGLBackground from "./WebGLBackground";
@@ -86,6 +86,8 @@ export default function Layout() {
   const outlet = useOutlet();
   const { t, lang } = useLang();
   const glassRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 30, mass: 0.3 });
 
   useEffect(() => {
     setOpen(false);
@@ -133,6 +135,7 @@ export default function Layout() {
   return (
     <MotionConfig reducedMotion="user">
       <WebGLBackground />
+      <motion.div className="scroll-progress" style={{ scaleX: progress }} aria-hidden="true" />
       <div className="site-shell">
         <header className={`site-header${scrolled || open ? " is-glass" : ""}`}>
           <motion.div
@@ -216,7 +219,9 @@ export default function Layout() {
               >
                 digitalapgujeong@gmail.com
                 <br />
-                010.2892.0328
+                <a href="https://www.instagram.com/digital_apgujeong" target="_blank" rel="noopener noreferrer">
+                  @digital_apgujeong
+                </a>
               </motion.p>
             </motion.nav>
           )}
@@ -226,10 +231,9 @@ export default function Layout() {
           <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
             <motion.div
               key={pathname}
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.55, ease }}
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0, transition: { duration: 0.5, ease } }}
+              exit={{ opacity: 0, transition: { duration: 0.14 } }}
             >
               {outlet}
             </motion.div>
@@ -249,11 +253,26 @@ export default function Layout() {
             <div className="footer-col">
               <span className="eyebrow">contact</span>
               <a href="mailto:digitalapgujeong@gmail.com">digitalapgujeong@gmail.com</a>
-              <a href="tel:01028920328">010.2892.0328</a>
+              <a href="https://www.instagram.com/digital_apgujeong" target="_blank" rel="noopener noreferrer">
+                @digital_apgujeong
+              </a>
             </div>
             <div className="footer-col footer-copy">
               <span className="eyebrow">© {new Date().getFullYear()}</span>
               <p>diap — digital apgujeong</p>
+            </div>
+          </div>
+          <div className="marquee" aria-hidden="true">
+            <div className="marquee-track">
+              {[0, 1].map((g) => (
+                <div className="marquee-group" key={g}>
+                  {[0, 1, 2, 3].map((i) => (
+                    <span key={i}>
+                      Beauty <em>&</em> Cleanup
+                    </span>
+                  ))}
+                </div>
+              ))}
             </div>
           </div>
           <motion.div

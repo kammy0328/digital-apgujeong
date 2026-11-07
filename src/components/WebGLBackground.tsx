@@ -8,7 +8,11 @@ void main() { gl_Position = vec4(a_pos, 0.0, 1.0); }
 // Slow domain-warped smoke, a soft light that trails the cursor, and fine grain.
 // Brightness stays within a few percent of the base so the page reads as one black.
 const FRAGMENT = `
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
 precision mediump float;
+#endif
 uniform vec2 u_res;
 uniform float u_time;
 uniform vec2 u_mouse;
@@ -40,7 +44,11 @@ void main() {
   float vig = smoothstep(1.35, 0.15, length(p));
   float light = (n * n * 0.085 + glow * 0.03) * vig;
   vec3 col = vec3(0.047) + light * vec3(1.0, 0.985, 0.96);
-  col += (hash(gl_FragCoord.xy) - 0.5) * 0.016;
+    // Triangular dither (+-1.5 levels before 8-bit rounding) breaks up banding in the near-black gradient.
+  // The canvas is upscaled with nearest-neighbour (see CSS) so it is not smoothed away.
+  float n1 = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453);
+  float n2 = fract(sin(dot(gl_FragCoord.xy, vec2(39.3468, 11.1351))) * 24634.6345);
+  col += (n1 + n2 - 1.0) * 1.5 / 255.0;
   gl_FragColor = vec4(col, 1.0);
 }
 `;
