@@ -45,16 +45,36 @@ const ROLES: L[] = [
 // A wall of work drifting in opposite directions behind the wordmark.
 const COLUMNS = 4;
 function Wall() {
+  const [ready, setReady] = useState(false);
+  // Show the wall only once its thumbnails are decoded, so tiles never appear empty and then pop in.
+  useEffect(() => {
+    let live = true;
+    const urls = [...new Set(portfolioVideos.map((v) => getVideoThumb(v)).filter(Boolean) as string[])];
+    const loads = urls.map(
+      (u) =>
+        new Promise<void>((resolve) => {
+          const img = new Image();
+          img.onload = img.onerror = () => resolve();
+          img.src = u;
+          img.decode?.().then(resolve, resolve);
+        }),
+    );
+    const timeout = new Promise<void>((r) => setTimeout(r, 3500));
+    Promise.race([Promise.all(loads), timeout]).then(() => live && setReady(true));
+    return () => {
+      live = false;
+    };
+  }, []);
   const cols = Array.from({ length: COLUMNS }, (_, c) => {
     const items = portfolioVideos.filter((_, i) => i % COLUMNS === c);
     return items.length ? items : portfolioVideos.slice(0, 2);
   });
   return (
-    <div className="wall" aria-hidden="true">
+    <div className={`wall${ready ? " is-ready" : ""}`} aria-hidden="true">
       {cols.map((items, c) => (
         <div className={`wall-col${c % 2 ? " is-up" : ""}`} key={c} style={{ animationDuration: `${46 + c * 7}s` }}>
           {[...items, ...items, ...items, ...items].map((v, i) => (
-            <img key={i} src={getVideoThumb(v)} alt="" decoding="async" loading={i < 3 ? "eager" : "lazy"} />
+            <img key={i} src={getVideoThumb(v)} alt="" decoding="async" loading="eager" />
           ))}
         </div>
       ))}
