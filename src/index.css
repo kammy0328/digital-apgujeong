@@ -1539,3 +1539,46 @@ main {
   font-size: 14px;
   font-weight: 500;
 }
+
+.landing-team p span {
+  display: block;
+  text-wrap: balance;
+}
+
+/* ---------- partner studios (quiet text row) ---------- */
+.partners {
+  padding: 56px 0;
+}
+.partner-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.partner-item li {
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: #a6a6a3;
+}
+
+@media (max-width: 767px) {
+  .hero-center .glass-button {
+    padding: 11px 20px;
+    font-size: 13px;
+    gap: 10px;
+  }
+  .hero-center .glass-button svg {
+    width: 15px;
+    height: 15px;
+  }
+  .partner-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .partners {
+    padding: 40px 0;
+  }
+}

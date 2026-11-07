@@ -13,6 +13,7 @@ const T = {
   } as L,
   teamLabel: { en: "team", ko: "team" } as L,
   teamTitle: { en: "One team, from direction to delivery", ko: "디렉션부터 납품까지, 하나의 팀" } as L,
+  partnersLabel: { en: "partner studios", ko: "파트너 스튜디오" } as L,
   fastLabel: { en: "why us", ko: "why us" } as L,
   fastTitle: { en: "High quality, even on a tight deadline", ko: "촉박한 납기에도 높은 퀄리티" } as L,
 };
@@ -33,7 +34,7 @@ const TEAM: { role: L; text: L }[] = [
     },
   },
   {
-    role: { en: "Core Beauty", ko: "베이스 뷰티" },
+    role: { en: "Beauty", ko: "뷰티" },
     text: {
       en: "The in-house retouchers who carry the studio's look: skin, tone and contour that hold frame by frame.",
       ko: "스튜디오의 룩을 지키는 상주 리터처. 피부, 톤, 윤곽이 프레임 단위로 일관되게 이어지도록 작업합니다.",
@@ -47,6 +48,8 @@ const TEAM: { role: L; text: L }[] = [
     },
   },
 ];
+
+const PARTNERS = ["ARTVFXSTUDIO", "AFTERTAKEVFX", "PIXEL SURGERY", "STAR SPACE STUDIO"];
 
 const FAST: { title: L; text: L }[] = [
   {
@@ -111,6 +114,19 @@ export default function Company() {
             </Reveal>
           ))}
         </div>
+      </section>
+
+      <section className="service-section partners">
+        <Reveal className="service-section-head">
+          <span className="eyebrow">{t(T.partnersLabel)}</span>
+        </Reveal>
+        <ul className="partner-list">
+          {PARTNERS.map((name, i) => (
+            <Reveal key={name} delay={i * 0.06} className="partner-item">
+              <li>{name}</li>
+            </Reveal>
+          ))}
+        </ul>
       </section>
 
       <section className="service-section service-approach">

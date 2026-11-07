@@ -29,9 +29,9 @@ const T = {
   workLabel: { en: "latest work", ko: "최신 작업" } as L,
   all: { en: "All work", ko: "전체 보기" } as L,
   team: {
-    en: "Supervisor, lead, core beauty and a cleanup team. One pipeline that holds quality on tight deadlines.",
-    ko: "수퍼바이저, 리드, 베이스 뷰티, 클린업 팀. 촉박한 납기에서도 퀄리티를 지키는 하나의 파이프라인.",
-  } as L,
+    en: ["Supervisor, lead, core beauty and a cleanup team.", "One pipeline that holds quality on tight deadlines."],
+    ko: ["수퍼바이저, 리드, 베이스 뷰티, 클린업 팀.", "촉박한 납기에서도 퀄리티를 지키는 하나의 파이프라인."],
+  },
   teamLink: { en: "About our service", ko: "서비스 소개" } as L,
 };
 
@@ -223,7 +223,11 @@ export default function Landing() {
           ))}
         </Reveal>
         <Reveal>
-          <p>{t(T.team)}</p>
+          <p>
+            {T.team[lang].map((line) => (
+              <span key={line}>{line}</span>
+            ))}
+          </p>
           <Link to="/service" className="landing-link">
             {t(T.teamLink)} <ArrowUpRight size={14} />
           </Link>
