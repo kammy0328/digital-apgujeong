@@ -19,6 +19,10 @@ const videos: PortfolioVideo[] = [
   { id: "memi", youtubeId: "i_-pZiZJ7MQ", date: "2026-04-29", title: { ko: "매미 - BADidea", en: "MEMI - BADidea" } },
   { id: "matthew", youtubeId: "nZS9J20OWog", date: "2026-05-28", title: { ko: "제로베이스원 석매튜 - Love Ain't Easy", en: "ZEROBASEONE Seok Matthew - Love Ain't Easy" } },
   { id: "hanbin", youtubeId: "AkP6v3sMyh8", date: "2026-06-13", title: { ko: "제로베이스원 성한빈 - Pretender", en: "ZEROBASEONE Han Bin - Pretender" } },
+  { id: "dragonpony", youtubeId: "oKzPAN7JXVo", date: "2026-11-05", title: { ko: "드래곤포니 - Calling back", en: "Dragon Pony - Calling back" } },
+  { id: "rescene", youtubeId: "pey3E47eSc8", date: "2026-11-03", title: { ko: "리센느 - With", en: "RESCENE - With" } },
+  { id: "illit", youtubeId: "V2V9-9VhYJo", date: "2026-10-26", title: { ko: "아일릿 - 체포하겠어", en: "ILLIT - You’re Under Arrest" } },
+  { id: "leechangsub", youtubeId: "9lNp4h06dpc", date: "2026-09-18", title: { ko: "이창섭 - 사계, 그리고 너", en: "LEECHANGSUB - 사계, 그리고 너" } },
   { id: "keyveatz", youtubeId: "rt7fIlko0CM", title: { ko: "키비츠 - A1ㄱ", en: "Keyveatz - A1ㄱ" } },
 ];
 
