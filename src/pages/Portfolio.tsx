@@ -147,7 +147,7 @@ export default function Portfolio() {
               setOpen(true);
             }}
             aria-label={
-              lang === "ko" ? `${item.title} 영상 재생` : `Play ${item.title}`
+              lang === "ko" ? `${item.title.ko} 영상 재생` : `Play ${item.title.en}`
             }
             initial={{ opacity: reduced ? 1 : 0, y: reduced ? 0 : 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -160,7 +160,7 @@ export default function Portfolio() {
           >
             <span className="work-image">
               <span className="image-fallback" aria-hidden="true">
-                {item.title.split(" - ")[0]}
+                {item.title[lang].split(" - ")[0]}
               </span>
               {getVideoThumb(item) && (
                 <img
@@ -174,7 +174,7 @@ export default function Portfolio() {
                 />
               )}
               <span className="work-overlay" aria-hidden="true">
-                <span className="work-title">{item.title}</span>
+                <span className="work-title">{item.title[lang]}</span>
               </span>
             </span>
           </motion.button>
@@ -194,7 +194,7 @@ export default function Portfolio() {
               <div
                 role="dialog"
                 aria-modal="true"
-                aria-label={video.title}
+                aria-label={video.title[lang]}
                 onKeyDown={(event) => {
                   if (event.key !== "Tab") return;
                   const nodes = Array.from(
@@ -227,7 +227,7 @@ export default function Portfolio() {
                   transition={{ duration: reduced ? 0 : 0.18 }}
                   onClick={(event) => event.stopPropagation()}
                 >
-                  <span>{video.title}</span>
+                  <span>{video.title[lang]}</span>
                   <button
                     ref={closeButton}
                     onClick={close}
@@ -255,7 +255,7 @@ export default function Portfolio() {
                   onClick={(event) => event.stopPropagation()}
                 >
                   <span className="image-fallback" aria-hidden="true">
-                    {video.title.split(" - ")[0]}
+                    {video.title[lang].split(" - ")[0]}
                   </span>
                   {thumb && (
                     <img className="video-poster" src={thumb} alt="" />
@@ -274,7 +274,7 @@ export default function Portfolio() {
                     <iframe
                       className="video-player"
                       src={getVideoEmbedUrl(video)}
-                      title={video.title}
+                      title={video.title[lang]}
                       allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
                       allowFullScreen
                     />
