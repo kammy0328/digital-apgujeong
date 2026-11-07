@@ -9,7 +9,7 @@ import {
   getVideoPoster,
   getVideoThumb,
 } from "../data/portfolio";
-import { ease, TITLE, REVEAL } from "../motion";
+import { ease, TITLE } from "../motion";
 
 type Frame = { left: number; top: number; width: number; height: number };
 function playerFrame(): Frame {
@@ -119,7 +119,7 @@ export default function Portfolio() {
         aria-label={lang === "ko" ? "포트폴리오" : "Portfolio"}
       >
         {portfolioVideos.map((item, index) => (
-          <motion.button
+          <button
             key={item.id}
             className="work-card"
             onPointerEnter={() => preloadPoster(item)}
@@ -145,15 +145,6 @@ export default function Portfolio() {
             aria-label={
               lang === "ko" ? `${item.title.ko} 영상 재생` : `Play ${item.title.en}`
             }
-            initial={{ opacity: reduced ? 1 : 0, y: reduced ? 0 : REVEAL.y }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: REVEAL.margin }}
-            transition={{
-              duration: reduced ? 0 : REVEAL.duration,
-              ease,
-              // The first row follows the title; later rows start the moment they scroll in.
-              delay: reduced ? 0 : (index < 4 ? 0.3 : 0) + (index % 4) * REVEAL.stagger,
-            }}
           >
             <span className="work-image">
               <span className="image-fallback" aria-hidden="true">
@@ -174,7 +165,7 @@ export default function Portfolio() {
                 <span className="work-title">{item.title[lang]}</span>
               </span>
             </span>
-          </motion.button>
+          </button>
         ))}
       </section>
       {createPortal(

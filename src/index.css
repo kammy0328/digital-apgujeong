@@ -852,7 +852,6 @@ main {
 
 /* Page titles drift up and fade as you scroll (CSS scroll-driven; browsers without it just skip it). */
 @supports (animation-timeline: scroll()) {
-  .work-intro h1,
   .service-hero h1,
   .contact-heading h1 {
     animation: title-drift linear both;

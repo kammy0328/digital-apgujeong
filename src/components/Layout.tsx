@@ -1,5 +1,5 @@
 import { NavLink, Link, useLocation, useOutlet } from "react-router-dom";
-import { useEffect, useRef, useState, type PointerEvent } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type PointerEvent } from "react";
 import { AnimatePresence, MotionConfig, motion, useScroll, useSpring } from "motion/react";
 import { Menu, X } from "lucide-react";
 import Logo from "./Logo";
@@ -51,6 +51,11 @@ function LangToggle() {
 }
 
 
+// Route changes must not inherit CSS smooth scrolling or a browser-restored position.
+function resetPageScroll() {
+  if (!window.location.hash) window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+}
+
 export default function Layout() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -60,6 +65,12 @@ export default function Layout() {
   const glassRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 30, mass: 0.3 });
+
+  useLayoutEffect(() => {
+    resetPageScroll();
+    window.addEventListener("pageshow", resetPageScroll);
+    return () => window.removeEventListener("pageshow", resetPageScroll);
+  }, []);
 
   useEffect(() => {
     setOpen(false);
@@ -202,11 +213,11 @@ export default function Layout() {
         </AnimatePresence>
 
         <main id="main-content">
-          <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
+          <AnimatePresence mode="wait" onExitComplete={resetPageScroll}>
             <motion.div
               key={pathname}
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0, transition: { duration: 0.5, ease } }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, transition: { duration: 0.25, ease } }}
               exit={{ opacity: 0, transition: { duration: 0.14 } }}
             >
               {outlet}
