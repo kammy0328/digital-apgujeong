@@ -17,7 +17,7 @@ const T = {
   fastTitle: { en: "High quality, even on a tight deadline", ko: "촉박한 납기에도 높은 퀄리티" } as L,
 };
 
-const TEAM: { role: L; text: L; badge?: L }[] = [
+const TEAM: { role: L; text: L; stat?: { value: string; label: L } }[] = [
   {
     role: { en: "Project Supervisor", ko: "프로젝트 수퍼바이저" },
     text: {
@@ -41,7 +41,7 @@ const TEAM: { role: L; text: L; badge?: L }[] = [
   },
   {
     role: { en: "Cleanup Team", ko: "Cleanup 팀" },
-    badge: { en: "~30 artists available through partnership", ko: "파트너십 체결, 가용 인원 약 30명" },
+    stat: { value: "~30", label: { en: "artists available through partnership", ko: "파트너십 체결 · 가용 인원" } },
     text: {
       en: "A partner team of around 30 available artists. Volume and deadlines scale up without waiting on a single desk.",
       ko: "파트너십으로 연결된 약 30명의 가용 인원. 물량과 납기에 맞춰 한 사람의 속도에 묶이지 않고 규모를 키웁니다.",
@@ -103,13 +103,18 @@ export default function Company() {
         </Reveal>
         <div className="team-list">
           {TEAM.map((m, i) => (
-            <Reveal key={m.role.en} delay={i * 0.08} className="team-row">
+            <Reveal key={m.role.en} delay={i * 0.08} className={`team-row${m.stat ? " has-stat" : ""}`}>
               <span className="process-index">{String(i + 1).padStart(2, "0")}</span>
               <div>
                 <h3>{t(m.role)}</h3>
-                {m.badge && <span className="team-badge">{t(m.badge)}</span>}
               </div>
               <p>{t(m.text)}</p>
+              {m.stat && (
+                <div className="team-stat">
+                  <strong>{m.stat.value}</strong>
+                  <span>{t(m.stat.label)}</span>
+                </div>
+              )}
             </Reveal>
           ))}
         </div>

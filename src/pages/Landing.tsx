@@ -23,10 +23,10 @@ const T = {
   } as L,
   stats: [
     { value: 30, prefix: "~", label: { en: "partner cleanup artists available", ko: "파트너 Cleanup 가용 인원" } as L },
-    { value: portfolioVideos.length, prefix: "", label: { en: "selected projects", ko: "선별 작업" } as L },
+    { value: portfolioVideos.length, prefix: "", label: { en: "projects", ko: "프로젝트" } as L },
     { value: 4, prefix: "", label: { en: "layers from supervisor to artist", ko: "수퍼바이저부터 작업자까지 단계" } as L },
   ],
-  workLabel: { en: "selected work", ko: "selected work" } as L,
+  workLabel: { en: "latest work", ko: "최신 작업" } as L,
   all: { en: "All work", ko: "전체 보기" } as L,
   team: {
     en: "Supervisor, lead, core beauty and a partner cleanup team. One pipeline that holds quality on tight deadlines.",
@@ -39,7 +39,7 @@ const ROLES: L[] = [
   { en: "Supervisor", ko: "수퍼바이저" },
   { en: "Lead", ko: "리드" },
   { en: "Beauty", ko: "Beauty" },
-  { en: "Cleanup ×30", ko: "Cleanup ×30" },
+  { en: "Cleanup", ko: "Cleanup" },
 ];
 
 // A wall of work drifting in opposite directions behind the wordmark.
