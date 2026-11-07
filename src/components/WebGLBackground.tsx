@@ -134,7 +134,8 @@ export default function WebGLBackground() {
     let lastDraw = 0;
     const loop = (now: number) => {
       frame = requestAnimationFrame(loop);
-      if (document.hidden || now - lastDraw < 33) return;
+      // Idle while the tab is hidden or the video player is open, so the transition has the GPU to itself.
+      if (document.hidden || document.body.classList.contains("player-open") || now - lastDraw < 33) return;
       lastDraw = now;
       draw(now);
     };

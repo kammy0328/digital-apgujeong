@@ -27,12 +27,33 @@ function playerFrame(): Frame {
   };
 }
 
+// Animate the player with transforms only (no per-frame layout): it is laid out at its final size
+// and starts scaled down onto the clicked card.
+function flip(origin: Frame, target: Frame) {
+  const scale = origin.width / target.width;
+  return {
+    x: origin.left - target.left,
+    y: origin.top - target.top,
+    scale,
+    borderRadius: 10 / scale,
+  };
+}
+
+const preloaded = new Set<string>();
+function preloadPoster(video: Parameters<typeof getVideoPoster>[0]) {
+  const url = getVideoPoster(video);
+  if (!url || preloaded.has(url)) return;
+  preloaded.add(url);
+  new Image().src = url;
+}
+
 export default function Portfolio() {
   const { lang } = useLang();
   const reduced = useReducedMotion();
   const [selected, setSelected] = useState<number | null>(null);
   const [open, setOpen] = useState(false);
   const [ready, setReady] = useState(false);
+  const [hd, setHd] = useState(false);
   const [origin, setOrigin] = useState<Frame | null>(null);
   const [target, setTarget] = useState<Frame | null>(null);
   const playbackAllowed = useRef(false);
@@ -59,6 +80,7 @@ export default function Portfolio() {
     if (selected === null) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    document.body.classList.add("player-open");
     closeButton.current?.focus({ preventScroll: true });
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") close();
@@ -68,6 +90,7 @@ export default function Portfolio() {
     window.addEventListener("resize", resize);
     return () => {
       document.body.style.overflow = previous;
+      document.body.classList.remove("player-open");
       document.removeEventListener("keydown", onKey);
       window.removeEventListener("resize", resize);
       trigger.current?.focus({ preventScroll: true });
@@ -76,6 +99,7 @@ export default function Portfolio() {
 
   const video = selected !== null ? portfolioVideos[selected] : null;
   const poster = video ? getVideoPoster(video) : undefined;
+  const thumb = video ? getVideoThumb(video) : undefined;
   const duration = reduced ? 0 : 0.46;
   return (
     <>
@@ -102,6 +126,8 @@ export default function Portfolio() {
           <motion.button
             key={item.id}
             className="work-card"
+            onPointerEnter={() => preloadPoster(item)}
+            onFocus={() => preloadPoster(item)}
             onClick={(event) => {
               trigger.current = event.currentTarget;
               const rect = event.currentTarget
@@ -116,6 +142,7 @@ export default function Portfolio() {
               playbackAllowed.current = true;
               setTarget(playerFrame());
               setReady(false);
+              setHd(false);
               setSelected(index);
               setOpen(true);
             }}
@@ -156,23 +183,14 @@ export default function Portfolio() {
       {createPortal(
         <AnimatePresence onExitComplete={() => setSelected(null)}>
           {open && video && origin && target && (
-            <motion.div
-              className="video-overlay"
-              onClick={close}
-              initial={{
-                backgroundColor: "rgba(6,6,6,0)",
-                backdropFilter: "blur(0px)",
-              }}
-              animate={{
-                backgroundColor: "rgba(6,6,6,0.86)",
-                backdropFilter: "blur(12px)",
-              }}
-              exit={{
-                backgroundColor: "rgba(6,6,6,0)",
-                backdropFilter: "blur(0px)",
-              }}
-              transition={{ duration }}
-            >
+            <div className="video-overlay" onClick={close}>
+              <motion.div
+                className="video-backdrop"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration }}
+              />
               <div
                 role="dialog"
                 aria-modal="true"
@@ -220,9 +238,16 @@ export default function Portfolio() {
                 </motion.div>
                 <motion.div
                   className="video-morph-frame"
-                  initial={{ ...origin, borderRadius: 10 }}
-                  animate={{ ...target, borderRadius: 8 }}
-                  exit={{ ...origin, borderRadius: 10 }}
+                  style={{
+                    left: target.left,
+                    top: target.top,
+                    width: target.width,
+                    height: target.height,
+                    transformOrigin: "0 0",
+                  }}
+                  initial={flip(origin, target)}
+                  animate={{ x: 0, y: 0, scale: 1, borderRadius: 8 }}
+                  exit={flip(origin, target)}
                   transition={{ duration, ease }}
                   onAnimationComplete={() => {
                     if (playbackAllowed.current) setReady(true);
@@ -232,14 +257,17 @@ export default function Portfolio() {
                   <span className="image-fallback" aria-hidden="true">
                     {video.title.split(" - ")[0]}
                   </span>
+                  {thumb && (
+                    <img className="video-poster" src={thumb} alt="" />
+                  )}
                   {poster && (
                     <img
-                      className="video-poster"
+                      className="video-poster video-poster-hd"
                       src={poster}
                       alt=""
-                      onError={(event) => {
-                        event.currentTarget.style.opacity = "0";
-                      }}
+                      decoding="async"
+                      style={{ opacity: hd ? 1 : 0 }}
+                      onLoad={() => setHd(true)}
                     />
                   )}
                   {ready && (
@@ -253,7 +281,7 @@ export default function Portfolio() {
                   )}
                 </motion.div>
               </div>
-            </motion.div>
+            </div>
           )}
         </AnimatePresence>,
         document.body,

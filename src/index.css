@@ -19,6 +19,7 @@
   font-synthesis: none;
 }
 html {
+  scrollbar-gutter: stable;
   /* One black for the whole page, footer included; the WebGL canvas paints over it. */
   background: var(--ink);
   scroll-behavior: smooth;
@@ -431,9 +432,6 @@ main {
   align-items: center;
   justify-content: center;
   padding: 30px;
-  background: rgba(6, 6, 6, 0.8);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
 }
 .video-dialog {
   width: min(1200px, 100%);
@@ -852,43 +850,6 @@ main {
   height: auto;
 }
 
-.marquee {
-  overflow: hidden;
-  margin-top: 64px;
-  padding: 22px 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-}
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: marquee 48s linear infinite;
-  will-change: transform;
-}
-.marquee-group {
-  display: flex;
-  flex-shrink: 0;
-}
-.marquee-group span {
-  padding-right: 0.7em;
-  font-size: clamp(40px, 7vw, 108px);
-  font-weight: 500;
-  letter-spacing: -0.055em;
-  line-height: 1.05;
-  white-space: nowrap;
-  color: #2c2c2a;
-}
-.marquee-group em {
-  color: #3a3a38;
-}
-@keyframes marquee {
-  to {
-    transform: translateX(-50%);
-  }
-}
-
 /* Page titles drift up and fade as you scroll (CSS scroll-driven; browsers without it just skip it). */
 @supports (animation-timeline: scroll()) {
   .work-intro h1,
@@ -1079,6 +1040,15 @@ main {
   position: fixed;
   overflow: hidden;
   background: #161616;
+  will-change: transform;
+}
+.video-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 6, 6, 0.92);
+}
+.video-poster-hd {
+  transition: opacity 0.3s;
 }
 .video-poster,
 .video-player {

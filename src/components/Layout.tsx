@@ -262,19 +262,6 @@ export default function Layout() {
               <p>diap — digital apgujeong</p>
             </div>
           </div>
-          <div className="marquee" aria-hidden="true">
-            <div className="marquee-track">
-              {[0, 1].map((g) => (
-                <div className="marquee-group" key={g}>
-                  {[0, 1, 2, 3].map((i) => (
-                    <span key={i}>
-                      Beauty <em>&</em> Cleanup
-                    </span>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
           <motion.div
             className="footer-mark"
             initial={{ opacity: 0, y: 40 }}
