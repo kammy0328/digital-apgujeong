@@ -1,13 +1,10 @@
-import { Link } from "react-router-dom";
 import { motion } from "motion/react";
-import { ArrowUpRight } from "lucide-react";
 import type { Key, ReactNode } from "react";
 import { useLang, type L } from "../i18n";
-import Magnetic from "../components/Magnetic";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-interface ServiceContent {
+export interface ServiceContent {
   title: string;
   cta: L;
   lead: L;
@@ -16,14 +13,14 @@ interface ServiceContent {
   approach: { title: L; text: L }[];
 }
 
-const LABELS = {
+export const LABELS = {
   what: { en: "what we do", ko: "what we do" } as L,
   approach: { en: "approach", ko: "approach" } as L,
   process: { en: "process", ko: "process" } as L,
   inquiry: { en: "Project inquiry", ko: "프로젝트 문의" } as L,
 };
 
-const PROCESS: { title: L; text: L }[] = [
+export const PROCESS: { title: L; text: L }[] = [
   {
     title: { en: "Send footage", ko: "원본 전달" },
     text: { en: "Share your video link, scope of work and preferred deadline.", ko: "영상 링크와 작업 범위, 희망 납기를 공유해 주세요." },
@@ -42,7 +39,7 @@ const PROCESS: { title: L; text: L }[] = [
   },
 ];
 
-const BEAUTY: ServiceContent = {
+export const BEAUTY: ServiceContent = {
   title: "Beauty",
   cta: { en: "Need beauty retouching for your video?", ko: "영상 뷰티 리터칭이 필요한 영상이 있다면" },
   lead: {
@@ -65,7 +62,7 @@ const BEAUTY: ServiceContent = {
   ],
 };
 
-const CLEANUP: ServiceContent = {
+export const CLEANUP: ServiceContent = {
   title: "Cleanup",
   cta: { en: "Need object cleanup for your video?", ko: "오브젝트 클리닝이 필요한 영상이 있다면" },
   lead: {
@@ -102,24 +99,17 @@ export function Reveal({ children, delay = 0, className }: { key?: Key; children
   );
 }
 
-function ServicePage({ content }: { content: ServiceContent }) {
+export function ServiceBlock({ id, index, content }: { id: string; index: string; content: ServiceContent }) {
   const { t } = useLang();
   return (
-    <div className="service-page page-pad">
-      <section className="service-hero">
-        <h1 className="reveal-line">
-          <motion.span initial={{ y: "105%" }} animate={{ y: 0 }} transition={{ duration: 1.1, ease, delay: 0.1 }}>
-            {content.title}
-          </motion.span>
-        </h1>
-        <Reveal delay={0.35} className="service-lead">
+    <section id={id} className="service-section service-block">
+      <Reveal className="service-section-head">
+        <span className="eyebrow">{index}</span>
+        <h2>{content.title}</h2>
+      </Reveal>
+      <div className="service-block-body">
+        <Reveal className="service-lead">
           <p>{t(content.lead)}</p>
-        </Reveal>
-      </section>
-
-      <section className="service-section">
-        <Reveal className="service-section-head">
-          <span className="eyebrow">{t(LABELS.what)}</span>
         </Reveal>
         <div className="service-items">
           {content.items.map((item, i) => (
@@ -130,12 +120,8 @@ function ServicePage({ content }: { content: ServiceContent }) {
             </Reveal>
           ))}
         </div>
-      </section>
-
-      <section className="service-section service-approach">
-        <Reveal className="service-section-head">
-          <span className="eyebrow">{t(LABELS.approach)}</span>
-          <h2>{t(content.approachTitle)}</h2>
+        <Reveal className="approach-title">
+          <h3>{t(content.approachTitle)}</h3>
         </Reveal>
         <div className="approach-list">
           {content.approach.map((a, i) => (
@@ -145,39 +131,27 @@ function ServicePage({ content }: { content: ServiceContent }) {
             </Reveal>
           ))}
         </div>
-      </section>
-
-      <section className="service-section">
-        <Reveal className="service-section-head">
-          <span className="eyebrow">{t(LABELS.process)}</span>
-        </Reveal>
-        <div className="process-list">
-          {PROCESS.map((step, i) => (
-            <Reveal key={step.title.en} delay={i * 0.08} className="process-step">
-              <span className="process-index">{String(i + 1).padStart(2, "0")}</span>
-              <h3>{t(step.title)}</h3>
-              <p>{t(step.text)}</p>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      <Reveal className="service-cta">
-        <p>{t(content.cta)}</p>
-        <Magnetic>
-          <Link to="/contact" className="glass-button">
-            {t(LABELS.inquiry)} <ArrowUpRight size={18} />
-          </Link>
-        </Magnetic>
-      </Reveal>
-    </div>
+      </div>
+    </section>
   );
 }
 
-export function Beauty() {
-  return <ServicePage content={BEAUTY} />;
-}
-
-export function Cleanup() {
-  return <ServicePage content={CLEANUP} />;
+export function Process() {
+  const { t } = useLang();
+  return (
+    <section className="service-section">
+      <Reveal className="service-section-head">
+        <span className="eyebrow">{t(LABELS.process)}</span>
+      </Reveal>
+      <div className="process-list">
+        {PROCESS.map((step, i) => (
+          <Reveal key={step.title.en} delay={i * 0.08} className="process-step">
+            <span className="process-index">{String(i + 1).padStart(2, "0")}</span>
+            <h3>{t(step.title)}</h3>
+            <p>{t(step.text)}</p>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  );
 }

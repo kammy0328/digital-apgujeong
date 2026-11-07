@@ -1,6 +1,8 @@
 import { motion } from "motion/react";
 import { useLang, type L } from "../i18n";
-import { Reveal } from "./Services";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { Reveal, ServiceBlock, Process, BEAUTY, CLEANUP } from "./Services";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -73,6 +75,14 @@ const FAST: { title: L; text: L }[] = [
 
 export default function Company() {
   const { t } = useLang();
+  const { hash } = useLocation();
+  // Jump to #beauty / #cleanup once the page has mounted (links from the landing page and old URLs).
+  useEffect(() => {
+    if (!hash) return;
+    const id = hash.slice(1);
+    const timer = window.setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }), 450);
+    return () => window.clearTimeout(timer);
+  }, [hash]);
   return (
     <div className="service-page page-pad">
       <section className="service-hero">
@@ -119,6 +129,10 @@ export default function Company() {
           ))}
         </div>
       </section>
+
+      <ServiceBlock id="beauty" index="01 — beauty" content={BEAUTY} />
+      <ServiceBlock id="cleanup" index="02 — cleanup" content={CLEANUP} />
+      <Process />
     </div>
   );
 }

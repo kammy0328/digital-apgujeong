@@ -1451,3 +1451,29 @@ main {
     grid-column: 2;
   }
 }
+
+/* ---------- service blocks (beauty / cleanup) ---------- */
+.service-block {
+  scroll-margin-top: 90px;
+}
+.service-block-body {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  min-width: 0;
+}
+.approach-title h3 {
+  margin: 24px 0 0;
+  font-size: clamp(20px, 2vw, 30px);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  word-break: keep-all;
+}
+.service-block .approach-list {
+  margin-top: -16px;
+}
+.service-block .service-section-head h2 {
+  font-size: clamp(36px, 4.4vw, 72px);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+}

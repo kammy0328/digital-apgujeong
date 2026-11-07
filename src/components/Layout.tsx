@@ -9,8 +9,6 @@ import { useLang, type L, type Lang } from "../i18n";
 const NAV = [
   { to: "/work", label: "work" },
   { to: "/service", label: "service" },
-  { to: "/beauty", label: "beauty" },
-  { to: "/cleanup", label: "cleanup" },
   { to: "/contact", label: "contact" },
 ];
 
@@ -30,24 +28,10 @@ const META: Record<string, { title: L; description: L }> = {
     },
   },
   "/service": {
-    title: { en: "service — Team & pipeline | diap", ko: "service — 팀 구성과 작업 방식 | 디지털 압구정" },
+    title: { en: "service — Beauty, cleanup & team | diap", ko: "service — 뷰티 · 클리닝 · 팀 구성 | 디지털 압구정" },
     description: {
-      en: "A supervised team of project supervisor, lead, core beauty artists and a partner cleanup team of about 30, built to deliver quality on tight deadlines.",
+      en: "Video beauty retouching and object cleanup by a supervised team of project supervisor, lead, core beauty artists and a partner cleanup team of about 30, built to deliver quality on tight deadlines.",
       ko: "프로젝트 수퍼바이저, 리드, 베이스 Beauty 작업자, 약 30명의 Cleanup 파트너 팀으로 촉박한 납기에도 퀄리티를 지키는 작업 구성.",
-    },
-  },
-  "/beauty": {
-    title: { en: "beauty — Video beauty retouching | diap", ko: "beauty — 영상 뷰티 리터칭 | 디지털 압구정" },
-    description: {
-      en: "Video beauty retouching that keeps skin texture and personality, removing only what distracts. Natural, frame-accurate work.",
-      ko: "피부 질감은 살리고 시선을 방해하는 요소만 덜어내는 영상 뷰티 리터칭. 프레임 단위로 자연스럽게 이어지는 보정.",
-    },
-  },
-  "/cleanup": {
-    title: { en: "cleanup — Object cleanup | diap", ko: "cleanup — 오브젝트 클리닝 | 디지털 압구정" },
-    description: {
-      en: "Object cleanup for video: rigs, logos, reflections and background clutter removed and restored as if never there.",
-      ko: "장비, 로고, 반사, 배경 잡물 등 화면 속 불필요한 요소를 지우고 원래 있던 것처럼 복원하는 오브젝트 클리닝.",
     },
   },
   "/contact": {

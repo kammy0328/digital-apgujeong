@@ -145,8 +145,8 @@ export default function Landing() {
             <span className="eyebrow">{t(T.disciplines)}</span>
           </Reveal>
           {[
-            { to: "/beauty", n: "01", name: "Beauty", text: T.beautyText },
-            { to: "/cleanup", n: "02", name: "Cleanup", text: T.cleanupText },
+            { to: "/service#beauty", n: "01", name: "Beauty", text: T.beautyText },
+            { to: "/service#cleanup", n: "02", name: "Cleanup", text: T.cleanupText },
           ].map((s, i) => (
             <Reveal key={s.to} delay={i * 0.08}>
               <Link to={s.to} className="index-row">

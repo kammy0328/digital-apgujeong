@@ -23,20 +23,6 @@
   </url>
 
   <url>
-    <loc>https://digital-apgujeong.vercel.app/beauty</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <lastmod>2026-11-06</lastmod>
-  </url>
-
-  <url>
-    <loc>https://digital-apgujeong.vercel.app/cleanup</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <lastmod>2026-11-06</lastmod>
-  </url>
-
-  <url>
     <loc>https://digital-apgujeong.vercel.app/contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
