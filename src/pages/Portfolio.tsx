@@ -163,7 +163,7 @@ export default function Portfolio() {
                   loading={index < 4 ? "eager" : "lazy"}
                   decoding="async"
                   src={getVideoThumb(item)}
-                  alt=""
+                  alt={item.title[lang]}
                   onError={(event) => {
                     event.currentTarget.style.opacity = "0";
                   }}

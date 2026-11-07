@@ -1,7 +1,13 @@
 {
-  "buildCommand": "vite build",
+  "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "installCommand": "npm install",
+  "redirects": [
+    { "source": "/beauty", "destination": "/service", "permanent": true },
+    { "source": "/cleanup", "destination": "/service", "permanent": true },
+    { "source": "/consultation", "destination": "/contact", "permanent": true },
+    { "source": "/about", "destination": "/service", "permanent": true }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",

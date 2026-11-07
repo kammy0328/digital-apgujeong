@@ -13,6 +13,8 @@ function detectLang(): Lang {
   } catch {
     /* storage unavailable */
   }
+  // Search crawlers (Googlebot, Naver Yeti, ...) get the Korean site so snippets match Korean queries.
+  if (/bot|crawl|spider|yeti|slurp/i.test(navigator.userAgent)) return "ko";
   const langs = navigator.languages?.length ? navigator.languages : [navigator.language];
   if (langs.some((l) => l?.toLowerCase().startsWith("ko"))) return "ko";
   try {

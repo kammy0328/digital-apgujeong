@@ -30,7 +30,7 @@ const T = {
   all: { en: "All work", ko: "전체 보기" } as L,
   team: {
     en: ["Supervisor, lead, core beauty and a cleanup team.", "One pipeline that holds quality on tight deadlines."],
-    ko: ["수퍼바이저, 리드, 베이스 뷰티, 클린업 팀.", "촉박한 납기에서도 퀄리티를 지키는 하나의 파이프라인."],
+    ko: ["수퍼바이저, 리드, 뷰티, 클린업 팀.", "촉박한 납기에서도 퀄리티를 지키는 하나의 파이프라인."],
   },
   teamLink: { en: "About our service", ko: "서비스 소개" } as L,
 };

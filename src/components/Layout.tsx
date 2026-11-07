@@ -5,6 +5,7 @@ import { Menu, X } from "lucide-react";
 import Logo from "./Logo";
 import WebGLBackground from "./WebGLBackground";
 import { useLang, type L, type Lang } from "../i18n";
+import seo from "../data/seo.json";
 
 const NAV = [
   { to: "/work", label: "work" },
@@ -12,36 +13,8 @@ const NAV = [
   { to: "/contact", label: "contact" },
 ];
 
-const META: Record<string, { title: L; description: L }> = {
-  "/": {
-    title: { en: "diap / Digital Apgujeong — video beauty retouching & cleanup", ko: "디지털 압구정 / diap — 영상 뷰티 리터칭 · 오브젝트 클리닝" },
-    description: {
-      en: "Digital Apgujeong (diap): video beauty retouching and object cleanup for music videos, commercials and film.",
-      ko: "디지털 압구정(diap): 뮤직비디오, 광고, 영화를 위한 영상 뷰티 리터칭과 오브젝트 클리닝 스튜디오.",
-    },
-  },
-  "/work": {
-    title: { en: "work — diap / Digital Apgujeong", ko: "work — 디지털 압구정 / diap" },
-    description: {
-      en: "Portfolio of diap (Digital Apgujeong): beauty retouching and object cleanup for music videos, commercials and film.",
-      ko: "디지털 압구정(diap)의 영상 뷰티 리터칭·오브젝트 클리닝 포트폴리오. 뮤직비디오, 광고, 영화 작업을 확인하세요.",
-    },
-  },
-  "/service": {
-    title: { en: "service — Beauty, cleanup & team | diap", ko: "service — 뷰티 · 클리닝 · 팀 구성 | 디지털 압구정" },
-    description: {
-      en: "Video beauty retouching and object cleanup by a supervised team of project supervisor, lead, core beauty artists and a cleanup team of about 30, built to deliver quality on tight deadlines.",
-      ko: "프로젝트 수퍼바이저, 리드, 뷰티 작업자, 약 30명의 클린업 팀으로 촉박한 납기에도 퀄리티를 지키는 작업 구성.",
-    },
-  },
-  "/contact": {
-    title: { en: "contact — Project inquiry | diap", ko: "contact — 프로젝트 문의 | 디지털 압구정" },
-    description: {
-      en: "Project inquiries for diap. Send a video link, length and deadline and we will get back to you quickly.",
-      ko: "디지털 압구정 프로젝트 문의. 영상 링크, 분량, 희망 납기일을 보내주시면 빠르게 안내드립니다.",
-    },
-  },
-};
+const META = seo as Record<string, { title: L; description: L }>;
+const SITE = "https://digital-apgujeong.vercel.app";
 
 const UI = {
   home: { en: "diap home", ko: "디지털 압구정 홈" } as L,
@@ -97,9 +70,11 @@ export default function Layout() {
     document.querySelector('meta[name="description"]')?.setAttribute("content", description);
     document.querySelector('meta[property="og:title"]')?.setAttribute("content", title);
     document.querySelector('meta[property="og:description"]')?.setAttribute("content", description);
-    document
-      .querySelector('meta[property="og:url"]')
-      ?.setAttribute("content", `https://digital-apgujeong.vercel.app${pathname}`);
+    const url = `${SITE}${pathname === "/" ? "/" : pathname}`;
+    document.querySelector('meta[property="og:url"]')?.setAttribute("content", url);
+    document.querySelector('link[rel="canonical"]')?.setAttribute("href", url);
+    document.querySelector('meta[name="twitter:title"]')?.setAttribute("content", title);
+    document.querySelector('meta[name="twitter:description"]')?.setAttribute("content", description);
   }, [pathname, lang]);
 
   useEffect(() => {

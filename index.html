@@ -7,7 +7,8 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <!-- Primary Meta -->
     <title>디지털 압구정 | 영상 뷰티 리터칭·오브젝트 클리닝 스튜디오</title>
@@ -29,6 +30,7 @@
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="디지털 압구정 - 영상 뷰티 리터칭·오브젝트 클리닝 스튜디오" />
     <meta property="og:locale" content="ko_KR" />
+    <meta property="og:locale:alternate" content="en_US" />
     <meta property="og:site_name" content="디지털 압구정" />
 
     <!-- Twitter Card -->
@@ -44,53 +46,89 @@
     <!-- <meta name="google-site-verification" content="YOUR_GOOGLE_VERIFICATION_CODE" /> -->
 
     <!-- JSON-LD Structured Data -->
-    <script type="application/ld+json">
+<script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "디지털 압구정",
-      "alternateName": ["Digital Apgujeong", "DIAP"],
-      "description": "뮤직비디오, 광고 등 상업 영상의 영상 뷰티 리터칭, 오브젝트 클리닝 전문 디지털 뷰티 스튜디오",
-      "url": "https://digital-apgujeong.vercel.app",
-      "logo": "https://digital-apgujeong.vercel.app/favicon.svg",
-      "image": "https://digital-apgujeong.vercel.app/og-image.png?v=2",
-      "email": "digitalapgujeong@gmail.com",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "압구정",
-        "addressRegion": "서울특별시",
-        "addressCountry": "KR"
-      },
-      "openingHoursSpecification": [
+      "@graph": [
         {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
-          "opens": "10:00",
-          "closes": "19:00"
-        }
-      ],
-      "priceRange": "₩₩₩",
-      "sameAs": [
-        "https://www.instagram.com/digital_apgujeong"
-      ],
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "영상 스킨 리터칭·피부보정 서비스",
-        "itemListElement": [
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "상업 영상 스킨 리터칭·피부보정",
-              "description": "광고, 뮤직비디오, 드라마, 영화 등 상업 영상 전문 스킨 리터칭 및 뷰티 리터칭"
-            }
+          "@type": "WebSite",
+          "@id": "https://digital-apgujeong.vercel.app/#website",
+          "url": "https://digital-apgujeong.vercel.app/",
+          "name": "디지털 압구정",
+          "alternateName": [
+            "Digital Apgujeong",
+            "diap",
+            "DIAP"
+          ],
+          "inLanguage": [
+            "ko",
+            "en"
+          ]
+        },
+        {
+          "@type": "ProfessionalService",
+          "@id": "https://digital-apgujeong.vercel.app/#studio",
+          "name": "디지털 압구정",
+          "alternateName": [
+            "Digital Apgujeong",
+            "diap",
+            "DIAP"
+          ],
+          "description": "뮤직비디오, 광고, 영화 등 영상의 뷰티 리터칭(피부 보정)과 오브젝트 클리닝을 전문으로 하는 영상 후반 작업 스튜디오",
+          "url": "https://digital-apgujeong.vercel.app/",
+          "logo": "https://digital-apgujeong.vercel.app/logo-512.png",
+          "image": "https://digital-apgujeong.vercel.app/og-image.png?v=2",
+          "email": "digitalapgujeong@gmail.com",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "압구정",
+            "addressRegion": "서울특별시",
+            "addressCountry": "KR"
+          },
+          "areaServed": [
+            "KR",
+            "Worldwide"
+          ],
+          "sameAs": [
+            "https://www.instagram.com/digital_apgujeong"
+          ],
+          "knowsAbout": [
+            "영상 뷰티 리터칭",
+            "피부 보정",
+            "오브젝트 클리닝",
+            "뮤직비디오 후반 작업",
+            "video beauty retouching",
+            "object cleanup"
+          ],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "영상 후반 작업 서비스",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "영상 뷰티 리터칭",
+                  "description": "피부 결, 잡티, 톤, 윤곽을 프레임 단위로 자연스럽게 보정"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "오브젝트 클리닝",
+                  "description": "장비, 로고, 반사, 배경 잡물을 지우고 자연스럽게 복원"
+                }
+              }
+            ]
           }
-        ]
-      }
+        }
+      ]
     }
     </script>
 
     <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://i.ytimg.com" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   </head>
