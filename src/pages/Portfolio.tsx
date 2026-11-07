@@ -104,11 +104,15 @@ export default function Portfolio() {
   return (
     <>
       <section className="work-intro page-pad">
-        <h1 className="reveal-line">
+        <h1 className="reveal-line" lang="en" translate="no">
           <motion.span
             initial={{ y: reduced ? 0 : "105%" }}
             animate={{ y: 0 }}
-            transition={{ duration: reduced ? 0 : TITLE.duration, ease, delay: reduced ? 0 : TITLE.delay }}
+            transition={{
+              duration: reduced ? 0 : TITLE.duration,
+              ease,
+              delay: reduced ? 0 : TITLE.delay,
+            }}
           >
             WORK
           </motion.span>
@@ -122,7 +126,11 @@ export default function Portfolio() {
           <button
             key={item.id}
             className="work-card"
-            style={{ "--work-delay": `${Math.min(index, 5) * 35}ms` } as CSSProperties}
+            style={
+              {
+                "--work-delay": `${Math.min(index, 5) * 35}ms`,
+              } as CSSProperties
+            }
             onPointerEnter={() => preloadPoster(item)}
             onFocus={() => preloadPoster(item)}
             onClick={(event) => {
@@ -144,7 +152,9 @@ export default function Portfolio() {
               setOpen(true);
             }}
             aria-label={
-              lang === "ko" ? `${item.title.ko} 영상 재생` : `Play ${item.title.en}`
+              lang === "ko"
+                ? `${item.title.ko} 영상 재생`
+                : `Play ${item.title.en}`
             }
           >
             <span className="work-image">
@@ -169,112 +179,113 @@ export default function Portfolio() {
           </button>
         ))}
       </section>
-      {createPortal(
-        <AnimatePresence onExitComplete={() => setSelected(null)}>
-          {open && video && origin && target && (
-            <div className="video-overlay" onClick={close}>
-              <motion.div
-                className="video-backdrop"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration }}
-              />
-              <div
-                role="dialog"
-                aria-modal="true"
-                aria-label={video.title[lang]}
-                onKeyDown={(event) => {
-                  if (event.key !== "Tab") return;
-                  const nodes = Array.from(
-                    event.currentTarget.querySelectorAll("button, iframe"),
-                  ) as HTMLElement[];
-                  const first = nodes[0],
-                    last = nodes[nodes.length - 1];
-                  if (event.shiftKey && document.activeElement === first) {
-                    event.preventDefault();
-                    last.focus();
-                  } else if (
-                    !event.shiftKey &&
-                    document.activeElement === last
-                  ) {
-                    event.preventDefault();
-                    first.focus();
-                  }
-                }}
-              >
+      {typeof document !== "undefined" &&
+        createPortal(
+          <AnimatePresence onExitComplete={() => setSelected(null)}>
+            {open && video && origin && target && (
+              <div className="video-overlay" onClick={close}>
                 <motion.div
-                  className="video-top video-morph-top"
-                  style={{
-                    left: target.left,
-                    top: target.top - 52,
-                    width: target.width,
-                  }}
+                  className="video-backdrop"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  transition={{ duration: reduced ? 0 : 0.18 }}
-                  onClick={(event) => event.stopPropagation()}
+                  transition={{ duration }}
+                />
+                <div
+                  role="dialog"
+                  aria-modal="true"
+                  aria-label={video.title[lang]}
+                  onKeyDown={(event) => {
+                    if (event.key !== "Tab") return;
+                    const nodes = Array.from(
+                      event.currentTarget.querySelectorAll("button, iframe"),
+                    ) as HTMLElement[];
+                    const first = nodes[0],
+                      last = nodes[nodes.length - 1];
+                    if (event.shiftKey && document.activeElement === first) {
+                      event.preventDefault();
+                      last.focus();
+                    } else if (
+                      !event.shiftKey &&
+                      document.activeElement === last
+                    ) {
+                      event.preventDefault();
+                      first.focus();
+                    }
+                  }}
                 >
-                  <span>{video.title[lang]}</span>
-                  <button
-                    ref={closeButton}
-                    onClick={close}
-                    aria-label={lang === "ko" ? "영상 닫기" : "Close video"}
+                  <motion.div
+                    className="video-top video-morph-top"
+                    style={{
+                      left: target.left,
+                      top: target.top - 52,
+                      width: target.width,
+                    }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: reduced ? 0 : 0.18 }}
+                    onClick={(event) => event.stopPropagation()}
                   >
-                    <X size={20} />
-                  </button>
-                </motion.div>
-                <motion.div
-                  className="video-morph-frame"
-                  style={{
-                    left: target.left,
-                    top: target.top,
-                    width: target.width,
-                    height: target.height,
-                    transformOrigin: "0 0",
-                  }}
-                  initial={flip(origin, target)}
-                  animate={{ x: 0, y: 0, scale: 1, borderRadius: 8 }}
-                  exit={flip(origin, target)}
-                  transition={{ duration, ease }}
-                  onAnimationComplete={() => {
-                    if (playbackAllowed.current) setReady(true);
-                  }}
-                  onClick={(event) => event.stopPropagation()}
-                >
-                  <span className="image-fallback" aria-hidden="true">
-                    {video.title[lang].split(" - ")[0]}
-                  </span>
-                  {thumb && (
-                    <img className="video-poster" src={thumb} alt="" />
-                  )}
-                  {poster && (
-                    <img
-                      className="video-poster video-poster-hd"
-                      src={poster}
-                      alt=""
-                      decoding="async"
-                      style={{ opacity: hd ? 1 : 0 }}
-                      onLoad={() => setHd(true)}
-                    />
-                  )}
-                  {ready && (
-                    <iframe
-                      className="video-player"
-                      src={getVideoEmbedUrl(video)}
-                      title={video.title[lang]}
-                      allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-                      allowFullScreen
-                    />
-                  )}
-                </motion.div>
+                    <span>{video.title[lang]}</span>
+                    <button
+                      ref={closeButton}
+                      onClick={close}
+                      aria-label={lang === "ko" ? "영상 닫기" : "Close video"}
+                    >
+                      <X size={20} />
+                    </button>
+                  </motion.div>
+                  <motion.div
+                    className="video-morph-frame"
+                    style={{
+                      left: target.left,
+                      top: target.top,
+                      width: target.width,
+                      height: target.height,
+                      transformOrigin: "0 0",
+                    }}
+                    initial={flip(origin, target)}
+                    animate={{ x: 0, y: 0, scale: 1, borderRadius: 8 }}
+                    exit={flip(origin, target)}
+                    transition={{ duration, ease }}
+                    onAnimationComplete={() => {
+                      if (playbackAllowed.current) setReady(true);
+                    }}
+                    onClick={(event) => event.stopPropagation()}
+                  >
+                    <span className="image-fallback" aria-hidden="true">
+                      {video.title[lang].split(" - ")[0]}
+                    </span>
+                    {thumb && (
+                      <img className="video-poster" src={thumb} alt="" />
+                    )}
+                    {poster && (
+                      <img
+                        className="video-poster video-poster-hd"
+                        src={poster}
+                        alt=""
+                        decoding="async"
+                        style={{ opacity: hd ? 1 : 0 }}
+                        onLoad={() => setHd(true)}
+                      />
+                    )}
+                    {ready && (
+                      <iframe
+                        className="video-player"
+                        src={getVideoEmbedUrl(video)}
+                        title={video.title[lang]}
+                        allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                        allowFullScreen
+                      />
+                    )}
+                  </motion.div>
+                </div>
               </div>
-            </div>
-          )}
-        </AnimatePresence>,
-        document.body,
-      )}
+            )}
+          </AnimatePresence>,
+          document.body,
+        )}
     </>
   );
 }

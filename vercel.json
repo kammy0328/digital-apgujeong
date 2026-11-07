@@ -3,15 +3,45 @@
   "outputDirectory": "dist",
   "installCommand": "npm install",
   "redirects": [
-    { "source": "/beauty", "destination": "/service", "permanent": true },
-    { "source": "/cleanup", "destination": "/service", "permanent": true },
-    { "source": "/consultation", "destination": "/contact", "permanent": true },
-    { "source": "/about", "destination": "/service", "permanent": true }
-  ],
-  "rewrites": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "source": "/beauty",
+      "destination": "/service#beauty",
+      "permanent": true
+    },
+    {
+      "source": "/cleanup",
+      "destination": "/service#cleanup",
+      "permanent": true
+    },
+    {
+      "source": "/consultation",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/about/:path*",
+      "destination": "/service",
+      "permanent": true
+    },
+    {
+      "source": "/en/beauty",
+      "destination": "/en/service#beauty",
+      "permanent": true
+    },
+    {
+      "source": "/en/cleanup",
+      "destination": "/en/service#cleanup",
+      "permanent": true
+    },
+    {
+      "source": "/en/consultation",
+      "destination": "/en/contact",
+      "permanent": true
+    },
+    {
+      "source": "/en/about/:path*",
+      "destination": "/en/service",
+      "permanent": true
     }
   ],
   "headers": [
@@ -58,5 +88,7 @@
         }
       ]
     }
-  ]
+  ],
+  "cleanUrls": true,
+  "trailingSlash": false
 }

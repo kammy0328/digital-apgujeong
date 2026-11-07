@@ -1,57 +1,55 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  type ReactNode,
+} from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 export type Lang = "en" | "ko";
 export type L = { en: string; ko: string };
-
-const STORAGE_KEY = "diap-lang";
-
-// Saved choice first; otherwise Korean for Korean-language browsers or a Seoul timezone, English for everyone else.
-function detectLang(): Lang {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved === "en" || saved === "ko") return saved;
-  } catch {
-    /* storage unavailable */
-  }
-  // Search crawlers (Googlebot, Naver Yeti, ...) get the Korean site so snippets match Korean queries.
-  if (/bot|crawl|spider|yeti|slurp/i.test(navigator.userAgent)) return "ko";
-  const langs = navigator.languages?.length ? navigator.languages : [navigator.language];
-  if (langs.some((l) => l?.toLowerCase().startsWith("ko"))) return "ko";
-  try {
-    if (Intl.DateTimeFormat().resolvedOptions().timeZone === "Asia/Seoul") return "ko";
-  } catch {
-    /* ignore */
-  }
-  return "en";
+export function basePath(path: string) {
+  return path.replace(/^\/en(?=\/|$)/, "").replace(/\/$/, "") || "/";
 }
-
+export function localizedPath(path: string, lang: Lang) {
+  if (!path.startsWith("/") || path.startsWith("//")) return path;
+  const plain = path.replace(/^\/en(?=\/|$)/, "") || "/";
+  return lang === "en" ? `/en${plain === "/" ? "" : plain}` : plain;
+}
 interface Ctx {
   lang: Lang;
   setLang: (lang: Lang) => void;
   t: (text: L) => string;
 }
-
 const LangContext = createContext<Ctx | null>(null);
-
 export function LangProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>(detectLang);
-  const setLang = useCallback((next: Lang) => {
-    setLangState(next);
-    try {
-      localStorage.setItem(STORAGE_KEY, next);
-    } catch {
-      /* ignore */
-    }
-  }, []);
+  const location = useLocation();
+  const navigate = useNavigate();
+  // Each URL always represents the same language for visitors and crawlers.
+  const lang: Lang = /^\/en(?:\/|$)/.test(location.pathname) ? "en" : "ko";
+  const setLang = useCallback(
+    (next: Lang) => {
+      if (next !== lang)
+        navigate(
+          localizedPath(basePath(location.pathname), next) +
+            location.search +
+            location.hash,
+        );
+    },
+    [lang, location, navigate],
+  );
   useEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);
-  const value = useMemo<Ctx>(() => ({ lang, setLang, t: (text) => text[lang] }), [lang, setLang]);
+  const value = useMemo<Ctx>(
+    () => ({ lang, setLang, t: (text) => text[lang] }),
+    [lang, setLang],
+  );
   return <LangContext.Provider value={value}>{children}</LangContext.Provider>;
 }
-
 export function useLang() {
-  const ctx = useContext(LangContext);
-  if (!ctx) throw new Error("useLang must be used inside LangProvider");
-  return ctx;
+  const value = useContext(LangContext);
+  if (!value) throw new Error("LangProvider is required");
+  return value;
 }

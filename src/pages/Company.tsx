@@ -5,17 +5,22 @@ import { useLocation } from "react-router-dom";
 import { Reveal, ServiceBlock, Process, BEAUTY, CLEANUP } from "./Services";
 import { ease, TITLE } from "../motion";
 
-
 const T = {
   lead: {
     en: "Digital Apgujeong is a post-production studio specialised in video beauty retouching and object cleanup. Supervisors, leads and artists work as one pipeline, so even a tight schedule never costs the quality.",
     ko: "디지털 압구정은 영상 뷰티 리터칭과 오브젝트 클리닝을 전문으로 하는 후반 작업 스튜디오입니다. 슈퍼바이저, 리드, 작업자가 하나의 파이프라인으로 움직여, 촉박한 일정에서도 결과물의 완성도를 지킵니다.",
   } as L,
   teamLabel: { en: "team", ko: "team" } as L,
-  teamTitle: { en: "One team, from direction to delivery", ko: "디렉션부터 납품까지, 하나의 팀" } as L,
+  teamTitle: {
+    en: "One team, from direction to delivery",
+    ko: "디렉션부터 납품까지, 하나의 팀",
+  } as L,
   partnersLabel: { en: "partner studios", ko: "파트너 스튜디오" } as L,
   fastLabel: { en: "why us", ko: "why us" } as L,
-  fastTitle: { en: "High quality, even on a tight deadline", ko: "촉박한 납기에도 높은 퀄리티" } as L,
+  fastTitle: {
+    en: "High quality, even on a tight deadline",
+    ko: "촉박한 납기에도 높은 퀄리티",
+  } as L,
 };
 
 const TEAM: { role: L; text: L }[] = [
@@ -49,7 +54,12 @@ const TEAM: { role: L; text: L }[] = [
   },
 ];
 
-const PARTNERS = ["ARTVFXSTUDIO", "AFTERTAKEVFX", "PIXEL SURGERY", "STAR SPACE STUDIO"];
+const PARTNERS = [
+  "ARTVFXSTUDIO",
+  "AFTERTAKEVFX",
+  "PIXEL SURGERY",
+  "STAR SPACE STUDIO",
+];
 
 const FAST: { title: L; text: L }[] = [
   {
@@ -60,7 +70,10 @@ const FAST: { title: L; text: L }[] = [
     },
   },
   {
-    title: { en: "One look across every artist", ko: "작업자가 달라도 하나의 룩" },
+    title: {
+      en: "One look across every artist",
+      ko: "작업자가 달라도 하나의 룩",
+    },
     text: {
       en: "A test cut fixes the strength and direction first, and the lead keeps every artist inside it.",
       ko: "테스트 컷으로 강도와 방향을 먼저 확정하고, 리드가 모든 작업자를 그 기준 안에 맞춥니다.",
@@ -82,14 +95,21 @@ export default function Company() {
   useEffect(() => {
     if (!hash) return;
     const id = hash.slice(1);
-    const timer = window.setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }), 450);
+    const timer = window.setTimeout(
+      () => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }),
+      450,
+    );
     return () => window.clearTimeout(timer);
   }, [hash]);
   return (
     <div className="service-page page-pad">
       <section className="service-hero">
-        <h1 className="reveal-line">
-          <motion.span initial={{ y: "105%" }} animate={{ y: 0 }} transition={{ duration: TITLE.duration, ease, delay: TITLE.delay }}>
+        <h1 className="reveal-line" lang="en" translate="no">
+          <motion.span
+            initial={{ y: "105%" }}
+            animate={{ y: 0 }}
+            transition={{ duration: TITLE.duration, ease, delay: TITLE.delay }}
+          >
             Service
           </motion.span>
         </h1>
@@ -106,7 +126,9 @@ export default function Company() {
         <div className="team-list">
           {TEAM.map((m, i) => (
             <Reveal key={m.role.en} delay={i * 0.08} className="team-row">
-              <span className="process-index">{String(i + 1).padStart(2, "0")}</span>
+              <span className="process-index">
+                {String(i + 1).padStart(2, "0")}
+              </span>
               <div>
                 <h3>{t(m.role)}</h3>
               </div>

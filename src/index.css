@@ -288,7 +288,10 @@ em {
   align-items: flex-start;
   gap: 20px;
 }
-.mobile-menu-footer .lang-toggle button { min-width: 48px; min-height: 44px; }
+.mobile-menu-footer .lang-toggle button {
+  min-width: 48px;
+  min-height: 44px;
+}
 
 .mobile-nav p {
   margin: 0;
@@ -336,9 +339,15 @@ main {
   letter-spacing: 0.08em;
   transition: opacity 0.2s;
 }
-.lang-toggle button:hover { opacity: 0.7; }
-.lang-toggle button.is-active { font-weight: 700; }
-.mobile-menu-footer .lang-toggle { align-self: flex-end; }
+.lang-toggle button:hover {
+  opacity: 0.7;
+}
+.lang-toggle button.is-active {
+  font-weight: 700;
+}
+.mobile-menu-footer .lang-toggle {
+  align-self: flex-end;
+}
 
 /* ---------- work ---------- */
 .work-intro {
@@ -1149,12 +1158,20 @@ main {
   filter: brightness(0.62);
 }
 @keyframes wall-down {
-  from { transform: translateY(-33.3333%); }
-  to { transform: translateY(0); }
+  from {
+    transform: translateY(-33.3333%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 @keyframes wall-up {
-  from { transform: translateY(0); }
-  to { transform: translateY(-33.3333%); }
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-33.3333%);
+  }
 }
 .landing-hero::after {
   content: "";
@@ -1162,8 +1179,19 @@ main {
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(ellipse 60% 50% at 50% 50%, rgba(12, 12, 12, 0.82), rgba(12, 12, 12, 0.35) 70%, transparent),
-    linear-gradient(to bottom, rgba(12, 12, 12, 0.55), transparent 22%, transparent 78%, rgba(12, 12, 12, 0.7));
+    radial-gradient(
+      ellipse 60% 50% at 50% 50%,
+      rgba(12, 12, 12, 0.82),
+      rgba(12, 12, 12, 0.35) 70%,
+      transparent
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(12, 12, 12, 0.55),
+      transparent 22%,
+      transparent 78%,
+      rgba(12, 12, 12, 0.7)
+    );
 }
 .hero-center {
   position: absolute;
@@ -1210,7 +1238,9 @@ main {
   gap: 24px;
   padding: 34px 0;
   border-bottom: 1px solid var(--line);
-  transition: padding 0.5s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s ease;
+  transition:
+    padding 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.3s ease;
 }
 .landing-index .eyebrow {
   display: block;
@@ -1227,7 +1257,9 @@ main {
   letter-spacing: -0.04em;
   line-height: 1;
   color: #d8d8d4;
-  transition: color 0.3s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  transition:
+    color 0.3s ease,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .index-text {
   font-size: 14px;
@@ -1238,7 +1270,9 @@ main {
 .index-arrow {
   justify-self: end;
   color: #77777a;
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s ease;
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.3s ease;
 }
 @media (hover: hover) {
   .index-row:hover .index-name {
@@ -1473,19 +1507,19 @@ main {
 }
 
 /* Korean glyphs are wide and collide under negative tracking, so keep it nearly neutral there. */
-:lang(ko) .service-section-head h2,
-:lang(ko) .service-item h3,
-:lang(ko) .approach-row h3,
-:lang(ko) .process-step h3,
-:lang(ko) .team-row h3,
-:lang(ko) .landing-team p,
-:lang(ko) .contact-aside h2,
-:lang(ko) .service-cta p,
-:lang(ko) .landing-hero h1 {
+.service-section-head h2:lang(ko),
+.service-item h3:lang(ko),
+.approach-row h3:lang(ko),
+.process-step h3:lang(ko),
+.team-row h3:lang(ko),
+.landing-team p:lang(ko),
+.contact-aside h2:lang(ko),
+.service-cta p:lang(ko),
+.landing-hero h1:lang(ko) {
   letter-spacing: -0.005em;
 }
-:lang(ko) .service-block .service-section-head h2,
-:lang(ko) .index-name {
+.service-block .service-section-head h2:lang(ko),
+.index-name:lang(ko) {
   letter-spacing: -0.035em;
 }
 
@@ -1514,7 +1548,10 @@ main {
   font-size: 16px;
   font-weight: 400;
   line-height: 1.5;
-  transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
+  transition:
+    border-color 0.25s,
+    background 0.25s,
+    box-shadow 0.25s;
 }
 .form-fields input:hover,
 .form-fields select:hover,
@@ -1598,5 +1635,33 @@ main {
   animation: work-card-appear 320ms ease-out both;
   animation-delay: var(--work-delay, 0ms);
 }
-@keyframes work-card-appear { from { opacity: 0; } to { opacity: 1; } }
-@media (prefers-reduced-motion: reduce) { .work-card { animation: none; } }
+@keyframes work-card-appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .work-card {
+    animation: none;
+  }
+}
+
+.not-found {
+  padding-top: 70px;
+  padding-bottom: 100px;
+}
+.not-found h1 {
+  font-size: 72px;
+  font-weight: 400;
+  margin: 0 0 20px;
+}
+.not-found p {
+  margin-bottom: 30px;
+}
+.not-found a {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}

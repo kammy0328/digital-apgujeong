@@ -1,10 +1,23 @@
-import { NavLink, Link, useLocation, useOutlet } from "react-router-dom";
-import { useEffect, useLayoutEffect, useRef, useState, type PointerEvent } from "react";
-import { AnimatePresence, MotionConfig, motion, useScroll, useSpring } from "motion/react";
+import { useLocation, useOutlet } from "react-router-dom";
+import { Link, NavLink } from "./LocalizedLink";
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type PointerEvent,
+} from "react";
+import {
+  AnimatePresence,
+  MotionConfig,
+  motion,
+  useScroll,
+  useSpring,
+} from "motion/react";
 import { Menu, X } from "lucide-react";
 import Logo from "./Logo";
 import WebGLBackground from "./WebGLBackground";
-import { useLang, type L, type Lang } from "../i18n";
+import { basePath, localizedPath, useLang, type L, type Lang } from "../i18n";
 import seo from "../data/seo.json";
 import { ease } from "../motion";
 
@@ -34,7 +47,13 @@ function LangToggle() {
     { value: "ko", label: "KR" },
   ];
   return (
-    <div className="lang-toggle" lang="en" translate="no" role="group" aria-label={t(UI.switchLang)}>
+    <div
+      className="lang-toggle"
+      lang="en"
+      translate="no"
+      role="group"
+      aria-label={t(UI.switchLang)}
+    >
       {options.map((o) => (
         <button
           key={o.value}
@@ -50,21 +69,28 @@ function LangToggle() {
   );
 }
 
-
 // Route changes must not inherit CSS smooth scrolling or a browser-restored position.
 function resetPageScroll() {
-  if (!window.location.hash) window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  if (!window.location.hash)
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
 }
 
 export default function Layout() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { pathname } = useLocation();
+  const location = useLocation();
+  const pathname = basePath(location.pathname);
   const outlet = useOutlet();
   const { t, lang } = useLang();
   const glassRef = useRef<HTMLDivElement>(null);
+  const menuToggleRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 30, mass: 0.3 });
+  const progress = useSpring(scrollYProgress, {
+    stiffness: 140,
+    damping: 30,
+    mass: 0.3,
+  });
 
   useLayoutEffect(() => {
     resetPageScroll();
@@ -77,18 +103,72 @@ export default function Layout() {
   }, [pathname]);
 
   useEffect(() => {
-    const meta = META[pathname] ?? META["/"];
+    const meta = META[pathname] ?? {
+      title: { ko: "페이지 없음 — diap", en: "Page not found — diap" },
+      description: {
+        ko: "요청한 페이지를 찾을 수 없습니다.",
+        en: "The requested page could not be found.",
+      },
+    };
     const title = meta.title[lang];
     const description = meta.description[lang];
     document.title = title;
-    document.querySelector('meta[name="description"]')?.setAttribute("content", description);
-    document.querySelector('meta[property="og:title"]')?.setAttribute("content", title);
-    document.querySelector('meta[property="og:description"]')?.setAttribute("content", description);
-    const url = `${SITE}${pathname === "/" ? "/" : pathname}`;
-    document.querySelector('meta[property="og:url"]')?.setAttribute("content", url);
-    document.querySelector('link[rel="canonical"]')?.setAttribute("href", url);
-    document.querySelector('meta[name="twitter:title"]')?.setAttribute("content", title);
-    document.querySelector('meta[name="twitter:description"]')?.setAttribute("content", description);
+    document
+      .querySelector('meta[name="description"]')
+      ?.setAttribute("content", description);
+    document
+      .querySelector('meta[property="og:title"]')
+      ?.setAttribute("content", title);
+    document
+      .querySelector('meta[property="og:description"]')
+      ?.setAttribute("content", description);
+    const url = `${SITE}${localizedPath(pathname, lang)}`;
+    const known = Boolean(META[pathname]);
+    document
+      .querySelector('meta[name="robots"]')
+      ?.setAttribute("content", known ? "index, follow" : "noindex, follow");
+    if (known) {
+      let canonical = document.querySelector<HTMLLinkElement>(
+        'link[rel="canonical"]',
+      );
+      if (!canonical) {
+        canonical = document.createElement("link");
+        canonical.rel = "canonical";
+        document.head.appendChild(canonical);
+      }
+      canonical.href = url;
+      for (const code of ["ko", "en", "x-default"]) {
+        let link = document.querySelector<HTMLLinkElement>(
+          `link[hreflang="${code}"]`,
+        );
+        if (!link) {
+          link = document.createElement("link");
+          link.rel = "alternate";
+          link.hreflang = code;
+          document.head.appendChild(link);
+        }
+        link.href = SITE + localizedPath(pathname, code === "en" ? "en" : "ko");
+      }
+    } else {
+      document
+        .querySelectorAll('link[rel="canonical"], link[hreflang]')
+        .forEach((link) => link.remove());
+    }
+    document
+      .querySelector('meta[property="og:locale"]')
+      ?.setAttribute("content", lang === "en" ? "en_US" : "ko_KR");
+    document
+      .querySelector('meta[property="og:locale:alternate"]')
+      ?.setAttribute("content", lang === "en" ? "ko_KR" : "en_US");
+    document
+      .querySelector('meta[property="og:url"]')
+      ?.setAttribute("content", url);
+    document
+      .querySelector('meta[name="twitter:title"]')
+      ?.setAttribute("content", title);
+    document
+      .querySelector('meta[name="twitter:description"]')
+      ?.setAttribute("content", description);
   }, [pathname, lang]);
 
   useEffect(() => {
@@ -102,13 +182,61 @@ export default function Layout() {
     if (!open) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+    const roots = [
+      document.querySelector("main"),
+      document.querySelector("footer"),
+      document.querySelector(".brand"),
+      document.querySelector(".desktop-nav"),
+      document.querySelector(".header-language"),
+    ].filter(Boolean) as HTMLElement[];
+    const wasInert = roots.map((el) => el.inert);
+    roots.forEach((el) => {
+      el.inert = true;
+    });
+    const items = () =>
+      [
+        menuToggleRef.current!,
+        ...Array.from(
+          menuRef.current?.querySelectorAll<HTMLElement>("a[href], button") ??
+            [],
+        ),
+      ].filter((el) => el && !el.hasAttribute("disabled"));
+    items()[1]?.focus({ preventScroll: true });
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+      if (event.key !== "Tab") return;
+      const list = items(),
+        first = list[0],
+        last = list[list.length - 1];
+      if (
+        event.shiftKey &&
+        (document.activeElement === first ||
+          !list.includes(document.activeElement as HTMLElement))
+      ) {
+        event.preventDefault();
+        last?.focus();
+      } else if (
+        !event.shiftKey &&
+        (document.activeElement === last ||
+          !list.includes(document.activeElement as HTMLElement))
+      ) {
+        event.preventDefault();
+        first?.focus();
+      }
+    };
+    const resize = () => {
+      if (window.innerWidth >= 768) setOpen(false);
     };
     document.addEventListener("keydown", onKey);
+    window.addEventListener("resize", resize);
     return () => {
       document.body.style.overflow = previous;
+      roots.forEach((el, i) => {
+        el.inert = wasInert[i];
+      });
       document.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", resize);
+      menuToggleRef.current?.focus({ preventScroll: true });
     };
   }, [open]);
 
@@ -123,7 +251,11 @@ export default function Layout() {
   return (
     <MotionConfig reducedMotion="user">
       <WebGLBackground />
-      <motion.div className="scroll-progress" style={{ scaleX: progress }} aria-hidden="true" />
+      <motion.div
+        className="scroll-progress"
+        style={{ scaleX: progress }}
+        aria-hidden="true"
+      />
       <div className="site-shell">
         <header className={`site-header${scrolled || open ? " is-glass" : ""}`}>
           <motion.div
@@ -143,34 +275,43 @@ export default function Layout() {
               </span>
             </Link>
             <div className="header-right">
-            <nav className="desktop-nav" aria-label={t(UI.mainMenu)}>
-              {NAV.map((item) => (
-                <NavLink key={item.to} to={item.to} end={item.to === "/"}>
-                  {({ isActive }) => (
-                    <>
-                      {isActive && (
-                        <motion.span
-                          layoutId="nav-pill"
-                          className="nav-pill"
-                          transition={{ type: "spring", stiffness: 420, damping: 34 }}
-                        />
-                      )}
-                      <span className="nav-label" lang="en" translate="no">{item.label}</span>
-                    </>
-                  )}
-                </NavLink>
-              ))}
-            </nav>
-            <div className="header-language"><LangToggle /></div>
-            <button
-              className="menu-toggle"
-              aria-label={open ? t(UI.closeMenu) : t(UI.openMenu)}
-              aria-expanded={open}
-              aria-controls="mobile-navigation"
-              onClick={() => setOpen(!open)}
-            >
-              {open ? <X size={22} /> : <Menu size={22} />}
-            </button>
+              <nav className="desktop-nav" aria-label={t(UI.mainMenu)}>
+                {NAV.map((item) => (
+                  <NavLink key={item.to} to={item.to} end={item.to === "/"}>
+                    {({ isActive }) => (
+                      <>
+                        {isActive && (
+                          <motion.span
+                            layoutId="nav-pill"
+                            className="nav-pill"
+                            transition={{
+                              type: "spring",
+                              stiffness: 420,
+                              damping: 34,
+                            }}
+                          />
+                        )}
+                        <span className="nav-label" lang="en" translate="no">
+                          {item.label}
+                        </span>
+                      </>
+                    )}
+                  </NavLink>
+                ))}
+              </nav>
+              <div className="header-language">
+                <LangToggle />
+              </div>
+              <button
+                ref={menuToggleRef}
+                className="menu-toggle"
+                aria-label={open ? t(UI.closeMenu) : t(UI.openMenu)}
+                aria-expanded={open}
+                aria-controls="mobile-navigation"
+                onClick={() => setOpen(!open)}
+              >
+                {open ? <X size={22} /> : <Menu size={22} />}
+              </button>
             </div>
           </motion.div>
         </header>
@@ -178,6 +319,7 @@ export default function Layout() {
         <AnimatePresence>
           {open && (
             <motion.nav
+              ref={menuRef}
               id="mobile-navigation"
               className="mobile-nav"
               aria-label={t(UI.mobileMenu)}
@@ -194,7 +336,13 @@ export default function Layout() {
                   exit={{ opacity: 0, y: 12 }}
                   transition={{ duration: 0.55, delay: 0.06 * i + 0.05, ease }}
                 >
-                  <NavLink to={item.to} lang="en" translate="no" end={item.to === "/"} onClick={() => setOpen(false)}>
+                  <NavLink
+                    to={item.to}
+                    lang="en"
+                    translate="no"
+                    end={item.to === "/"}
+                    onClick={() => setOpen(false)}
+                  >
                     <span className="mobile-index">0{i + 1}</span>
                     {item.label}
                   </NavLink>
@@ -209,7 +357,11 @@ export default function Layout() {
                 <p>
                   digitalapgujeong@gmail.com
                   <br />
-                  <a href="https://www.instagram.com/digital_apgujeong" target="_blank" rel="noopener noreferrer">
+                  <a
+                    href="https://www.instagram.com/digital_apgujeong"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     @digital_apgujeong
                   </a>
                 </p>
@@ -244,8 +396,14 @@ export default function Layout() {
             </div>
             <div className="footer-col">
               <span className="eyebrow">contact</span>
-              <a href="mailto:digitalapgujeong@gmail.com">digitalapgujeong@gmail.com</a>
-              <a href="https://www.instagram.com/digital_apgujeong" target="_blank" rel="noopener noreferrer">
+              <a href="mailto:digitalapgujeong@gmail.com">
+                digitalapgujeong@gmail.com
+              </a>
+              <a
+                href="https://www.instagram.com/digital_apgujeong"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 @digital_apgujeong
               </a>
             </div>
