@@ -1,8 +1,5 @@
-import { Link } from "react-router-dom";
 import { motion } from "motion/react";
-import { ArrowUpRight } from "lucide-react";
 import { useLang, type L } from "../i18n";
-import Magnetic from "../components/Magnetic";
 import { Reveal } from "./Services";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -16,8 +13,6 @@ const T = {
   teamTitle: { en: "One team, from direction to delivery", ko: "디렉션부터 납품까지, 하나의 팀" } as L,
   fastLabel: { en: "why us", ko: "why us" } as L,
   fastTitle: { en: "High quality, even on a tight deadline", ko: "촉박한 납기에도 높은 퀄리티" } as L,
-  cta: { en: "Tell us your deadline.", ko: "납기와 함께 문의해 주세요." } as L,
-  inquiry: { en: "Project inquiry", ko: "프로젝트 문의" } as L,
 };
 
 const TEAM: { role: L; text: L; badge?: L }[] = [
@@ -124,15 +119,6 @@ export default function Company() {
           ))}
         </div>
       </section>
-
-      <Reveal className="service-cta">
-        <p>{t(T.cta)}</p>
-        <Magnetic>
-          <Link to="/contact" className="glass-button">
-            {t(T.inquiry)} <ArrowUpRight size={18} />
-          </Link>
-        </Magnetic>
-      </Reveal>
     </div>
   );
 }
