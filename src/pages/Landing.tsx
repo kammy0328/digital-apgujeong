@@ -11,7 +11,7 @@ import { ease } from "../motion";
 const T = {
   eyebrow: {
     en: "video beauty retouching & object cleanup",
-    ko: "영상 뷰티 리터칭 · 오브젝트 클리닝",
+    ko: "뷰티 리터칭 · 오브젝트 클리닝",
   } as L,
   viewWork: { en: "View work", ko: "작업 보기" } as L,
   disciplines: { en: "two disciplines", ko: "two disciplines" } as L,

@@ -2,7 +2,7 @@
   "/": {
     "title": {
       "en": "Digital Apgujeong (diap) | Video beauty retouching & object cleanup studio",
-      "ko": "디지털 압구정 | 영상 뷰티 리터칭 · 오브젝트 클리닝 스튜디오"
+      "ko": "디지털 압구정 | 뷰티 리터칭 · 오브젝트 클리닝 스튜디오"
     },
     "description": {
       "en": "Digital Apgujeong (diap) is a post-production studio for video beauty retouching and object cleanup on music videos, commercials and film.",
@@ -16,13 +16,13 @@
     },
     "description": {
       "en": "Video beauty retouching and cleanup portfolio by Digital Apgujeong: ILLIT, ZEROBASEONE, BLACKPINK and more music video work.",
-      "ko": "아일릿, 제로베이스원, 블랙핑크 등 뮤직비디오 영상 뷰티 리터칭·오브젝트 클리닝 작업물을 디지털 압구정 포트폴리오에서 확인하세요."
+      "ko": "아일릿, 제로베이스원, 블랙핑크 등 뮤직비디오 뷰티 리터칭·오브젝트 클리닝 작업물을 디지털 압구정 포트폴리오에서 확인하세요."
     }
   },
   "/service": {
     "title": {
       "en": "Service | Beauty retouching, object cleanup & team — Digital Apgujeong",
-      "ko": "서비스 | 영상 뷰티 리터칭 · 오브젝트 클리닝 · 팀 구성 — 디지털 압구정"
+      "ko": "서비스 | 뷰티 리터칭 · 오브젝트 클리닝 · 팀 구성 — 디지털 압구정"
     },
     "description": {
       "en": "A supervisor-led team delivering video beauty retouching and object cleanup with high quality, even on tight deadlines. See the scope of work and our process.",
@@ -36,7 +36,7 @@
     },
     "description": {
       "en": "Send a video link, length and deadline and we will reply quickly with a quote and schedule for beauty retouching or object cleanup.",
-      "ko": "영상 링크, 분량, 희망 납기일을 보내주시면 영상 뷰티 리터칭·오브젝트 클리닝 견적과 일정을 빠르게 안내드립니다."
+      "ko": "영상 링크, 분량, 희망 납기일을 보내주시면 뷰티 리터칭·오브젝트 클리닝 견적과 일정을 빠르게 안내드립니다."
     }
   }
 }

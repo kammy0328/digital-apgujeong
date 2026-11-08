@@ -46,7 +46,7 @@ const T = {
   } as L,
   services: {
     en: "Video beauty retouching / Object cleanup",
-    ko: "영상 뷰티 리터칭 / 오브젝트 클리닝",
+    ko: "뷰티 리터칭 / 오브젝트 클리닝",
   } as L,
   fields: {
     en: "Film · Commercial · Music video",
