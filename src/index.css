@@ -1100,15 +1100,46 @@ main {
 }
 .video-player {
   background: #000;
-  animation: player-reveal 0.18s ease both;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 180ms ease;
 }
-@keyframes player-reveal {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.video-player.is-ready {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.video-loading {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  padding: 7px 10px;
+  background: #101010c9;
+  border-radius: 4px;
+  color: #ddd;
+  font-size: 11px;
+}
+.video-load-error {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  background: #101010e8;
+  padding: 20px;
+  font-size: 13px;
+  text-align: center;
+}
+.video-load-error p {
+  margin: 0;
+  color: #aaa;
+}
+.video-load-error a {
+  text-decoration: underline;
+  text-underline-offset: 5px;
 }
 @media (max-width: 599px) {
   .work-overlay {
@@ -1710,6 +1741,45 @@ main {
     transform: none;
   }
   .hero-center .glass-button svg {
+    display: block;
+  }
+}
+
+@media (max-width: 767px) {
+  .site-header .header-glass,
+  .site-header.is-glass .header-glass {
+    width: calc(100% - 20px);
+    height: 64px;
+    padding: 0 12px;
+    border-radius: 999px;
+  }
+  .site-header .brand-logo,
+  .site-header.is-glass .brand-logo {
+    height: 26px;
+  }
+  .brand:hover .logo-dot {
+    transform: none;
+  }
+  .team-flow {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 20px;
+  }
+  .team-node {
+    display: block;
+    min-width: 0;
+  }
+  .team-node i {
     display: none;
+  }
+  .team-node b {
+    display: block;
+    padding: 14px 0;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    white-space: nowrap;
   }
 }

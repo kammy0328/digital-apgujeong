@@ -56,7 +56,7 @@ export function getVideoEmbedUrl(video: PortfolioVideo): string {
     embed.searchParams.set("dnt", "1");
     return embed.toString();
   }
-  return `https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&rel=0`;
+  return `https://www.youtube.com/embed/${video.youtubeId}?autoplay=1&rel=0&enablejsapi=1&playsinline=1`;
 }
 
 /** Card-sized still (640px WebP). YouTube bakes 4:3 letterbox bars into it; the card's object-fit: cover crops them off. */

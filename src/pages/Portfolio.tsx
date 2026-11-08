@@ -10,6 +10,7 @@ import {
   getVideoThumb,
 } from "../data/portfolio";
 import { ease, TITLE } from "../motion";
+import EmbeddedVideo from "../components/EmbeddedVideo";
 
 type Frame = { left: number; top: number; width: number; height: number };
 function playerFrame(): Frame {
@@ -198,7 +199,9 @@ export default function Portfolio() {
                   onKeyDown={(event) => {
                     if (event.key !== "Tab") return;
                     const nodes = Array.from(
-                      event.currentTarget.querySelectorAll("button, iframe"),
+                      event.currentTarget.querySelectorAll(
+                        'button, a[href], iframe:not([tabindex="-1"])',
+                      ),
                     ) as HTMLElement[];
                     const first = nodes[0],
                       last = nodes[nodes.length - 1];
@@ -271,12 +274,13 @@ export default function Portfolio() {
                       />
                     )}
                     {ready && (
-                      <iframe
-                        className="video-player"
+                      <EmbeddedVideo
                         src={getVideoEmbedUrl(video)}
                         title={video.title[lang]}
-                        allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-                        allowFullScreen
+                        watchUrl={
+                          video.vimeoUrl ||
+                          `https://www.youtube.com/watch?v=${video.youtubeId}`
+                        }
                       />
                     )}
                   </motion.div>
