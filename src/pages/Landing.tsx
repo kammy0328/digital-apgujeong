@@ -75,25 +75,25 @@ const WALL_URLS = [
   ),
 ];
 
-// Start fetching as soon as the app loads so the thumbnails are cached before the landing page mounts.
-const wallLoad: Promise<void> =
-  typeof window === "undefined"
-    ? Promise.resolve()
-    : Promise.all(
-        WALL_URLS.map(
-          (u) =>
-            new Promise<void>((resolve) => {
-              const img = new Image();
-              img.onload = img.onerror = () => resolve();
-              img.src = u;
-              img.decode?.().then(resolve, resolve);
-            }),
-        ),
-      ).then(() => undefined);
+// Start only when Wall mounts; importing this page must not fetch images on other routes.
+let wallLoad: Promise<void> | undefined;
 let wallReady = false;
-wallLoad.then(() => {
-  wallReady = true;
-});
+function loadWall() {
+  wallLoad ??= Promise.all(
+    WALL_URLS.map(
+      (url) =>
+        new Promise<void>((resolve) => {
+          const image = new Image();
+          image.onload = image.onerror = () => resolve();
+          image.src = url;
+          image.decode?.().then(resolve, resolve);
+        }),
+    ),
+  ).then(() => {
+    wallReady = true;
+  });
+  return wallLoad;
+}
 
 function Wall() {
   const [ready, setReady] = useState(wallReady);
@@ -103,10 +103,18 @@ function Wall() {
       return;
     }
     let live = true;
-    const timeout = new Promise<void>((r) => setTimeout(r, 4000));
-    Promise.race([wallLoad, timeout]).then(() => live && setReady(true));
+    const timeout = window.setTimeout(() => {
+      if (live) setReady(true);
+    }, 4000);
+    loadWall().then(() => {
+      if (live) {
+        window.clearTimeout(timeout);
+        setReady(true);
+      }
+    });
     return () => {
       live = false;
+      window.clearTimeout(timeout);
     };
   }, []);
   const cols = Array.from({ length: COLUMNS }, (_, c) =>
