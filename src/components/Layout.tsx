@@ -114,6 +114,7 @@ export default function Layout() {
     const title = meta.title[lang];
     const description = meta.description[lang];
     document.title = title;
+    document.querySelector('meta[property="og:site_name"]')?.setAttribute("content", lang === "en" ? "diap" : "디지털 압구정");
     document
       .querySelector('meta[name="description"]')
       ?.setAttribute("content", description);

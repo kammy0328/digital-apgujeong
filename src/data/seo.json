@@ -1,7 +1,7 @@
 {
   "/": {
     "title": {
-      "en": "Digital Apgujeong (diap) | Video beauty retouching & object cleanup studio",
+      "en": "diap | Video beauty retouching & object cleanup studio",
       "ko": "디지털 압구정 | 뷰티 리터칭 · 오브젝트 클리닝 스튜디오"
     },
     "description": {
@@ -11,7 +11,7 @@
   },
   "/work": {
     "title": {
-      "en": "Work | Video retouching portfolio — Digital Apgujeong (diap)",
+      "en": "Work | Video retouching portfolio — diap",
       "ko": "작업물 | 뮤직비디오·광고 영상 보정 포트폴리오 — 디지털 압구정"
     },
     "description": {
@@ -21,7 +21,7 @@
   },
   "/service": {
     "title": {
-      "en": "Service | Beauty retouching, object cleanup & team — Digital Apgujeong",
+      "en": "Service | Beauty retouching, object cleanup & team — diap",
       "ko": "서비스 | 뷰티 리터칭 · 오브젝트 클리닝 · 팀 구성 — 디지털 압구정"
     },
     "description": {
@@ -31,7 +31,7 @@
   },
   "/contact": {
     "title": {
-      "en": "Contact | Project inquiry & quote — Digital Apgujeong",
+      "en": "Contact | Project inquiry & quote — diap",
       "ko": "문의 | 영상 보정 견적 · 프로젝트 문의 — 디지털 압구정"
     },
     "description": {

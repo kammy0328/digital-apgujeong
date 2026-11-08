@@ -44,6 +44,7 @@ for (const [route, page] of Object.entries(seo)) {
     html = meta(html, "name", "description", page.description[lang]);
     for (const [attr, key, value] of [
       ["property", "og:title", page.title[lang]],
+      ["property", "og:site_name", lang === "en" ? "diap" : "디지털 압구정"],
       ["property", "og:description", page.description[lang]],
       ["property", "og:url", SITE + path],
       ["property", "og:locale", lang === "en" ? "en_US" : "ko_KR"],
