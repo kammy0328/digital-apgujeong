@@ -5,10 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
-    "build": "vite build && node scripts/prerender.mjs",
+    "build": "vite build && vite build --ssr src/entry-server.tsx --outDir .ssr-build && node scripts/prerender.mjs",
     "preview": "vite preview",
     "clean": "rm -rf dist",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "test:contact": "node --import tsx --test scripts/contact.test.ts",
+    "test:static": "node scripts/check-static.mjs"
   },
   "dependencies": {
     "@google/genai": "^1.29.0",

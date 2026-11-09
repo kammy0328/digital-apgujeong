@@ -1,33 +1,38 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
-import nodemailer from 'nodemailer';
+import type { VercelRequest, VercelResponse } from "@vercel/node";
+import nodemailer from "nodemailer";
+import { validateContact } from "../src/data/contact";
 
 const esc = (v: unknown) =>
-  String(v ?? '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+  String(v ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+  if (req.method !== "POST") {
+    res.setHeader("Allow", "POST");
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { name, phone, email, workType, volume, deadline, message } = req.body ?? {};
-
-  if (!name || !phone || !workType) {
-    return res.status(400).json({ error: '이름, 연락처, 작업 종류는 필수 항목입니다.' });
+  const result = validateContact(req.body);
+  if (!result.ok) {
+    return res
+      .status(400)
+      .json({ error: "입력 내용을 확인해 주세요.", code: "INVALID_INPUT" });
   }
+  const { name, phone, email, workType, volume, deadline, message } =
+    result.data;
 
   if (!process.env.GMAIL_APP_PASSWORD) {
-    console.error('GMAIL_APP_PASSWORD is not set');
-    return res.status(500).json({ error: 'Mail is not configured.' });
+    console.error("GMAIL_APP_PASSWORD is not set");
+    return res.status(500).json({ error: "Mail is not configured." });
   }
 
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    service: "gmail",
     auth: {
-      user: 'digitalapgujeong@gmail.com',
+      user: "digitalapgujeong@gmail.com",
       pass: process.env.GMAIL_APP_PASSWORD,
     },
   });
@@ -37,12 +42,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
 ■ 이름: ${name}
 ■ 연락처: ${phone}
-■ 이메일: ${email || '미입력'}
+■ 이메일: ${email || "미입력"}
 ■ 작업 종류: ${workType}
-■ 영상 분량: ${volume || '미입력'}
-■ 희망 납기일: ${deadline || '미입력'}
+■ 영상 분량: ${volume || "미입력"}
+■ 희망 납기일: ${deadline || "미입력"}
 ■ 추가 요청사항:
-${message || '없음'}
+${message || "없음"}
 
 ---
 디지털 압구정 웹사이트 견적 문의 폼
@@ -55,11 +60,11 @@ ${message || '없음'}
   <table style="width: 100%; border-collapse: collapse;">
     <tr><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #888; font-size: 12px; width: 120px; vertical-align: top;">이름</td><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #171717; font-size: 14px;">${esc(name)}</td></tr>
     <tr><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #888; font-size: 12px; vertical-align: top;">연락처</td><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #171717; font-size: 14px;">${esc(phone)}</td></tr>
-    <tr><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #888; font-size: 12px; vertical-align: top;">이메일</td><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #171717; font-size: 14px;">${esc(email) || '미입력'}</td></tr>
+    <tr><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #888; font-size: 12px; vertical-align: top;">이메일</td><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #171717; font-size: 14px;">${esc(email) || "미입력"}</td></tr>
     <tr><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #888; font-size: 12px; vertical-align: top;">작업 종류</td><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #171717; font-size: 14px; font-weight: 600;">${esc(workType)}</td></tr>
-    <tr><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #888; font-size: 12px; vertical-align: top;">영상 분량</td><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #171717; font-size: 14px;">${esc(volume) || '미입력'}</td></tr>
-    <tr><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #888; font-size: 12px; vertical-align: top;">희망 납기일</td><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #171717; font-size: 14px;">${esc(deadline) || '미입력'}</td></tr>
-    <tr><td style="padding: 12px 0; color: #888; font-size: 12px; vertical-align: top;">추가 요청사항</td><td style="padding: 12px 0; color: #171717; font-size: 14px; white-space: pre-line;">${esc(message) || '없음'}</td></tr>
+    <tr><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #888; font-size: 12px; vertical-align: top;">영상 분량</td><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #171717; font-size: 14px;">${esc(volume) || "미입력"}</td></tr>
+    <tr><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #888; font-size: 12px; vertical-align: top;">희망 납기일</td><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #171717; font-size: 14px;">${esc(deadline) || "미입력"}</td></tr>
+    <tr><td style="padding: 12px 0; color: #888; font-size: 12px; vertical-align: top;">추가 요청사항</td><td style="padding: 12px 0; color: #171717; font-size: 14px; white-space: pre-line;">${esc(message) || "없음"}</td></tr>
   </table>
   <p style="margin: 32px 0 0 0; color: #aaa; font-size: 11px; border-top: 1px solid #e5e5e5; padding-top: 16px;">디지털 압구정 · digitalapgujeong@gmail.com</p>
 </div>
@@ -68,16 +73,18 @@ ${message || '없음'}
   try {
     await transporter.sendMail({
       from: '"디지털 압구정 문의" <digitalapgujeong@gmail.com>',
-      to: 'digitalapgujeong@gmail.com',
+      to: "digitalapgujeong@gmail.com",
       replyTo: email || undefined,
-      subject: `[견적 문의] ${String(workType).replace(/[\r\n]/g, ' ')} — ${String(name).replace(/[\r\n]/g, ' ')}`,
+      subject: `[견적 문의] ${String(workType).replace(/[\r\n]/g, " ")} — ${String(name).replace(/[\r\n]/g, " ")}`,
       text: mailText,
       html: mailHtml,
     });
 
     return res.status(200).json({ success: true });
   } catch (error) {
-    console.error('Email error:', error);
-    return res.status(500).json({ error: '메일 전송에 실패했습니다. 잠시 후 다시 시도해 주세요.' });
+    console.error("Email error:", error);
+    return res
+      .status(500)
+      .json({ error: "메일 전송에 실패했습니다. 잠시 후 다시 시도해 주세요." });
   }
 }
