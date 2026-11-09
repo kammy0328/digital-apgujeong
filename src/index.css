@@ -371,7 +371,7 @@ main {
   aspect-ratio: 16 / 9;
   overflow: hidden;
   border-radius: 10px;
-  background: #161616;
+  background: #232323;
   isolation: isolate;
   transform: translateZ(0);
 }
@@ -381,6 +381,21 @@ main {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+/* Blur-up: the tiny preview shows first (blurred), then the sharp image fades over it. */
+.work-image .work-tiny {
+  filter: blur(14px);
+  transform: scale(1.12);
+  transition: opacity 0.7s var(--ease);
+}
+.work-image .work-sharp {
+  transition: opacity 0.9s var(--ease);
+}
+@media (prefers-reduced-motion: reduce) {
+  .work-image .work-tiny,
+  .work-image .work-sharp {
+    transition: none;
+  }
 }
 .image-fallback {
   position: absolute;

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import type { PortfolioVideo } from "../data/portfolio";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { X } from "lucide-react";
 import { createPortal, flushSync } from "react-dom";
@@ -8,8 +9,9 @@ import {
   getVideoEmbedUrl,
   getVideoPoster,
   getVideoThumb,
+  getVideoTiny,
 } from "../data/portfolio";
-import { ease, TITLE, REVEAL } from "../motion";
+import { ease, TITLE } from "../motion";
 
 type Frame = { left: number; top: number; width: number; height: number };
 function playerFrame(): Frame {
@@ -47,6 +49,102 @@ function preloadPoster(video: Parameters<typeof getVideoPoster>[0]) {
   new Image().src = url;
 }
 
+// Cards on the first screen wait (up to 1.5s) for their tiny blurred previews, then appear in a wave.
+const FIRST_SCREEN = 8;
+const WAVE_STEP = 0.08;
+const WAVE_TIMEOUT = 1500;
+let waveDone = false;
+
+function loadImage(url?: string) {
+  return new Promise<void>((resolve) => {
+    if (!url) return resolve();
+    const img = new Image();
+    img.onload = img.onerror = () => resolve();
+    img.src = url;
+  });
+}
+
+function WorkThumb({
+  item,
+  index,
+  lang,
+  wave,
+  reduced,
+}: {
+  item: PortfolioVideo;
+  index: number;
+  lang: "en" | "ko";
+  wave: boolean;
+  reduced: boolean | null;
+}) {
+  const box = useRef<HTMLSpanElement>(null);
+  const sharpImg = useRef<HTMLImageElement>(null);
+  const [inView, setInView] = useState(false);
+  const [sharp, setSharp] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const early = index < FIRST_SCREEN;
+
+  useEffect(() => {
+    if (early || !box.current) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -40px 0px" },
+    );
+    io.observe(box.current);
+    return () => io.disconnect();
+  }, [early]);
+
+  useEffect(() => {
+    if (sharpImg.current?.complete && sharpImg.current.naturalWidth) setSharp(true);
+  }, []);
+
+  const shown = early ? wave : inView;
+  // Diagonal stagger (column + row) so the cards ripple in.
+  const delay = reduced ? 0 : ((index % 4) + Math.floor(index / 4)) * WAVE_STEP;
+  const tiny = getVideoTiny(item);
+  const full = getVideoThumb(item);
+  return (
+    <span className="work-image" ref={box}>
+      {failed && (
+        <span className="image-fallback" aria-hidden="true">
+          {item.title[lang].split(" - ")[0]}
+        </span>
+      )}
+      {tiny && (
+        <img
+          className="work-tiny"
+          src={tiny}
+          alt=""
+          aria-hidden="true"
+          decoding="async"
+          style={{ opacity: shown ? 1 : 0, transitionDelay: `${delay}s` }}
+        />
+      )}
+      {full && (
+        <img
+          ref={sharpImg}
+          className="work-sharp"
+          loading={early ? "eager" : "lazy"}
+          decoding="async"
+          src={full}
+          alt={item.title[lang]}
+          onLoad={() => setSharp(true)}
+          onError={() => setFailed(true)}
+          style={{ opacity: shown && sharp ? 1 : 0, transitionDelay: `${delay + 0.3}s` }}
+        />
+      )}
+      <span className="work-overlay" aria-hidden="true">
+        <span className="work-title">{item.title[lang]}</span>
+      </span>
+    </span>
+  );
+}
+
 export default function Portfolio() {
   const { lang } = useLang();
   const reduced = useReducedMotion();
@@ -56,6 +154,7 @@ export default function Portfolio() {
   const [hd, setHd] = useState(false);
   const [origin, setOrigin] = useState<Frame | null>(null);
   const [target, setTarget] = useState<Frame | null>(null);
+  const [wave, setWave] = useState(waveDone);
   const playbackAllowed = useRef(false);
   const closeButton = useRef<HTMLButtonElement>(null);
   const trigger = useRef<HTMLElement | null>(null);
@@ -75,6 +174,22 @@ export default function Portfolio() {
     flushSync(() => setReady(false));
     setOpen(false);
   };
+
+  useEffect(() => {
+    if (waveDone) return;
+    let live = true;
+    const previews = Promise.all(
+      portfolioVideos.slice(0, FIRST_SCREEN).map((v) => loadImage(getVideoTiny(v))),
+    );
+    const timeout = new Promise<void>((resolve) => setTimeout(resolve, WAVE_TIMEOUT));
+    Promise.race([previews, timeout]).then(() => {
+      waveDone = true;
+      if (live) setWave(true);
+    });
+    return () => {
+      live = false;
+    };
+  }, []);
 
   useEffect(() => {
     if (selected === null) return;
@@ -119,7 +234,7 @@ export default function Portfolio() {
         aria-label={lang === "ko" ? "포트폴리오" : "Portfolio"}
       >
         {portfolioVideos.map((item, index) => (
-          <motion.button
+          <button
             key={item.id}
             className="work-card"
             onPointerEnter={() => preloadPoster(item)}
@@ -145,36 +260,9 @@ export default function Portfolio() {
             aria-label={
               lang === "ko" ? `${item.title.ko} 영상 재생` : `Play ${item.title.en}`
             }
-            initial={{ opacity: reduced ? 1 : 0, y: reduced ? 0 : REVEAL.y }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: REVEAL.margin }}
-            transition={{
-              duration: reduced ? 0 : REVEAL.duration,
-              ease,
-              // The first row follows the title; later rows start the moment they scroll in.
-              delay: reduced ? 0 : (index < 4 ? 0.3 : 0) + (index % 4) * REVEAL.stagger,
-            }}
           >
-            <span className="work-image">
-              <span className="image-fallback" aria-hidden="true">
-                {item.title[lang].split(" - ")[0]}
-              </span>
-              {getVideoThumb(item) && (
-                <img
-                  loading={index < 4 ? "eager" : "lazy"}
-                  decoding="async"
-                  src={getVideoThumb(item)}
-                  alt={item.title[lang]}
-                  onError={(event) => {
-                    event.currentTarget.style.opacity = "0";
-                  }}
-                />
-              )}
-              <span className="work-overlay" aria-hidden="true">
-                <span className="work-title">{item.title[lang]}</span>
-              </span>
-            </span>
-          </motion.button>
+            <WorkThumb item={item} index={index} lang={lang} wave={wave} reduced={reduced} />
+          </button>
         ))}
       </section>
       {createPortal(

@@ -77,3 +77,13 @@ export function getVideoPoster(video: PortfolioVideo): string | undefined {
       : undefined)
   );
 }
+
+/** Tiny 16:9 still (320px) used as the blurred preview while the sharper card image loads. */
+export function getVideoTiny(video: PortfolioVideo): string | undefined {
+  return (
+    video.poster ||
+    (video.youtubeId
+      ? `https://i.ytimg.com/vi/${video.youtubeId}/mqdefault.jpg`
+      : undefined)
+  );
+}
