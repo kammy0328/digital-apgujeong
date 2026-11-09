@@ -69,7 +69,7 @@ const ROLES: L[] = [
 const COLUMNS = 5;
 const PER_COLUMN = 6;
 const COPIES = 3;
-// Tiny 320px stills keep the first visit light (about 100KB for the whole wall). The work page uses
+// Small 480px stills keep the first visit light (about 150KB for the whole wall). The work page uses
 // the same URLs for its blurred previews, so they are already cached when a visitor goes there next.
 const wallVideo = (column: number, row: number) =>
   portfolioVideos[(column * 2 + row) % portfolioVideos.length];

@@ -78,12 +78,12 @@ export function getVideoPoster(video: PortfolioVideo): string | undefined {
   );
 }
 
-/** Tiny 16:9 still (320px) used as the blurred preview while the sharper card image loads. */
+/** Small still (480px WebP, about 13KB) shown first as the blurred preview. Same 4:3 framing as the card image, so the swap to sharp does not shift the picture. */
 export function getVideoTiny(video: PortfolioVideo): string | undefined {
   return (
     video.poster ||
     (video.youtubeId
-      ? `https://i.ytimg.com/vi/${video.youtubeId}/mqdefault.jpg`
+      ? `https://i.ytimg.com/vi_webp/${video.youtubeId}/hqdefault.webp`
       : undefined)
   );
 }

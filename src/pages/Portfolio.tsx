@@ -92,7 +92,7 @@ function WorkThumb({
   const tiny = getVideoTiny(item);
   const full = getVideoThumb(item);
   return (
-    <span className="work-image">
+    <span className={`work-image${wave && sharp ? " is-sharp" : ""}`}>
       {failed && (
         <span className="image-fallback" aria-hidden="true">
           {item.title[lang].split(" - ")[0]}
@@ -105,7 +105,11 @@ function WorkThumb({
           alt=""
           aria-hidden="true"
           decoding="async"
-          style={{ opacity: wave ? 1 : undefined, transitionDelay: `${delay}s` }}
+          style={{
+            opacity: wave ? 1 : undefined,
+            // opacity first, then the blur and zoom ease out together with the sharp image's fade-in
+            transitionDelay: `${delay}s, ${delay + 0.3}s, ${delay + 0.3}s`,
+          }}
         />
       )}
       {full && (
