@@ -1800,3 +1800,28 @@ main {
     white-space: nowrap;
   }
 }
+
+/* Contact form: two fields on the first row, then email / length / deadline side by side. */
+.form-fields {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+.form-fields label {
+  grid-column: span 3;
+}
+.form-fields .third-field {
+  grid-column: span 2;
+}
+.form-fields .full-field {
+  grid-column: 1 / -1;
+}
+@media (max-width: 1023px) {
+  .form-fields .third-field {
+    grid-column: span 3;
+  }
+}
+@media (max-width: 599px) {
+  .form-fields label,
+  .form-fields .third-field {
+    grid-column: 1 / -1;
+  }
+}

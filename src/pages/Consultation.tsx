@@ -194,7 +194,7 @@ export default function Consultation() {
                   }
                 />
               </label>
-              <label className="full-field">
+              <label className="third-field">
                 {t(T.email)}
                 <input
                   name="email"
@@ -206,7 +206,7 @@ export default function Consultation() {
                   placeholder="hello@company.com"
                 />
               </label>
-              <label>
+              <label className="third-field">
                 {t(T.volume)}
                 <input
                   name="volume"
@@ -216,7 +216,7 @@ export default function Consultation() {
                   placeholder={t(T.volumePh)}
                 />
               </label>
-              <label>
+              <label className="third-field">
                 {t(T.deadline)}
                 <input
                   name="deadline"
