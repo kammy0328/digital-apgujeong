@@ -111,10 +111,16 @@ export default function WebGLBackground() {
     const resize = () => {
       // The field is soft, so rendering below native resolution is invisible and keeps phones cool.
       scale = window.innerWidth < 768 ? 0.3 : 0.4;
-      canvas.width = Math.max(1, Math.round(window.innerWidth * scale));
-      canvas.height = Math.max(1, Math.round(window.innerHeight * scale));
-      gl.viewport(0, 0, canvas.width, canvas.height);
-      if (reduced) draw(start);
+      const width = Math.max(1, Math.round(window.innerWidth * scale));
+      const height = Math.max(1, Math.round(window.innerHeight * scale));
+      // Assigning width/height clears the canvas, so only touch them when the size really changed,
+      // and repaint in the same task so no blank frame is ever shown while the window is resized.
+      if (canvas.width !== width || canvas.height !== height) {
+        canvas.width = width;
+        canvas.height = height;
+        gl.viewport(0, 0, width, height);
+      }
+      draw(performance.now());
     };
     const onMove = (e: PointerEvent) => {
       target.x = e.clientX / window.innerWidth;

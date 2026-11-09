@@ -731,10 +731,12 @@ main {
   letter-spacing: -0.04em;
   line-height: 0.95;
 }
+/* The form keeps one fixed width, so its fields never stretch or shrink while the window is resized;
+   the page only switches to a single column when the screen is too narrow for both columns. */
 .contact-layout {
   display: grid;
-  grid-template-columns: 1fr 1.6fr;
-  gap: 8%;
+  grid-template-columns: minmax(0, 1fr) 720px;
+  gap: 72px;
 }
 .contact-aside {
   border-top: 1px solid var(--line);
@@ -763,6 +765,8 @@ main {
 }
 .contact-form {
   border-top: 1px solid #555;
+  width: 100%;
+  max-width: 720px;
 }
 .form-fields {
   display: grid;
@@ -1823,5 +1827,15 @@ main {
   .form-fields label,
   .form-fields .third-field {
     grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 1179px) {
+  .contact-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 48px;
+  }
+  .contact-aside {
+    order: 2;
   }
 }
