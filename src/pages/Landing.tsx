@@ -5,7 +5,7 @@ import Logo from "../components/Logo";
 import { ArrowUpRight } from "lucide-react";
 import { useLang, type L } from "../i18n";
 import { Reveal } from "./Services";
-import { portfolioVideos, getVideoThumb } from "../data/portfolio";
+import { portfolioVideos, getVideoThumb, getVideoTiny } from "../data/portfolio";
 import { ease } from "../motion";
 
 const T = {
@@ -69,18 +69,22 @@ const ROLES: L[] = [
 const COLUMNS = 5;
 const PER_COLUMN = 6;
 const COPIES = 3;
-const WALL_URLS = [
-  ...new Set(
-    portfolioVideos.map((v) => getVideoThumb(v)).filter(Boolean) as string[],
-  ),
-];
+// Tiny 320px stills keep the first visit light (about 100KB for the whole wall). The work page uses
+// the same URLs for its blurred previews, so they are already cached when a visitor goes there next.
+const wallVideo = (column: number, row: number) =>
+  portfolioVideos[(column * 2 + row) % portfolioVideos.length];
+const WALL_FIRST_URLS = Array.from({ length: COLUMNS }, (_, c) =>
+  getVideoTiny(wallVideo(c, 0)),
+).filter(Boolean) as string[];
 
 // Start only when Wall mounts; importing this page must not fetch images on other routes.
+// The wall fades in once the first tile of each column is decoded (or after 1.5s); the remaining
+// tiles then fade in one by one as they arrive, so nothing pops in.
 let wallLoad: Promise<void> | undefined;
 let wallReady = false;
 function loadWall() {
   wallLoad ??= Promise.all(
-    WALL_URLS.map(
+    WALL_FIRST_URLS.map(
       (url) =>
         new Promise<void>((resolve) => {
           const image = new Image();
@@ -95,6 +99,11 @@ function loadWall() {
   return wallLoad;
 }
 
+// Cached images can finish before React attaches onLoad, so check them as they mount.
+function markLoaded(image: HTMLImageElement | null) {
+  if (image?.complete && image.naturalWidth) image.classList.add("is-loaded");
+}
+
 function Wall() {
   const [ready, setReady] = useState(wallReady);
   useEffect(() => {
@@ -105,7 +114,7 @@ function Wall() {
     let live = true;
     const timeout = window.setTimeout(() => {
       if (live) setReady(true);
-    }, 4000);
+    }, 1500);
     loadWall().then(() => {
       if (live) {
         window.clearTimeout(timeout);
@@ -118,10 +127,7 @@ function Wall() {
     };
   }, []);
   const cols = Array.from({ length: COLUMNS }, (_, c) =>
-    Array.from(
-      { length: PER_COLUMN },
-      (_, i) => portfolioVideos[(c * 2 + i) % portfolioVideos.length],
-    ),
+    Array.from({ length: PER_COLUMN }, (_, i) => wallVideo(c, i)),
   );
   return (
     <div className={`wall${ready ? " is-ready" : ""}`} aria-hidden="true">
@@ -138,10 +144,12 @@ function Wall() {
             items.map((v, i) => (
               <img
                 key={`${k}-${i}`}
-                src={getVideoThumb(v)}
+                ref={markLoaded}
+                src={getVideoTiny(v)}
                 alt=""
                 decoding="async"
                 loading="eager"
+                onLoad={(event) => event.currentTarget.classList.add("is-loaded")}
               />
             )),
           )}

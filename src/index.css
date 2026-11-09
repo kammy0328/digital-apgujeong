@@ -1221,6 +1221,16 @@ main {
   border-radius: 10px;
   background: #151515;
   filter: brightness(0.62);
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+.wall-col img.is-loaded {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .wall-col img {
+    transition: none;
+  }
 }
 @keyframes wall-down {
   from {
