@@ -6,7 +6,6 @@ const valid = {
   name: " Studio ",
   phone: "+82 (10) 1234-5678",
   email: "artist@example.com",
-  workType: "영상 뷰티 리터칭",
   message: "Line one\nLine two",
 };
 test("valid international contact is trimmed; optional fields default empty", () => {
@@ -31,11 +30,10 @@ test("reject non-object bodies and non-string fields", () => {
   ])
     assert.equal(validateContact(body).ok, false);
 });
-test("reject blanks, unsupported work types, invalid email and header injection", () => {
+test("reject blanks, invalid email and header injection", () => {
   for (const patch of [
     { name: "   " },
     { phone: " " },
-    { workType: "other" },
     { phone: "call me" },
     { phone: "123" },
     { email: "invalid" },
@@ -73,7 +71,6 @@ test("API rejects invalid input before mail configuration or transport", async (
     [],
     { ...valid, name: " " },
     { ...valid, phone: "bad" },
-    { ...valid, workType: "bad" },
     { ...valid, email: "invalid" },
     { ...valid, message: "x".repeat(5001) },
   ]) {

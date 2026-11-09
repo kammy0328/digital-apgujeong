@@ -1,14 +1,7 @@
-export const WORK_TYPES = [
-  "영상 뷰티 리터칭",
-  "오브젝트 클리닝",
-  "뷰티 리터칭 + 클리닝",
-  "기타 / 상담 후 결정",
-] as const;
 export const CONTACT_LIMITS = {
   name: 100,
   phone: 40,
   email: 254,
-  workType: 80,
   volume: 200,
   deadline: 100,
   message: 5000,
@@ -36,11 +29,7 @@ export function validateContact(
       return { ok: false, error: field };
     data[field] = text;
   }
-  if (
-    !data.name ||
-    !data.phone ||
-    !WORK_TYPES.includes(data.workType as (typeof WORK_TYPES)[number])
-  )
+  if (!data.name || !data.phone)
     return { ok: false, error: "REQUIRED_FIELDS" };
   const digits = data.phone.replace(/\D/g, "");
   if (

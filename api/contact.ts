@@ -21,7 +21,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       .status(400)
       .json({ error: "입력 내용을 확인해 주세요.", code: "INVALID_INPUT" });
   }
-  const { name, phone, email, workType, volume, deadline, message } =
+  const { name, phone, email, volume, deadline, message } =
     result.data;
 
   if (!process.env.GMAIL_APP_PASSWORD) {
@@ -43,7 +43,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 ■ 이름: ${name}
 ■ 연락처: ${phone}
 ■ 이메일: ${email || "미입력"}
-■ 작업 종류: ${workType}
 ■ 영상 분량: ${volume || "미입력"}
 ■ 희망 납기일: ${deadline || "미입력"}
 ■ 추가 요청사항:
@@ -61,7 +60,6 @@ ${message || "없음"}
     <tr><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #888; font-size: 12px; width: 120px; vertical-align: top;">이름</td><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #171717; font-size: 14px;">${esc(name)}</td></tr>
     <tr><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #888; font-size: 12px; vertical-align: top;">연락처</td><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #171717; font-size: 14px;">${esc(phone)}</td></tr>
     <tr><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #888; font-size: 12px; vertical-align: top;">이메일</td><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #171717; font-size: 14px;">${esc(email) || "미입력"}</td></tr>
-    <tr><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #888; font-size: 12px; vertical-align: top;">작업 종류</td><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #171717; font-size: 14px; font-weight: 600;">${esc(workType)}</td></tr>
     <tr><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #888; font-size: 12px; vertical-align: top;">영상 분량</td><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #171717; font-size: 14px;">${esc(volume) || "미입력"}</td></tr>
     <tr><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #888; font-size: 12px; vertical-align: top;">희망 납기일</td><td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; color: #171717; font-size: 14px;">${esc(deadline) || "미입력"}</td></tr>
     <tr><td style="padding: 12px 0; color: #888; font-size: 12px; vertical-align: top;">추가 요청사항</td><td style="padding: 12px 0; color: #171717; font-size: 14px; white-space: pre-line;">${esc(message) || "없음"}</td></tr>
@@ -75,7 +73,7 @@ ${message || "없음"}
       from: '"디지털 압구정 문의" <digitalapgujeong@gmail.com>',
       to: "digitalapgujeong@gmail.com",
       replyTo: email || undefined,
-      subject: `[견적 문의] ${String(workType).replace(/[\r\n]/g, " ")} — ${String(name).replace(/[\r\n]/g, " ")}`,
+      subject: `[견적 문의] ${String(name).replace(/[\r\n]/g, " ")}`,
       text: mailText,
       html: mailHtml,
     });

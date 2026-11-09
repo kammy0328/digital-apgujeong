@@ -10,34 +10,10 @@ const initial = {
   name: "",
   phone: "",
   email: "",
-  workType: "",
   volume: "",
   deadline: "",
   message: "",
 };
-
-// The value stays Korean so inquiries arrive in the studio's inbox in one language.
-const WORK_TYPES: { value: string; label: L }[] = [
-  {
-    value: "영상 뷰티 리터칭",
-    label: { en: "Video beauty retouching", ko: "영상 뷰티 리터칭" },
-  },
-  {
-    value: "오브젝트 클리닝",
-    label: { en: "Object cleanup", ko: "오브젝트 클리닝" },
-  },
-  {
-    value: "뷰티 리터칭 + 클리닝",
-    label: { en: "Beauty retouching + cleanup", ko: "뷰티 리터칭 + 클리닝" },
-  },
-  {
-    value: "기타 / 상담 후 결정",
-    label: {
-      en: "Other / decide after consultation",
-      ko: "기타 / 상담 후 결정",
-    },
-  },
-];
 
 const T = {
   aside: {
@@ -69,8 +45,6 @@ const T = {
   } as L,
   phone: { en: "Phone *", ko: "연락처 *" } as L,
   email: { en: "Email", ko: "이메일" } as L,
-  type: { en: "Type of work *", ko: "작업 종류 *" } as L,
-  select: { en: "Please select", ko: "선택해 주세요" } as L,
   volume: { en: "Length / volume", ko: "작업 분량" } as L,
   volumePh: { en: "e.g. 3 min / about 50 shots", ko: "예) 3분 / 약 50컷" } as L,
   deadline: { en: "Preferred deadline", ko: "희망 납기일" } as L,
@@ -87,8 +61,8 @@ const T = {
   sending: { en: "Sending…", ko: "전송 중…" } as L,
   send: { en: "Send inquiry", ko: "프로젝트 문의 보내기" } as L,
   invalid: {
-    en: "Check the name, phone, email and work type. Keep the message under 5,000 characters.",
-    ko: "이름·연락처·이메일·작업 종류를 확인해 주세요. 요청사항은 5,000자 이내로 입력해 주세요.",
+    en: "Check the name, phone and email. Keep the message under 5,000 characters.",
+    ko: "이름·연락처·이메일을 확인해 주세요. 요청사항은 5,000자 이내로 입력해 주세요.",
   } as L,
   failed: {
     en: "We couldn't send your inquiry. Please contact us by email.",
@@ -220,7 +194,7 @@ export default function Consultation() {
                   }
                 />
               </label>
-              <label>
+              <label className="full-field">
                 {t(T.email)}
                 <input
                   name="email"
@@ -231,24 +205,6 @@ export default function Consultation() {
                   autoComplete="email"
                   placeholder="hello@company.com"
                 />
-              </label>
-              <label>
-                {t(T.type)}
-                <select
-                  name="workType"
-                  value={form.workType}
-                  onChange={change}
-                  required
-                >
-                  <option value="" disabled>
-                    {t(T.select)}
-                  </option>
-                  {WORK_TYPES.map((w) => (
-                    <option key={w.value} value={w.value}>
-                      {t(w.label)}
-                    </option>
-                  ))}
-                </select>
               </label>
               <label>
                 {t(T.volume)}
