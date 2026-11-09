@@ -22,6 +22,7 @@ const videos: PortfolioVideo[] = [
   { id: "dragonpony", youtubeId: "oKzPAN7JXVo", date: "2026-11-05", title: { ko: "드래곤포니 - Calling back", en: "Dragon Pony - Calling back" } },
   { id: "rescene", youtubeId: "pey3E47eSc8", date: "2026-11-03", title: { ko: "리센느 - With", en: "RESCENE - With" } },
   { id: "illit", youtubeId: "V2V9-9VhYJo", date: "2026-10-26", title: { ko: "아일릿 - 체포하겠어", en: "ILLIT - You’re Under Arrest" } },
+  { id: "lngshot", youtubeId: "fNQMQjDkoFk", date: "2026-10-22", title: { ko: "LNGSHOT - Masterpiece Performance Video", en: "LNGSHOT - Masterpiece Performance Video" } },
   { id: "leechangsub", youtubeId: "9lNp4h06dpc", date: "2026-09-18", title: { ko: "이창섭 - 사계, 그리고 너", en: "LEECHANGSUB - 사계, 그리고 너" } },
   { id: "keyveatz", youtubeId: "rt7fIlko0CM", date: "2026-09-30", title: { ko: "키비츠 - A1ㄱ", en: "Keyveatz - A1ㄱ" } },
 ];
