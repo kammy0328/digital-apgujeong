@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "../components/LocalizedLink";
-import { animate, motion, useInView, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import Logo from "../components/Logo";
 import { ArrowUpRight } from "lucide-react";
 import { useLang, type L } from "../i18n";
@@ -23,26 +23,6 @@ const T = {
     en: "Rigs, logos, reflections and clutter removed, the space rebuilt.",
     ko: "장비, 로고, 반사, 잡물을 지우고 그 자리를 복원.",
   } as L,
-  stats: [
-    {
-      value: 30,
-      prefix: "~",
-      label: { en: "cleanup artists available", ko: "클린업 가용 인원" } as L,
-    },
-    {
-      value: portfolioVideos.length,
-      prefix: "",
-      label: { en: "projects", ko: "프로젝트" } as L,
-    },
-    {
-      value: 4,
-      prefix: "",
-      label: {
-        en: "layers from supervisor to artist",
-        ko: "수퍼바이저부터 작업자까지 단계",
-      } as L,
-    },
-  ],
   workLabel: { en: "latest work", ko: "최신 작업" } as L,
   all: { en: "All work", ko: "전체 보기" } as L,
   team: {
@@ -218,28 +198,6 @@ function Hero() {
   );
 }
 
-function Count({ value, prefix }: { value: number; prefix: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-40px" });
-  const reduced = useReducedMotion();
-  const [n, setN] = useState(value);
-  useEffect(() => {
-    if (!inView || reduced) return;
-    const c = animate(0, value, {
-      duration: 1.4,
-      ease,
-      onUpdate: (v) => setN(Math.round(v)),
-    });
-    return () => c.stop();
-  }, [inView, value, reduced]);
-  return (
-    <span ref={ref}>
-      {prefix}
-      {n}
-    </span>
-  );
-}
-
 export default function Landing() {
   const { lang, t } = useLang();
   const featured = portfolioVideos.slice(0, 4);
@@ -274,17 +232,6 @@ export default function Landing() {
                 <span className="index-text">{t(s.text)}</span>
                 <ArrowUpRight className="index-arrow" size={28} />
               </Link>
-            </Reveal>
-          ))}
-        </section>
-
-        <section className="landing-stats">
-          {T.stats.map((s, i) => (
-            <Reveal key={s.label.en} delay={i * 0.1} className="stat">
-              <strong>
-                <Count value={s.value} prefix={s.prefix} />
-              </strong>
-              <span>{t(s.label)}</span>
             </Reveal>
           ))}
         </section>
