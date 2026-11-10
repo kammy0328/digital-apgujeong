@@ -5,7 +5,7 @@ import Logo from "../components/Logo";
 import { ArrowUpRight } from "lucide-react";
 import { useLang, type L } from "../i18n";
 import { Reveal } from "./Services";
-import { portfolioVideos, getVideoThumb, getVideoTiny } from "../data/portfolio";
+import { portfolioVideos, getVideoThumb, getVideoTiny, type PortfolioVideo } from "../data/portfolio";
 import { ease } from "../motion";
 
 const T = {
@@ -71,22 +71,50 @@ const PER_COLUMN = 6;
 const COPIES = 3;
 // Small 480px stills keep the first visit light (about 150KB for the whole wall). The work page uses
 // the same URLs for its blurred previews, so they are already cached when a visitor goes there next.
-const wallVideo = (column: number, row: number) =>
-  portfolioVideos[(column * 2 + row) % portfolioVideos.length];
-const WALL_FIRST_URLS = Array.from({ length: COLUMNS }, (_, c) =>
-  getVideoTiny(wallVideo(c, 0)),
-).filter(Boolean) as string[];
+function shuffle<T>(list: T[]): T[] {
+  const copy = [...list];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
 
-// Start only when Wall mounts; importing this page must not fetch images on other routes.
+// A fresh arrangement on every load, built from whatever is in the portfolio data. Videos are split
+// into two groups: even columns draw from one group and odd columns from the other, so neighbouring
+// columns never share a thumbnail. Within a column the order is shuffled so the same thumbnail never
+// sits directly above or below itself, including where the loop repeats.
+function buildColumns() {
+  const deck = shuffle(portfolioVideos);
+  const groups = [deck.filter((_, i) => i % 2 === 0), deck.filter((_, i) => i % 2 === 1)];
+  return Array.from({ length: COLUMNS }, (_, c) => {
+    const group = groups[c % 2].length ? groups[c % 2] : deck;
+    let column: PortfolioVideo[] = [];
+    while (column.length < PER_COLUMN) {
+      let round = shuffle(group);
+      // Keep rounds from repeating the same thumbnail back to back.
+      if (column.length && round.length > 1 && round[0] === column[column.length - 1]) round = round.reverse();
+      column = column.concat(round);
+    }
+    column = column.slice(0, PER_COLUMN);
+    // The column loops, so its last tile must differ from its first.
+    if (column.length > 2 && column[0] === column[column.length - 1]) {
+      [column[column.length - 1], column[column.length - 2]] = [column[column.length - 2], column[column.length - 1]];
+    }
+    return column;
+  });
+}
+
 // The wall fades in once the first tile of each column is decoded (or after 1.5s); the remaining
 // tiles then fade in one by one as they arrive, so nothing pops in.
-let wallLoad: Promise<void> | undefined;
 let wallReady = false;
-function loadWall() {
-  wallLoad ??= Promise.all(
-    WALL_FIRST_URLS.map(
-      (url) =>
+function loadFirstTiles(columns: PortfolioVideo[][]) {
+  return Promise.all(
+    columns.map(
+      (column) =>
         new Promise<void>((resolve) => {
+          const url = getVideoTiny(column[0]);
+          if (!url) return resolve();
           const image = new Image();
           image.onload = image.onerror = () => resolve();
           image.src = url;
@@ -96,7 +124,6 @@ function loadWall() {
   ).then(() => {
     wallReady = true;
   });
-  return wallLoad;
 }
 
 // Cached images can finish before React attaches onLoad, so check them as they mount.
@@ -105,6 +132,7 @@ function markLoaded(image: HTMLImageElement | null) {
 }
 
 function Wall() {
+  const [cols] = useState(buildColumns);
   const [ready, setReady] = useState(wallReady);
   useEffect(() => {
     if (wallReady) {
@@ -115,7 +143,7 @@ function Wall() {
     const timeout = window.setTimeout(() => {
       if (live) setReady(true);
     }, 1500);
-    loadWall().then(() => {
+    loadFirstTiles(cols).then(() => {
       if (live) {
         window.clearTimeout(timeout);
         setReady(true);
@@ -126,9 +154,6 @@ function Wall() {
       window.clearTimeout(timeout);
     };
   }, []);
-  const cols = Array.from({ length: COLUMNS }, (_, c) =>
-    Array.from({ length: PER_COLUMN }, (_, i) => wallVideo(c, i)),
-  );
   return (
     <div className={`wall${ready ? " is-ready" : ""}`} aria-hidden="true">
       {cols.map((items, c) => (
