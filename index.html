@@ -5,6 +5,24 @@
     <script>
       // Disable native restoration before the app loads, including reloads.
       if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+      // With JavaScript running, keep the prerendered markup out of sight until React has mounted.
+      // Otherwise the static page paints, is blanked when the app mounts, and then animates back in.
+      // If the bundle fails to load or takes too long, fall back to the readable static page.
+      (function () {
+        var root = document.documentElement;
+        root.classList.add("js");
+        function fallback() {
+          if (!root.classList.contains("is-mounted")) root.classList.remove("js");
+        }
+        window.addEventListener(
+          "error",
+          function (event) {
+            if (event.target && event.target.tagName === "SCRIPT") fallback();
+          },
+          true,
+        );
+        setTimeout(fallback, 5000);
+      })();
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0c0c0c" />

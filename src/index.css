@@ -87,6 +87,11 @@ em {
   display: inline-block;
 }
 
+/* index.html adds .js before first paint and main.tsx adds .is-mounted when React commits. */
+html.js:not(.is-mounted) #root {
+  visibility: hidden;
+}
+
 .webgl-bg {
   position: fixed;
   inset: 0;
@@ -414,9 +419,11 @@ main {
   object-fit: cover;
 }
 /* Blur-up: the tiny preview shows first (blurred), then the sharp image fades over it. */
-.work-image .work-tiny,
-.work-image .work-sharp {
-  opacity: 0; /* stays gray until the wave starts, also in the prerendered HTML */
+/* Hidden until the wave starts, but only while JavaScript is running (html.js): without it,
+   or if the bundle fails to load, the thumbnails simply show. */
+html.js .work-image .work-tiny,
+html.js .work-image .work-sharp {
+  opacity: 0;
 }
 .work-image .work-tiny {
   filter: blur(3px);
@@ -1213,13 +1220,13 @@ main {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  opacity: 0;
   transition: opacity 1.2s ease;
   animation: wall-down linear infinite;
   will-change: transform;
 }
-.wall.is-ready .wall-col {
-  opacity: 1;
+/* The fade-in is driven by JavaScript, so only hide while it is running (see html.js above). */
+html.js .wall:not(.is-ready) .wall-col {
+  opacity: 0;
 }
 .wall-col.is-up {
   animation-name: wall-up;
@@ -1232,11 +1239,10 @@ main {
   border-radius: 10px;
   background: #151515;
   filter: brightness(0.62);
-  opacity: 0;
   transition: opacity 0.9s ease;
 }
-.wall-col img.is-loaded {
-  opacity: 1;
+html.js .wall-col img:not(.is-loaded) {
+  opacity: 0;
 }
 @media (prefers-reduced-motion: reduce) {
   .wall-col img {

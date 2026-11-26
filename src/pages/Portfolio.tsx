@@ -183,9 +183,23 @@ export default function Portfolio() {
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     document.body.classList.add("player-open");
+    // The dialog is portaled outside #root, so making the page inert keeps Tab and clicks from
+    // reaching anything behind it (a cross-origin player swallows the keys a focus trap needs).
+    const page = document.getElementById("root");
+    const wasInert = page?.inert ?? false;
+    if (page) page.inert = true;
     closeButton.current?.focus({ preventScroll: true });
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") close();
+      // A cross-origin player hands focus back to the page when Tab runs past its last control;
+      // bring it back to the close button instead of leaving it on nothing.
+      if (
+        event.key === "Tab" &&
+        !document.activeElement?.closest('[role="dialog"]')
+      ) {
+        event.preventDefault();
+        closeButton.current?.focus({ preventScroll: true });
+      }
     };
     const resize = () => setTarget(playerFrame());
     document.addEventListener("keydown", onKey);
@@ -193,6 +207,7 @@ export default function Portfolio() {
     return () => {
       document.body.style.overflow = previous;
       document.body.classList.remove("player-open");
+      if (page) page.inert = wasInert;
       document.removeEventListener("keydown", onKey);
       window.removeEventListener("resize", resize);
       trigger.current?.focus({ preventScroll: true });
