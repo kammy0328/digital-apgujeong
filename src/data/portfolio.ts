@@ -19,7 +19,7 @@ const videos: PortfolioVideo[] = [
   { id: "memi", youtubeId: "i_-pZiZJ7MQ", date: "2026-04-29", title: { ko: "매미 - BADidea", en: "MEMI - BADidea" } },
   { id: "matthew", youtubeId: "nZS9J20OWog", date: "2026-05-28", title: { ko: "제로베이스원 석매튜 - Love Ain't Easy", en: "ZEROBASEONE Seok Matthew - Love Ain't Easy" } },
   { id: "hanbin", youtubeId: "AkP6v3sMyh8", date: "2026-06-13", title: { ko: "제로베이스원 성한빈 - Pretender", en: "ZEROBASEONE Han Bin - Pretender" } },
-  { id: "izna", youtubeId: "PyrLjTPJ19k", date: "2026-11-25", title: { ko: "IZNA - IWALY 사랑으로 남길", en: "IZNA - IWALY 사랑으로 남길" } },
+  { id: "izna", youtubeId: "PyrLjTPJ19k", date: "2026-11-25", title: { ko: "IZNA - IWALY", en: "IZNA - IWALY" } },
   { id: "huntrix-1million", youtubeId: "04fJ5AdAi68", date: "2026-11-24", title: { ko: "NETFLIX HUNTR/X x 1MILLION - How It's Done", en: "NETFLIX HUNTR/X x 1MILLION - How It's Done" } },
   { id: "lngshot-bananas", youtubeId: "xWNIrOTJ6VA", date: "2026-11-10", title: { ko: "LNGSHOT - Bananas", en: "LNGSHOT - Bananas" } },
   { id: "dragonpony", youtubeId: "oKzPAN7JXVo", date: "2026-11-05", title: { ko: "드래곤포니 - Calling back", en: "Dragon Pony - Calling back" } },
