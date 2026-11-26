@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 const site = "https://digital-apgujeong.vercel.app";
-const routes = ["", "/work", "/service", "/contact"];
+const routes = ["", "/work", "/service", "/app", "/contact"];
 for (const lang of ["ko", "en"])
   for (const route of routes) {
     const path = (lang === "en" ? "/en" : "") + route;
@@ -20,6 +20,7 @@ for (const lang of ["ko", "en"])
       assert(html.includes("Dragon Pony") || html.includes("드래곤포니"));
     if (route === "/service")
       assert(html.includes(lang === "en" ? "Skin texture" : "피부 결 정돈"));
+    if (route === "/app") assert(html.includes("OpenColorIO"));
     assert(!/style="[^"]*(?:^|;)opacity:0(?:;|")/.test(html));
     for (const json of html.matchAll(
       /<script type="application\/ld\+json">([\s\S]*?)<\/script>/g,
@@ -31,11 +32,11 @@ assert(notFound.includes("noindex, follow"));
 assert(notFound.includes("404"));
 assert(!notFound.includes('rel="canonical"'));
 const sitemap = readFileSync("dist/sitemap.xml", "utf8");
-assert.equal([...sitemap.matchAll(/<loc>/g)].length, 8);
+assert.equal([...sitemap.matchAll(/<loc>/g)].length, 10);
 assert(sitemap.includes(`${site}/en/work`));
 const config = JSON.parse(readFileSync("vercel.json", "utf8"));
 assert(!config.rewrites?.some((r) => r.source === "/(.*)"));
 assert.equal(config.cleanUrls, true);
 console.log(
-  "8 static pages: visible body, locale, canonical, alternates, structured data, sitemap and 404 checks passed",
+  "10 static pages: visible body, locale, canonical, alternates, structured data, sitemap and 404 checks passed",
 );

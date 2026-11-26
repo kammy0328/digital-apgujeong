@@ -7,6 +7,7 @@ import { useLang, type L } from "../i18n";
 import { Reveal } from "./Services";
 import { portfolioVideos, getVideoThumb, getVideoTiny, type PortfolioVideo } from "../data/portfolio";
 import { ease } from "../motion";
+import { AppViewer } from "./AppPage";
 
 const T = {
   eyebrow: {
@@ -36,6 +37,18 @@ const T = {
     ],
   },
   teamLink: { en: "About our service", ko: "서비스 소개" } as L,
+  appLabel: { en: "app · coming 2027", ko: "app · 2027 공개 예정" } as L,
+  app: {
+    en: [
+      "Our video skin retouching app.",
+      "The tool we use in production, opening to everyone in the first half of 2027.",
+    ],
+    ko: [
+      "영상 피부 보정 앱.",
+      "디지털 압구정이 제작에 쓰는 도구를 2027년 상반기에 공개할 예정입니다.",
+    ],
+  },
+  appLink: { en: "About the app", ko: "앱 소개" } as L,
 };
 
 const ROLES: L[] = [
@@ -262,6 +275,26 @@ export default function Landing() {
             </Link>
           ))}
         </div>
+      </section>
+
+      <section className="landing-app page-pad">
+        <Reveal className="landing-app-text">
+          <span className="eyebrow">{t(T.appLabel)}</span>
+          <h2 lang="en" translate="no">
+            DIAP
+          </h2>
+          <p>
+            {T.app[lang].map((line) => (
+              <span key={line}>{line}</span>
+            ))}
+          </p>
+          <Link to="/app" className="landing-link">
+            {t(T.appLink)} <ArrowUpRight size={14} />
+          </Link>
+        </Reveal>
+        <Reveal delay={0.1} className="landing-app-visual">
+          <AppViewer />
+        </Reveal>
       </section>
 
       <section className="landing-team page-pad">

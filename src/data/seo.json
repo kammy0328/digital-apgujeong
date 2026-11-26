@@ -29,6 +29,16 @@
       "ko": "수퍼바이저와 리드가 이끄는 팀이 영상 뷰티 리터칭과 오브젝트 클리닝을 촉박한 납기에도 높은 퀄리티로 진행합니다. 작업 범위와 진행 방식을 확인하세요."
     }
   },
+  "/app": {
+    "title": {
+      "en": "DIAP app | Video skin retouching software — diap",
+      "ko": "DIAP 앱 | 영상 피부 보정 소프트웨어 — 디지털 압구정"
+    },
+    "description": {
+      "en": "DIAP is a video skin retouching app built around K-pop music videos: face tracking, skin retouching, OpenColorIO-based log workflows and ProRes / OpenEXR delivery. Windows and macOS, public release planned for the first half of 2027.",
+      "ko": "DIAP은 K-pop 뮤직비디오를 기준으로 만든 영상 피부 보정 앱입니다. 얼굴 추적, 피부 보정, OpenColorIO 기반 Log 작업, ProRes·OpenEXR 출력을 지원합니다. Windows·macOS, 2027년 상반기 공개 예정."
+    }
+  },
   "/contact": {
     "title": {
       "en": "Contact | Project inquiry & quote — diap",

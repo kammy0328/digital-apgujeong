@@ -1809,3 +1809,336 @@ main {
     order: 2;
   }
 }
+
+/* ---------- app (DIAP) ---------- */
+.app-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.app-chips li {
+  padding: 8px 16px;
+  border: 1px solid #3a3a38;
+  border-radius: 999px;
+  font-size: 13px;
+  color: #b9b9b6;
+}
+.app-chips li.is-strong {
+  border-color: rgba(236, 236, 233, 0.55);
+  color: var(--paper);
+}
+.app-hero-visual {
+  margin-top: 56px;
+}
+
+/* Schematic viewer: a landmark mesh with a before/after wipe. Drawn as a diagram on purpose. */
+.app-viewer {
+  position: relative;
+  aspect-ratio: 16 / 7;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.02);
+}
+.app-viewer svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.viewer-pores circle {
+  fill: rgba(236, 236, 233, 0.2);
+}
+.viewer-mesh path {
+  fill: none;
+  stroke: rgba(236, 236, 233, 0.22);
+  stroke-width: 1;
+}
+.viewer-points circle {
+  fill: rgba(236, 236, 233, 0.78);
+}
+.viewer-box path {
+  fill: none;
+  stroke: rgba(236, 236, 233, 0.5);
+  stroke-width: 1.2;
+}
+.viewer-box text {
+  fill: #8c8c89;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+}
+.viewer-shine ellipse {
+  fill: rgba(236, 236, 233, 0.1);
+}
+.viewer-lines path {
+  fill: none;
+  stroke: rgba(236, 236, 233, 0.42);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+}
+.viewer-blemishes circle {
+  fill: rgba(236, 236, 233, 0.5);
+}
+.viewer-blemishes circle.is-ring {
+  fill: none;
+  stroke: rgba(236, 236, 233, 0.55);
+  stroke-width: 1.1;
+}
+/* The "source" layer is visible to the left of the wipe line; both animate on the same timing. */
+.viewer-before {
+  clip-path: inset(0 50% 0 0);
+  animation: viewer-clip 11s ease-in-out infinite alternate;
+}
+.viewer-wipe {
+  position: absolute;
+  inset: 0;
+  transform: translateX(50%);
+  animation: viewer-line 11s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+.viewer-wipe::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: rgba(236, 236, 233, 0.7);
+}
+.viewer-wipe::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -5px;
+  width: 11px;
+  height: 34px;
+  margin-top: -17px;
+  border-radius: 999px;
+  background: var(--paper);
+}
+@keyframes viewer-clip {
+  from {
+    clip-path: inset(0 86% 0 0);
+  }
+  to {
+    clip-path: inset(0 14% 0 0);
+  }
+}
+@keyframes viewer-line {
+  from {
+    transform: translateX(14%);
+  }
+  to {
+    transform: translateX(86%);
+  }
+}
+/* Narrow screens crop to the centre person, so the wipe only needs to cross that one face. */
+@keyframes viewer-clip-narrow {
+  from {
+    clip-path: inset(0 72% 0 0);
+  }
+  to {
+    clip-path: inset(0 28% 0 0);
+  }
+}
+@keyframes viewer-line-narrow {
+  from {
+    transform: translateX(28%);
+  }
+  to {
+    transform: translateX(72%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .viewer-before,
+  .viewer-wipe {
+    animation: none;
+  }
+}
+.app-figure {
+  margin: 0;
+}
+.app-figure figcaption {
+  margin-top: 12px;
+  font-size: 11px;
+  color: #6f6f6c;
+}
+.viewer-tag {
+  position: absolute;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: #8c8c89;
+}
+.viewer-tag {
+  top: 16px;
+}
+.viewer-tag.is-a {
+  left: 18px;
+}
+.viewer-tag.is-b {
+  right: 18px;
+  color: #d8d8d4;
+}
+
+.app-features {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.app-feature {
+  padding: 28px 28px 32px;
+}
+.app-diagram {
+  display: block;
+  width: 120px;
+  color: #b9b9b6;
+}
+.app-diagram svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.app-diagram .is-fill,
+.app-diagram .is-fill circle {
+  fill: currentColor;
+}
+.app-diagram .is-dot circle {
+  fill: currentColor;
+  stroke: none;
+  opacity: 0.6;
+}
+.app-feature h3 {
+  margin: 30px 0 12px;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.app-feature p,
+.app-road-row p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.85;
+  color: #a6a6a3;
+  word-break: keep-all;
+}
+
+.app-road-list {
+  display: grid;
+  grid-auto-rows: 1fr;
+}
+.app-road-row {
+  display: grid;
+  grid-template-columns: 130px 1.1fr 2fr;
+  gap: 24px;
+  align-items: center;
+  min-height: 104px;
+  border-top: 1px solid var(--line);
+}
+.app-road-row:first-child {
+  border-top: 0;
+}
+.app-road-row h3 {
+  margin: 0;
+  font-size: clamp(18px, 1.6vw, 24px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+.app-status {
+  justify-self: start;
+  padding: 6px 13px;
+  border: 1px solid #3a3a38;
+  border-radius: 999px;
+  font-size: 12px;
+  color: #b9b9b6;
+  white-space: nowrap;
+}
+.app-status.is-now {
+  border-color: var(--paper);
+  background: var(--paper);
+  color: #151515;
+}
+:lang(ko) .app-feature h3,
+:lang(ko) .app-road-row h3,
+:lang(ko) .landing-app p {
+  letter-spacing: -0.005em;
+}
+
+/* Landing teaser */
+.landing-app {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  gap: 56px;
+  align-items: center;
+  padding-top: 72px;
+  padding-bottom: 88px;
+  border-top: 1px solid var(--line);
+  margin: 0 var(--pad);
+  padding-left: 0;
+  padding-right: 0;
+}
+.landing-app h2 {
+  margin: 18px 0 20px;
+  font-size: clamp(48px, 7vw, 120px);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.landing-app p {
+  margin: 0 0 24px;
+  font-size: clamp(17px, 1.5vw, 22px);
+  line-height: 1.6;
+  letter-spacing: -0.02em;
+  color: #cfcfcc;
+  word-break: keep-all;
+}
+.landing-app p span {
+  display: block;
+  text-wrap: balance;
+}
+
+@media (max-width: 1023px) {
+  .landing-app {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 36px;
+  }
+}
+@media (max-width: 767px) {
+  .app-viewer {
+    aspect-ratio: 4 / 3;
+  }
+  .viewer-side {
+    display: none;
+  }
+  .viewer-before {
+    animation-name: viewer-clip-narrow;
+    animation-duration: 8s;
+  }
+  .viewer-wipe {
+    animation-name: viewer-line-narrow;
+    animation-duration: 8s;
+  }
+  .app-hero-visual {
+    margin-top: 40px;
+  }
+  .app-features {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .app-road-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    min-height: 0;
+    padding: 24px 0;
+  }
+  .landing-app {
+    padding-top: 48px;
+    padding-bottom: 56px;
+  }
+}

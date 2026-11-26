@@ -4,6 +4,7 @@ import Landing from "./pages/Landing";
 import Company from "./pages/Company";
 import Portfolio from "./pages/Portfolio";
 import Consultation from "./pages/Consultation";
+import AppPage from "./pages/AppPage";
 import NotFound from "./pages/NotFound";
 import { LangProvider, localizedPath, useLang } from "./i18n";
 function Legacy({ to }: { to: string }) {
@@ -18,6 +19,7 @@ export function SiteRoutes() {
           <Route path="/" element={<Landing />} />
           <Route path="/work" element={<Portfolio />} />
           <Route path="/service" element={<Company />} />
+          <Route path="/app" element={<AppPage />} />
           <Route path="/contact" element={<Consultation />} />
           <Route path="/beauty" element={<Legacy to="/service#beauty" />} />
           <Route path="/cleanup" element={<Legacy to="/service#cleanup" />} />
@@ -26,6 +28,7 @@ export function SiteRoutes() {
           <Route path="/en" element={<Landing />} />
           <Route path="/en/work" element={<Portfolio />} />
           <Route path="/en/service" element={<Company />} />
+          <Route path="/en/app" element={<AppPage />} />
           <Route path="/en/contact" element={<Consultation />} />
           <Route path="/en/beauty" element={<Legacy to="/service#beauty" />} />
           <Route

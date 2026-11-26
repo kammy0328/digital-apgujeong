@@ -25,6 +25,7 @@ import { ease } from "../motion";
 const NAV = [
   { to: "/work", label: "work" },
   { to: "/service", label: "service" },
+  { to: "/app", label: "app" },
   { to: "/contact", label: "contact" },
 ];
 
