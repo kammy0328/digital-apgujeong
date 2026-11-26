@@ -2142,3 +2142,15 @@ main {
     padding-bottom: 56px;
   }
 }
+
+/* The app name is set in the studio wordmark. Sized in em so it follows each heading's type size:
+   the wordmark's ascender-to-baseline is 3/4 of its box, which lands near the old cap height. */
+.app-wordmark {
+  display: block;
+  height: 0.95em;
+  width: auto;
+  color: var(--paper);
+}
+.app-hero h1 {
+  line-height: 1;
+}

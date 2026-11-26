@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { useLang, type L } from "../i18n";
 import { Reveal } from "./Services";
 import { ease, TITLE } from "../motion";
+import Logo from "../components/Logo";
 
 const T = {
   lead: {
@@ -320,7 +321,7 @@ export default function AppPage() {
             animate={{ y: 0 }}
             transition={{ duration: TITLE.duration, ease, delay: TITLE.delay }}
           >
-            DIAP
+            <Logo className="app-wordmark" />
           </motion.span>
         </h1>
         <Reveal delay={0.35} className="service-lead">

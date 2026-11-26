@@ -281,7 +281,7 @@ export default function Landing() {
         <Reveal className="landing-app-text">
           <span className="eyebrow">{t(T.appLabel)}</span>
           <h2 lang="en" translate="no">
-            DIAP
+            <Logo className="app-wordmark" />
           </h2>
           <p>
             {T.app[lang].map((line) => (
