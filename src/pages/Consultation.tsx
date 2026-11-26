@@ -4,7 +4,11 @@ import { motion } from "motion/react";
 import { useLang, type L } from "../i18n";
 import Magnetic from "../components/Magnetic";
 import { ease, TITLE } from "../motion";
-import { CONTACT_LIMITS, validateContact } from "../data/contact";
+import {
+  CONTACT_LIMITS,
+  HONEYPOT_FIELD,
+  validateContact,
+} from "../data/contact";
 
 const initial = {
   name: "",
@@ -73,6 +77,7 @@ const T = {
 export default function Consultation() {
   const { lang, t } = useLang();
   const [form, setForm] = useState(initial);
+  const [trap, setTrap] = useState("");
   const [state, setState] = useState<"idle" | "loading" | "success" | "error">(
     "idle",
   );
@@ -91,7 +96,7 @@ export default function Consultation() {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(validation.data),
+        body: JSON.stringify({ ...validation.data, [HONEYPOT_FIELD]: trap }),
       });
       const data = await response.json().catch(() => null);
       if (response.status === 400) {
@@ -166,6 +171,19 @@ export default function Consultation() {
             onSubmit={submit}
             aria-label={t(T.formLabel)}
           >
+            {/* Honeypot: hidden from people and assistive tech; only bots fill it in. */}
+            <p className="form-trap" aria-hidden="true">
+              <label>
+                Leave this field empty
+                <input
+                  name={HONEYPOT_FIELD}
+                  value={trap}
+                  onChange={(event) => setTrap(event.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </label>
+            </p>
             <div className="form-fields">
               <label>
                 {t(T.name)}

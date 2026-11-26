@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import nodemailer from "nodemailer";
-import { validateContact } from "../src/data/contact";
+import { isHoneypotFilled, validateContact } from "../src/data/contact";
 
 const esc = (v: unknown) =>
   String(v ?? "")
@@ -13,6 +13,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
     return res.status(405).json({ error: "Method not allowed" });
+  }
+
+  // Bots that fill the hidden field get the same answer as a real submission, but no mail is sent.
+  if (isHoneypotFilled(req.body)) {
+    console.warn("Contact form: honeypot filled, submission dropped");
+    return res.status(200).json({ success: true });
   }
 
   const result = validateContact(req.body);

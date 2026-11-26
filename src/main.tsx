@@ -1,5 +1,6 @@
 import {StrictMode, useLayoutEffect, type ReactNode} from 'react';
 import {createRoot} from 'react-dom/client';
+import {Analytics} from '@vercel/analytics/react';
 import App from './App.tsx';
 import './index.css';
 
@@ -17,5 +18,7 @@ createRoot(document.getElementById('root')!).render(
     <Mounted>
       <App />
     </Mounted>
+    {/* Cookieless page-view counts; collects only once Web Analytics is enabled for the Vercel project. */}
+    <Analytics />
   </StrictMode>,
 );

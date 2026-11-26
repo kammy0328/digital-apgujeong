@@ -1,6 +1,11 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { validateContact, CONTACT_LIMITS } from "../src/data/contact";
+import {
+  validateContact,
+  isHoneypotFilled,
+  CONTACT_LIMITS,
+  HONEYPOT_FIELD,
+} from "../src/data/contact";
 import handler from "../api/contact";
 const valid = {
   name: " Studio ",
@@ -106,4 +111,45 @@ test("API method restrictions advertise POST", async () => {
   await handler({ method: "GET" } as any, res as any);
   assert.equal(res.code, 405);
   assert.equal(res.allow, "POST");
+});
+test("honeypot: empty or absent passes, any content is treated as a bot", () => {
+  assert.equal(isHoneypotFilled(valid), false);
+  assert.equal(isHoneypotFilled({ ...valid, [HONEYPOT_FIELD]: "" }), false);
+  assert.equal(isHoneypotFilled({ ...valid, [HONEYPOT_FIELD]: "  " }), false);
+  assert.equal(isHoneypotFilled({ ...valid, [HONEYPOT_FIELD]: "x" }), true);
+  assert.equal(isHoneypotFilled({ ...valid, [HONEYPOT_FIELD]: 1 }), true);
+  assert.equal(isHoneypotFilled(null), false);
+  // The hidden field never leaks into the validated data.
+  const result = validateContact({ ...valid, [HONEYPOT_FIELD]: "" });
+  assert.equal(result.ok && HONEYPOT_FIELD in result.data, false);
+});
+test("API answers a filled honeypot like a success without reaching mail", async () => {
+  const saved = process.env.GMAIL_APP_PASSWORD;
+  delete process.env.GMAIL_APP_PASSWORD;
+  const res = {
+    code: 0,
+    body: null as unknown,
+    status(n: number) {
+      this.code = n;
+      return this;
+    },
+    json(value: unknown) {
+      this.body = value;
+      return value;
+    },
+  };
+  const warn = console.warn;
+  console.warn = () => {};
+  try {
+    await handler(
+      { method: "POST", body: { ...valid, [HONEYPOT_FIELD]: "http://spam" } } as any,
+      res as any,
+    );
+  } finally {
+    console.warn = warn;
+    if (saved !== undefined) process.env.GMAIL_APP_PASSWORD = saved;
+  }
+  // Without the honeypot this request would stop at "Mail is not configured" (500).
+  assert.equal(res.code, 200);
+  assert.deepEqual(res.body, { success: true });
 });

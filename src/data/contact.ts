@@ -1,3 +1,11 @@
+// A field people never see. Bots that fill in every input give themselves away by filling it too.
+// The odd name keeps browser autofill from ever touching it.
+export const HONEYPOT_FIELD = "contact_me_by_fax_only";
+export function isHoneypotFilled(body: unknown) {
+  if (!body || typeof body !== "object") return false;
+  const value = (body as Record<string, unknown>)[HONEYPOT_FIELD];
+  return typeof value === "string" ? value.trim() !== "" : value != null;
+}
 export const CONTACT_LIMITS = {
   name: 100,
   phone: 40,
