@@ -1,6 +1,8 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import nodemailer from "nodemailer";
-import { isHoneypotFilled, validateContact } from "../src/data/contact";
+// The ".js" extension is required: package.json sets "type": "module", so Vercel runs this file as
+// native ESM, and Node's ESM loader does not guess extensions. Without it the function fails to load.
+import { isHoneypotFilled, validateContact } from "../src/data/contact.js";
 
 const esc = (v: unknown) =>
   String(v ?? "")

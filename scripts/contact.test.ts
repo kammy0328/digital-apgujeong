@@ -1,5 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import {
   validateContact,
   isHoneypotFilled,
@@ -152,4 +153,13 @@ test("API answers a filled honeypot like a success without reaching mail", async
   // Without the honeypot this request would stop at "Mail is not configured" (500).
   assert.equal(res.code, 200);
   assert.deepEqual(res.body, { success: true });
+});
+test("API files import local modules with an explicit .js extension", () => {
+  // Vercel runs api/*.ts as native ESM ("type": "module"); an extensionless relative import
+  // compiles fine and passes every local check, then crashes the function on its first request.
+  const source = readFileSync(new URL("../api/contact.ts", import.meta.url), "utf8");
+  const relative = [...source.matchAll(/from\s+["'](\.{1,2}\/[^"']+)["']/g)].map((m) => m[1]);
+  assert.ok(relative.length > 0);
+  for (const specifier of relative)
+    assert.match(specifier, /\.js$/, `${specifier} needs a .js extension`);
 });
