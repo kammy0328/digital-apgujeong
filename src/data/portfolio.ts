@@ -21,6 +21,7 @@ const videos: PortfolioVideo[] = [
   { id: "hanbin", youtubeId: "AkP6v3sMyh8", date: "2026-06-13", title: { ko: "제로베이스원 성한빈 - Pretender", en: "ZEROBASEONE Han Bin - Pretender" } },
   { id: "izna", youtubeId: "PyrLjTPJ19k", date: "2026-11-25", title: { ko: "IZNA - IWALY", en: "IZNA - IWALY" } },
   { id: "huntrix-1million", youtubeId: "04fJ5AdAi68", date: "2026-11-24", title: { ko: "NETFLIX HUNTR/X x 1MILLION - How It's Done", en: "NETFLIX HUNTR/X x 1MILLION - How It's Done" } },
+  { id: "ive-dive-academy", youtubeId: "BXvVO0gzLyA", date: "2026-11-15", title: { ko: "SPOTIFY x IVE - DIVE ACADEMY", en: "SPOTIFY x IVE - DIVE ACADEMY" } },
   { id: "lngshot-bananas", youtubeId: "xWNIrOTJ6VA", date: "2026-11-10", title: { ko: "LNGSHOT - Bananas", en: "LNGSHOT - Bananas" } },
   { id: "dragonpony", youtubeId: "oKzPAN7JXVo", date: "2026-11-05", title: { ko: "드래곤포니 - Calling back", en: "Dragon Pony - Calling back" } },
   { id: "rescene", youtubeId: "pey3E47eSc8", date: "2026-11-03", title: { ko: "리센느 - With", en: "RESCENE - With" } },
